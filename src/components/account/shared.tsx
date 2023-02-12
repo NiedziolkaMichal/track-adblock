@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { SideMenu } from "./sideMenu";
 import { AccountMain } from "./accountMain";
-import { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 
 const BaseStructure = styled.div`
   display: grid;
@@ -15,4 +15,8 @@ export function AccountBase({ children }: { children: ReactNode }) {
       <AccountMain>{children}</AccountMain>
     </BaseStructure>
   );
+}
+
+export function getAccountSharedLayout(page: ReactElement): ReactElement {
+  return <AccountBase>{page}</AccountBase>;
 }

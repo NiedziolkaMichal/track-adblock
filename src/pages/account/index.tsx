@@ -1,5 +1,7 @@
-import { AccountBase } from "../../components/account/shared";
+import { getAccountSharedLayout } from "../../components/account/shared";
 
 export default function Page() {
-  return <AccountBase></AccountBase>;
+  return "Index";
 }
+
+Page.getSharedLayout = getAccountSharedLayout;
