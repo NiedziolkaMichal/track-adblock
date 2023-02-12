@@ -1,10 +1,19 @@
 export const THEME = {
+  text: {
+    primary: "#5F6368",
+    secondary: "white",
+  },
   background: {
     primary: "white",
     secondary: "#F8F9FA",
   },
   border: {
     primary: "#DADCE0",
+  },
+  selected: {
+    fore: "#1A73E8",
+    light: "#F5F5F5",
+    back: "white",
   },
 };
 type ThemeType = typeof THEME;

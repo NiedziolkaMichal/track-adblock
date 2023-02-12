@@ -16,6 +16,9 @@ export const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
   }
+  a {
+    text-decoration: none;
+  }
   
   @font-face {
     src: url("/font/OpenSansVar.ttf");
