@@ -5,7 +5,7 @@ import { ReactElement, ReactNode } from "react";
 
 const BaseStructure = styled.div`
   display: grid;
-  grid-template: 1fr / 55px 1fr;
+  grid-template: 1fr / 55px 1fr; // 55px is used in sideMenu and account/index
 `;
 
 export function AccountBase({ children }: { children: ReactNode }) {
