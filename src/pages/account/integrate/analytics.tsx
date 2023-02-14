@@ -2,12 +2,12 @@ import { getAccountSharedLayout } from "../../../components/account/skeleton";
 import styled from "styled-components";
 import { CardH2 } from "../../../components/account/card";
 import { useCallback, useEffect, useState } from "react";
-import { ButtonShapeShifter, LinkSecondary } from "../../../components/account/button";
+import { ButtonShapeShifter } from "../../../components/account/button";
 import isValidDomain from "is-valid-domain";
 import { InvalidInput, Label, TextField } from "../../../components/account/input";
 import { NextRouter, useRouter } from "next/router";
 import { useInputWithCallback } from "../../../hooks/inputHooks";
-import { H1 } from "../../../components/account/common";
+import { H1, MeasurementCardSides, QuestionLink } from "../../../components/account/common";
 
 const NEXT_PAGE = "/account/install/analytics";
 
@@ -59,10 +59,6 @@ function saveDataAndRedirect(domain: string, measurementId: string, router: Next
   router.push(NEXT_PAGE);
 }
 
-const CardH2WithMargin = styled(CardH2)`
-  margin-bottom: 25px;
-`;
-
 const UrlTextField = styled(TextField)`
   width: 100%;
   max-width: 400px;
@@ -78,7 +74,7 @@ function DomainCard({ setDomain }: { setDomain: (domain: string) => void }) {
   const { fieldId, completed, invalid, onAddId } = useDomainInputWithCallback(setDomain);
 
   return (
-    <CardH2WithMargin headingContent="Nazwa domeny" innerPadding={true}>
+    <CardH2 headingContent="Nazwa domeny" innerPadding={true}>
       <Label htmlFor={fieldId}>Adres URL witryny, dla której zostanie odblokowana analityka</Label>
       <UrlTextField id={fieldId} name="url" placeholder="https://" type="url" disabled={completed} />
       {invalid && <InvalidInputWithMargin>Przekazany adres jest nieprawidłowy</InvalidInputWithMargin>}
@@ -86,22 +82,9 @@ function DomainCard({ setDomain }: { setDomain: (domain: string) => void }) {
         {!completed && "Dodaj domenę"}
         {completed && "Domena dodana"}
       </ButtonShapeShifter>
-    </CardH2WithMargin>
+    </CardH2>
   );
 }
-
-const MeasurementCardSides = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const QuestionLink = styled(LinkSecondary)`
-  margin-left: auto;
-
-  :first-child {
-    margin-top: -10px;
-  }
-`;
 
 function useMeasurementIdInputWithCallback(setMeasurementId: (id: string) => void) {
   const getValueFromInput = (input: string) => (verifyMeasurementId(input) ? input : undefined);
@@ -112,7 +95,7 @@ function MeasurementIdCard({ setMeasurementId }: { setMeasurementId: (id: string
   const { fieldId, completed, invalid, onAddId } = useMeasurementIdInputWithCallback(setMeasurementId);
 
   return (
-    <CardH2WithMargin headingContent="Identyfikator pomiaru" innerPadding={true}>
+    <CardH2 headingContent="Identyfikator pomiaru" innerPadding={true}>
       <MeasurementCardSides>
         <div>
           <Label htmlFor={fieldId}>Identyfikator Google Analytics w formacie &quot;G-XXXXXXXX&quot;</Label>
@@ -129,7 +112,7 @@ function MeasurementIdCard({ setMeasurementId }: { setMeasurementId: (id: string
           <QuestionLink href="">Czy dzielenie się identyfikatorem jest bezpieczne?</QuestionLink>
         </div>
       </MeasurementCardSides>
-    </CardH2WithMargin>
+    </CardH2>
   );
 }
 
