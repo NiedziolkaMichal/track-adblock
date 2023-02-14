@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     text-size-adjust: 100%;
     font-family: OpenSansMini, sans-serif;//TODO pick more appropriate fallbacks
   }
-  body {
+  body, p {
     margin: 0;
   }
   #__next {
@@ -18,6 +18,10 @@ export const GlobalStyle = createGlobalStyle`
   }
   a {
     text-decoration: none;
+  }
+  button {
+    cursor: pointer;
+    border: none;
   }
   
   @font-face {

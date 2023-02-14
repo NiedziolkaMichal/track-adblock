@@ -1,19 +1,19 @@
 import { getAccountSharedLayout } from "../../components/account/skeleton";
 import styled from "styled-components";
 import { RequestsCard } from "../../components/account/requests/requestsCard";
+import { LinkPrimary } from "../../components/account/button";
+import { H1 } from "../../components/account/common";
 
-const H1 = styled.h1`
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: ${({ theme }) => theme.text.heading};
-  margin-bottom: 30px;
+const ResizedRequestsCard = styled(RequestsCard)`
+  margin: 15px 0;
 `;
 
 export default function Page() {
   return (
     <>
       <H1>Statystyki strony: krainawiewiorek.pl</H1>
-      <RequestsCard />
+      <ResizedRequestsCard />
+      <LinkPrimary href={"/account/integrate/analytics"}>Dodaj kolejną domenę</LinkPrimary>
     </>
   );
 }

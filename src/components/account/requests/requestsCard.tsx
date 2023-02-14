@@ -3,14 +3,14 @@ import React from "react";
 import { RequestsChart } from "./requestsChart";
 import { THEME } from "../../../styles/themes";
 import { formatNumber } from "../../../util/format";
-import { Card } from "../common";
-import { useHostRequests } from "../../../api/apiHooks";
+import { Card } from "../card";
+import { useHostRequests } from "../../../hooks/apiHooks";
 
-export function RequestsCard() {
+export function RequestsCard({ className }: { className?: string }) {
   const requestsData = useHostRequests();
 
   return (
-    <Card>
+    <Card className={className}>
       {requestsData && (
         <MetricTabs>
           <MetricTab type="all" amount={formatNumber(requestsData.totalOrdinary + requestsData.totalUnblocked, 1)} />

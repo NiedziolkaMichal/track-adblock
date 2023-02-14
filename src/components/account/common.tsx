@@ -1,12 +1,8 @@
 import styled from "styled-components";
-import { ReactNode } from "react";
 
-export const CardDiv = styled.div`
-  background-color: ${({ theme }) => theme.background.primary};
-  border: 1px solid ${({ theme }) => theme.border.primary};
-  border-radius: 8px;
+export const H1 = styled.h1`
+  font-size: 1.25rem;
+  font-weight: 500;
   color: ${({ theme }) => theme.text.heading};
+  margin-bottom: 30px;
 `;
-export function Card({ children }: { children: ReactNode }) {
-  return <CardDiv>{children}</CardDiv>;
-}

@@ -4,6 +4,8 @@ export const THEME = {
     primary: "#5F6368",
     secondary: "white",
     light: "#989898",
+    disabled: "#626262",
+    invalid: "red",
   },
   background: {
     primary: "white",
@@ -11,6 +13,25 @@ export const THEME = {
   },
   border: {
     primary: "#DADCE0",
+    intense: "#6c6c6c",
+    selected: "#1A73E8",
+  },
+  button: {
+    primary: {
+      background: "#1A73E8",
+      backgroundHover: "#1B66CA",
+      text: "#F8F9FA",
+    },
+    secondary: {
+      text: "#1A73E8",
+      textHover: "#1B66CA",
+      backgroundHover: "#F6FAFE",
+    },
+    valid: {
+      background: "#3ba12f",
+      backgroundHover: "#368c2b",
+      text: "#F8F9FA",
+    },
   },
   selected: {
     fore: "#1A73E8",
