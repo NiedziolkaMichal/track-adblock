@@ -1,0 +1,8 @@
+@font-face {
+  src: url("/font/Montserrat.woff2") format("woff"), url("/font/Montserrat.ttf");
+  font-family: MonserratMini;
+  font-weight: 1 1000;
+  font-stretch: 1% 200%;
+  font-style: normal;
+  font-display: block;
+}
