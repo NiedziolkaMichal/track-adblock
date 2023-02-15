@@ -8,6 +8,7 @@ import { InvalidInput, Label, TextField } from "../../../components/account/inpu
 import { NextRouter, useRouter } from "next/router";
 import { useInputWithCallback } from "../../../hooks/inputHooks";
 import { H1, MeasurementCardSides, QuestionLink } from "../../../components/account/common";
+import { verifyMeasurementId } from "../../../util/verifyInput";
 
 const NEXT_PAGE = "/account/install/analytics";
 
@@ -129,10 +130,6 @@ function getDomainFromUrl(url: string) {
   } catch (e) {
     return undefined;
   }
-}
-
-function verifyMeasurementId(id: string) {
-  return /^G-[A-Z0-9]{3,12}$/i.test(id); // TODO Limits are guessed
 }
 
 Page.getSharedLayout = getAccountSharedLayout;
