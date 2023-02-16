@@ -4,11 +4,12 @@ import { ReactElement, ReactNode } from "react";
 
 const BaseStructure = styled.div`
   display: grid;
-  grid-template: 1fr / 55px 1fr; // 55px is used in sideMenu and account/index
+  grid-template: 1fr / minmax(55px, 240px) 1fr; // 55px is used in sideMenu and account/index
 `;
 
 const MainBackground = styled.div`
   background-color: ${({ theme }) => theme.background.secondary};
+  display: flex;
 `;
 
 const Main = styled.main`
@@ -16,7 +17,11 @@ const Main = styled.main`
   // RequestsChart required fixed width in order to be resized correctly with the viewport
   width: calc(100vw - 55px); // 55px is width of a side menu
   max-width: 1280px;
-  margin: 0 auto;
+  margin-left: auto;
+`;
+
+const UnevenMargin = styled.div`
+  flex-grow: 0.7;
 `;
 
 export function AccountBase({ children }: { children: ReactNode }) {
@@ -25,6 +30,7 @@ export function AccountBase({ children }: { children: ReactNode }) {
       <SideMenu />
       <MainBackground>
         <Main>{children}</Main>
+        <UnevenMargin />
       </MainBackground>
     </BaseStructure>
   );

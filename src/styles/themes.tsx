@@ -34,8 +34,9 @@ export const THEME = {
     },
   },
   selected: {
-    fore: "#1A73E8",
-    light: "#F5F5F5",
+    fore: "#F9AB00",
+    foreHover: "#ffb31a",
+    light: "#e7e7e7",
     back: "white",
   },
   graph: {

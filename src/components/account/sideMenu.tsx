@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,12 +30,11 @@ const Base = styled.nav`
   justify-content: space-between;
   padding-top: 8px;
   padding-bottom: 20px;
-  background-color: ${({ theme }) => theme.background.secondary};
+  background-color: ${({ theme }) => theme.background.primary};
   border-right: 1px solid ${({ theme }) => theme.border.primary};
   z-index: 1; // Placing it in foreground of the main section, when hover is active
 
   :hover {
-    background-color: ${({ theme }) => theme.background.primary};
     width: 240px;
   }
 `;
@@ -53,27 +52,31 @@ const Item = styled(Link)<{ $active: boolean }>`
   display: flex;
   height: 48px;
   width: 100%;
-  color: ${(props) => (props.$active ? props.theme.selected.back : props.theme.text.primary)};
+  color: ${(props) => props.theme.text.heading};
   position: relative;
 
   ${(props) =>
     props.$active &&
-    `
-    ${Base}:hover && {
-      background-color: ${props.theme.selected.fore};
-      border-top-right-radius: 25px;
-      border-bottom-right-radius: 25px;
-    }
-  `}
+    css`
+       {
+        background-color: ${props.theme.selected.fore};
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+
+        :hover {
+          background-color: ${props.theme.selected.foreHover};
+        }
+      }
+    `}
   ${(props) =>
     !props.$active &&
-    `
-    :hover {
-      background-color: ${props.theme.selected.light};
-      border-top-right-radius: 25px;
-      border-bottom-right-radius: 25px;
-    }
-  `}
+    css`
+      :hover {
+        background-color: ${props.theme.selected.light};
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+      }
+    `}
 `;
 /**
  * Blue Circle behind currently active item
@@ -92,18 +95,16 @@ const ActiveItemHighlight = styled.div`
 const ItemIcon = styled.svg`
   height: 24px;
   width: 24px;
+  min-width: 24px;
   margin: auto 15px; // 15px is (55px(side menu width) - 1px(side menu border-width) - 24px(icon width)) / 2
 `;
 
 const ItemTitle = styled.div`
-  display: none;
+  display: block;
   margin: auto 0;
   font-size: 0.875rem;
   font-weight: 600;
-
-  ${Base}:hover & {
-    display: block;
-  }
+  overflow: hidden; //TODO handle it better way
 `;
 
 function MenuItem({ title, href, children }: { title: string; href: string; children: ReactNode }) {
