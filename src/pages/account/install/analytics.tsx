@@ -1,20 +1,36 @@
 import { H1, MeasurementCardSides, QuestionLink } from "../../../components/account/common";
 import { getAccountSharedLayout } from "../../../components/account/skeleton";
-import { ButtonShapeShifter, LinkSecondary } from "../../../components/account/button";
-import { CardCodeBlock, CardH2, CardP } from "../../../components/account/card";
-import styled from "styled-components";
+import { ButtonShapeShifter } from "../../../components/account/button";
+import { Card, CardCodeBlock, CardH2, CardP } from "../../../components/account/card";
+import styled, { useTheme } from "styled-components";
 import { FileDownload } from "../../../components/account/install/fileDownload";
+import React from "react";
+import { CardTab, CardTabs } from "../../../components/account/cardTabs";
 
 export default function Page() {
+  const domain = "krainawiewiorek.pl";
   const jsFileName = "sddsuadksa";
   const phpFileName = "dsjkdsnjasd";
   const measurementId = "G-XXXXXX";
   return (
     <>
       <H1>Zainstaluj skrypt</H1>
+      <DomainCard domain={domain} measurementId={measurementId} />
       <FilesCard jsFileName={jsFileName} phpFileName={phpFileName} />
       <ScriptCard jsFileName={jsFileName} measurementId={measurementId} />
     </>
+  );
+}
+
+function DomainCard({ domain, measurementId }: { domain: string; measurementId: string }) {
+  const theme = useTheme();
+  return (
+    <Card>
+      <CardTabs>
+        <CardTab title="ADRES WITRYNY" value={domain} valueColor={theme.graph.requests.all} />
+        <CardTab title="IDENTYFIKATOR POMIARU" value={measurementId} valueColor={theme.graph.requests.all} />
+      </CardTabs>
+    </Card>
   );
 }
 
