@@ -4,6 +4,7 @@ import { ChartTooltip } from "./chartTooltip";
 import { formatNumber } from "../../../util/format";
 import { getRequestTypesTitle } from "./requestsCard";
 import { RequestsData } from "../../../pages/api/hostRequests";
+import { useTheme } from "styled-components";
 
 function createChartData(requestsData: RequestsData) {
   /**
@@ -40,11 +41,12 @@ function createChartData(requestsData: RequestsData) {
  */
 export function RequestsChart({ requestsData }: { requestsData: RequestsData }) {
   const data = createChartData(requestsData);
+  const graphTheme = useGraphTheme();
   return (
     <ResponsiveLine
       data={data}
       margin={{ top: 5, right: 60, bottom: 50, left: 20 }}
-      theme={theme}
+      theme={graphTheme}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -90,22 +92,25 @@ function formatShownDaysOnAxis(day: number, maxDays: number) {
   return show ? String(day) : "";
 }
 
-const theme = {
-  axis: {
-    ticks: {
+function useGraphTheme() {
+  const theme = useTheme();
+  return {
+    axis: {
+      ticks: {
+        line: {
+          stroke: "transparent",
+        },
+        text: {
+          fontSize: 11,
+          fill: theme.graph.tick,
+        },
+      },
+    },
+    grid: {
       line: {
-        stroke: "transparent",
-      },
-      text: {
-        fontSize: 11,
-        fill: THEME.graph.tick, //TODO In the future we might want it to respect the actual theme, and not the default one
+        stroke: theme.graph.line,
+        strokeWidth: "1px",
       },
     },
-  },
-  grid: {
-    line: {
-      stroke: THEME.graph.line,
-      strokeWidth: "1px",
-    },
-  },
-};
+  };
+}
