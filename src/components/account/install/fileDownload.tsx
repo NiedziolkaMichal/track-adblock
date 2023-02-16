@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useCallback, useId } from "react";
+import { SyntheticEvent, useCallback, useId } from "react";
 
 export function FileDownload({ filePath, fileName, iconSrc, className }: { filePath: string; fileName: string; iconSrc: string; className?: string }) {
   const anchorId = useId();
@@ -24,6 +24,7 @@ const DownloadBtn = styled.button`
 const Img = styled.img`
   display: block;
   border-radius: 8px;
+  filter: drop-shadow(0 0 3px #2c2c2cb0);
 
   ${DownloadBtn}:hover & {
     filter: grayscale(1) blur(2px);
@@ -40,10 +41,11 @@ const DownloadImg = styled.img`
 
   ${DownloadBtn}:hover & {
     z-index: 1;
+    filter: drop-shadow(0 0 3px black);
   }
 `;
 
-/* We use invisible <a> so link to the file is not displayed on the screen */
+/* We use invisible <a> so a URL to the file is not displayed on the screen */
 const InvisibleAnchor = styled.a`
   display: none;
 `;

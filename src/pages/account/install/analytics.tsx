@@ -49,7 +49,7 @@ function FilesCard({ jsFileName, phpFileName }: { jsFileName: string; phpFileNam
 const FilesContainer = styled.div`
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin: 15px 0 20px;
 `;
 
 const StyledFileDownload = styled(FileDownload)`
