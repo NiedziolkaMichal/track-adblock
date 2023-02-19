@@ -5,9 +5,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:push": "prisma db push",
     "lint": "next lint",
     "prettier": "prettier -w **",
     "prepare": "husky install"
+  },
+  "prisma": {
+    "schema": "db/schema.prisma"
   },
   "lint-staged": {
     "*": "prettier -w",
@@ -17,6 +24,7 @@
     "@next/font": "13.1.6",
     "@nivo/core": "^0.78.0",
     "@nivo/line": "^0.78.0",
+    "@prisma/client": "^4.10.1",
     "@types/node": "18.13.0",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
@@ -38,6 +46,7 @@
     "dotenv": "^16.0.3",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.1",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "prisma": "^4.10.1"
   }
 }

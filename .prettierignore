@@ -6,3 +6,4 @@ package-lock.json
 !.prettierrc.json
 out
 *.log
+*.prisma
