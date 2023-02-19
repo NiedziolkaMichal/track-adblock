@@ -61,7 +61,6 @@ function saveDataAndRedirect(domain: string, measurementId: string, router: Next
 }
 
 const UrlTextField = styled(TextField)`
-  width: 100%;
   max-width: 400px;
   margin-bottom: 20px;
 `;

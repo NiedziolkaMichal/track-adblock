@@ -2,24 +2,32 @@ import styled, { css } from "styled-components";
 import { ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
 
 export function SideMenu() {
   return (
     <Base>
       <ItemGroup>
-        <MenuItem title="Strona główna" href="/account">
+        <MenuItemLink title="Strona główna" href="/account">
           <IconIndex />
-        </MenuItem>
-        <MenuItem title="Płatności" href="/account/payments">
+        </MenuItemLink>
+        <MenuItemLink title="Płatności" href="/account/payments">
           <IconPayment />
-        </MenuItem>
-        <MenuItem title="Profil" href="/account/profile">
+        </MenuItemLink>
+        <MenuItemLink title="Profil" href="/account/profile">
           <IconProfile />
-        </MenuItem>
+        </MenuItemLink>
       </ItemGroup>
-      <MenuItem title="Wyloguj się" href="/account/logout">
+      <MenuItemButton
+        title="Wyloguj się"
+        onClick={() =>
+          signOut({
+            callbackUrl: "/",
+          })
+        }
+      >
         <IconLogout />
-      </MenuItem>
+      </MenuItemButton>
     </Base>
   );
 }
@@ -107,13 +115,22 @@ const ItemTitle = styled.div`
   overflow: hidden; //TODO handle it better way
 `;
 
-function MenuItem({ title, href, children }: { title: string; href: string; children: ReactNode }) {
+function MenuItemLink({ title, href, children }: { title: string; href: string; children: ReactNode }) {
   const router = useRouter();
   const isActive = router.pathname === href;
   return (
     <Item href={href} $active={isActive}>
       {children}
       {isActive && <ActiveItemHighlight />}
+      <ItemTitle>{title}</ItemTitle>
+    </Item>
+  );
+}
+
+function MenuItemButton({ title, children, ...other }: { title: string; children: ReactNode } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <Item as="button" $active={false} {...other}>
+      {children}
       <ItemTitle>{title}</ItemTitle>
     </Item>
   );

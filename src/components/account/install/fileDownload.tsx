@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SyntheticEvent, useCallback, useId } from "react";
+import { useCallback, useId } from "react";
 
 export function FileDownload({ filePath, fileName, iconSrc, className }: { filePath: string; fileName: string; iconSrc: string; className?: string }) {
   const anchorId = useId();

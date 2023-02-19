@@ -1,15 +1,16 @@
 import styled, { css } from "styled-components";
 
-export const Label = styled.label`
+export const Label = styled.label<{ $light?: boolean }>`
   display: block;
   width: fit-content;
   font-size: 0.9rem;
-  font-weight: 440;
+  font-weight: ${({ $light }) => ($light ? 440 : 500)};
   margin-bottom: 10px;
 `;
 
 const StyledTextField = styled.input`
   color: ${({ theme, disabled }) => (disabled ? theme.text.disabled : "inherit")};
+  width: 100%;
   padding: 10px;
   border: 1px solid ${({ theme }) => theme.border.primary};
   border-radius: 4px;

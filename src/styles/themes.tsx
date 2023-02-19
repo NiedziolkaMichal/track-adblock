@@ -10,6 +10,7 @@ export const THEME = {
   background: {
     primary: "white",
     secondary: "#F8F9FA",
+    glass: "#ffffff57",
   },
   border: {
     primary: "#DADCE0",
@@ -32,12 +33,36 @@ export const THEME = {
       backgroundHover: "#368c2b",
       text: "#F8F9FA",
     },
+    negligible: {
+      text: "#5F6368",
+      textHover: "#444444",
+    },
+    gitHub: {
+      background: "#303030",
+      backgroundHover: "#444444",
+      focusVisibleOutline: "#28f946",
+      text: "white",
+    },
+    google: {
+      background: "white",
+      backgroundHover: "#F8F9FA",
+      text: "#202124",
+    },
+    trackAdBlock: {
+      background: "#ffd346",
+      backgroundHover: "#ffca2e",
+      text: "#202124",
+    },
   },
   selected: {
     fore: "#F9AB00",
     foreHover: "#ffb31a",
     light: "#e7e7e7",
     back: "white",
+  },
+  error: {
+    background: "crimson",
+    text: "white",
   },
   graph: {
     line: "#00000014",

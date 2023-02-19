@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { SideMenu } from "./sideMenu";
 import { ReactElement, ReactNode } from "react";
+import { Header } from "../header";
 
 const BaseStructure = styled.div`
   display: grid;
@@ -26,13 +27,16 @@ const UnevenMargin = styled.div`
 
 export function AccountBase({ children }: { children: ReactNode }) {
   return (
-    <BaseStructure>
-      <SideMenu />
-      <MainBackground>
-        <Main>{children}</Main>
-        <UnevenMargin />
-      </MainBackground>
-    </BaseStructure>
+    <>
+      <Header />
+      <BaseStructure>
+        <SideMenu />
+        <MainBackground>
+          <Main>{children}</Main>
+          <UnevenMargin />
+        </MainBackground>
+      </BaseStructure>
+    </>
   );
 }
 

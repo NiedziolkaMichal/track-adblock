@@ -20,3 +20,13 @@ export const QuestionLink = styled(LinkSecondary)`
     margin-top: -10px;
   }
 `;
+
+export const ErrorBox = styled.div`
+  background-color: ${({ theme }) => theme.error.background};
+  color: ${({ theme }) => theme.error.text};
+  padding: 8px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  font-weight: 550;
+`;
