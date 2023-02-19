@@ -3,6 +3,8 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   html {
     text-size-adjust: 100%;
+  }
+  * {
     font-family: MonserratMini, sans-serif;
   }
   body, p {
