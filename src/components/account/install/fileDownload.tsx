@@ -1,5 +1,16 @@
 import styled from "styled-components";
 import { useCallback, useId } from "react";
+import { FillImg } from "../../common";
+
+export const FileDownloadGroup = styled.div`
+  display: flex;
+  gap: 10px;
+  margin: 15px 0 20px;
+  > button {
+    width: 90px;
+    height: 90px;
+  }
+`;
 
 export function FileDownload({ filePath, fileName, iconSrc, className }: { filePath: string; fileName: string; iconSrc: string; className?: string }) {
   const anchorId = useId();
@@ -21,8 +32,7 @@ const DownloadBtn = styled.button`
   position: relative;
 `;
 
-const Img = styled.img`
-  display: block;
+const Img = styled(FillImg)`
   border-radius: 8px;
   filter: drop-shadow(0 0 3px #2c2c2cb0);
 
@@ -31,12 +41,7 @@ const Img = styled.img`
   }
 `;
 
-const DownloadImg = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+const DownloadImg = styled(FillImg)`
   z-index: -1;
 
   ${DownloadBtn}:hover & {

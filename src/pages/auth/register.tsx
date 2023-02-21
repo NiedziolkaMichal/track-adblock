@@ -1,12 +1,12 @@
 import { useEffect, useId, useState } from "react";
 import { NextRouter, useRouter } from "next/router";
 import { ErrorBox, ErrorInline, H1 } from "../../components/account/common";
-import { AuthCardButton, AuthCardContent, AuthCardHrWithContent, AuthCardMultipleContent, CardBaseMargin } from "../../components/account/authCard";
+import { AuthCardButton, AuthCardContent, AuthCardHrWithContent, AuthCardMultipleContent } from "../../components/account/authCard";
 import { getAuthSharedLayout } from "../../components/auth";
 import { GitHubButton, GoogleButton, StyledLink, TrackAdBlockButton } from "../../components/account/button";
 import { signIn } from "next-auth/react";
 import { Label, TextField } from "../../components/account/input";
-import { FullSizeImg, MarginBlock } from "../../components/common";
+import { FullSizeImg, P } from "../../components/common";
 import { BuiltInProviderType } from "next-auth/providers";
 import { getPasswordWarning, verifyEmail, verifyPassword, VerifyPasswordResult } from "../../util/verifyInput";
 import { SignInOptions } from "next-auth/react/types";
@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps<object> = async (context: Ge
 export default function Page() {
   return (
     <>
-      <H1>Załóż nowe konto</H1>
+      <H1 $margin="b-30px">Załóż nowe konto</H1>
       <AuthCardMultipleContent>
         <AuthCardContent $center={true}>
           <RegisterDescription />
@@ -51,12 +51,10 @@ function RegisterDescription() {
   return (
     <>
       <FullSizeImg src="/img/illustration/cooperation.png" alt="" width={460} height={284} />
-      <MarginBlock $size="medium" as="p">
+      <P $margin="bl-20px">
         Sprawdź jak zachowują się użytkownicy AdBlocka przez <strong>3 dni za darmo</strong>!
-      </MarginBlock>
-      <MarginBlock $size="medium" as="p">
-        Zakładając konto, godzisz się na nasze warunki usługi oraz politykę prywatności.
-      </MarginBlock>
+      </P>
+      <P $margin="b-20px">Zakładając konto, godzisz się na nasze warunki usługi oraz politykę prywatności.</P>
       <StyledLink href="/auth/login">Mam już konto</StyledLink>
     </>
   );
@@ -128,11 +126,7 @@ function RegisterContent() {
 
   return (
     <>
-      {errorMsg && (
-        <CardBaseMargin>
-          <ErrorBox>{errorMsg}</ErrorBox>
-        </CardBaseMargin>
-      )}
+      {errorMsg && <ErrorBox $margin="b-15px">{errorMsg}</ErrorBox>}
       <AuthCardButton as={GoogleButton} onClick={() => signIn("google", SIGN_IN_CALLBACK)}>
         Użyj konta Google
       </AuthCardButton>
@@ -140,18 +134,14 @@ function RegisterContent() {
         Użyj konta GitHub
       </AuthCardButton>
       <AuthCardHrWithContent>lub</AuthCardHrWithContent>
-      <Label htmlFor={emailId} $light={true}>
+      <Label $margin="b-15px" $light={true} htmlFor={emailId}>
         Email {incorrectEmail && <ErrorInline>- Niepoprawny adres</ErrorInline>}
       </Label>
-      <CardBaseMargin>
-        <TextField id={emailId} name="email" type="email" />
-      </CardBaseMargin>
-      <Label htmlFor={passwordId} $light={true}>
+      <TextField $margin="b-15px" id={emailId} name="email" type="email" />
+      <Label $margin="b-15px" $light={true} htmlFor={passwordId}>
         Hasło {passwordState !== "ok" && <ErrorInline>- {getPasswordWarning(passwordState)}</ErrorInline>}
       </Label>
-      <CardBaseMargin>
-        <TextField id={passwordId} name="password" type="password" />
-      </CardBaseMargin>
+      <TextField $margin="b-15px" id={passwordId} name="password" type="password" />
       <AuthCardButton as={TrackAdBlockButton} onClick={tryRegister}>
         Załóż nowe konto
       </AuthCardButton>

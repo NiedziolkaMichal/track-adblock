@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Margin, MarginValue } from "./margin";
 
 // TODO image optimization
 export const FullSizeImg = styled.img`
@@ -9,10 +10,14 @@ export const FullSizeImg = styled.img`
   height: auto;
 `;
 
-export const MarginBottom = styled.div<{ $size: "small" | "medium" | string }>`
-  margin-bottom: ${({ $size }) => ($size === "small" ? "10px" : $size === "medium" ? "20px" : $size)};
+export const FillImg = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;
 
-export const MarginBlock = styled.div<{ $size: "small" | "medium" | string }>`
-  margin-block: ${({ $size }) => ($size === "small" ? "10px" : $size === "medium" ? "20px" : $size)};
+export const P = styled.p<{ $margin: MarginValue }>`
+  ${Margin}
 `;

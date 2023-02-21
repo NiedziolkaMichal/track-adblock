@@ -9,6 +9,7 @@ import { NextRouter, useRouter } from "next/router";
 import { useInputWithCallback } from "../../../hooks/inputHooks";
 import { H1, MeasurementCardSides, QuestionLink } from "../../../components/account/common";
 import { verifyMeasurementId } from "../../../util/verifyInput";
+import { MarginValue } from "../../../components/margin";
 
 const NEXT_PAGE = "/account/install/analytics";
 
@@ -17,7 +18,7 @@ export default function Page() {
 
   return (
     <>
-      <H1>Dodaj Google Analytics</H1>
+      <H1 $margin="b-30px">Dodaj Google Analytics</H1>
       <DomainCard setDomain={setDomain} />
       <MeasurementIdCard setMeasurementId={setMeasurementId} />
     </>
@@ -60,9 +61,8 @@ function saveDataAndRedirect(domain: string, measurementId: string, router: Next
   router.push(NEXT_PAGE);
 }
 
-const UrlTextField = styled(TextField)`
+const UrlTextField = styled(TextField)<{ $margin?: MarginValue }>`
   max-width: 400px;
-  margin-bottom: 20px;
 `;
 
 function useDomainInputWithCallback(setDomain: (domain: string) => void) {
@@ -74,10 +74,12 @@ function DomainCard({ setDomain }: { setDomain: (domain: string) => void }) {
   const { fieldId, completed, invalid, onAddId } = useDomainInputWithCallback(setDomain);
 
   return (
-    <CardH2 headingContent="Nazwa domeny" innerPadding={true}>
-      <Label htmlFor={fieldId}>Adres URL witryny, dla której zostanie odblokowana analityka</Label>
-      <UrlTextField id={fieldId} name="url" placeholder="https://" type="url" disabled={completed} />
-      {invalid && <InvalidInputWithMargin>Przekazany adres jest nieprawidłowy</InvalidInputWithMargin>}
+    <CardH2 $margin="b-25px" headingContent="Nazwa domeny" innerPadding={true}>
+      <Label $margin="b-10px" htmlFor={fieldId}>
+        Adres URL witryny, dla której zostanie odblokowana analityka
+      </Label>
+      <UrlTextField $margin={invalid ? "b-10px" : "b-20px"} id={fieldId} name="url" placeholder="https://" type="url" disabled={completed} />
+      {invalid && <InvalidInput $margin="b-10px">Przekazany adres jest nieprawidłowy</InvalidInput>}
       <ButtonShapeShifter onClick={onAddId} $state={completed ? "valid" : "primary"} disabled={completed}>
         {!completed && "Dodaj domenę"}
         {completed && "Domena dodana"}
@@ -98,9 +100,11 @@ function MeasurementIdCard({ setMeasurementId }: { setMeasurementId: (id: string
     <CardH2 headingContent="Identyfikator pomiaru" innerPadding={true}>
       <MeasurementCardSides>
         <div>
-          <Label htmlFor={fieldId}>Identyfikator Google Analytics w formacie &quot;G-XXXXXXXX&quot;</Label>
-          <UrlTextField id={fieldId} placeholder="G-XXXXXXXX" disabled={completed} />
-          {invalid && <InvalidInputWithMargin>Przekazany identyfikator jest nieprawidłowy</InvalidInputWithMargin>}
+          <Label $margin="b-10px" htmlFor={fieldId}>
+            Identyfikator Google Analytics w formacie &quot;G-XXXXXXXX&quot;
+          </Label>
+          <UrlTextField $margin={invalid ? "b-10px" : "b-20px"} id={fieldId} placeholder="G-XXXXXXXX" disabled={completed} />
+          {invalid && <InvalidInput $margin="b-10px">Przekazany identyfikator jest nieprawidłowy</InvalidInput>}
           <ButtonShapeShifter onClick={onAddId} $state={completed ? "valid" : "primary"} disabled={completed}>
             {!completed && "Dodaj identyfikator"}
             {completed && "Identyfikator dodany"}
@@ -115,11 +119,6 @@ function MeasurementIdCard({ setMeasurementId }: { setMeasurementId: (id: string
     </CardH2>
   );
 }
-
-const InvalidInputWithMargin = styled(InvalidInput)`
-  margin-bottom: 10px;
-  margin-top: -10px;
-`;
 
 function getDomainFromUrl(url: string) {
   try {

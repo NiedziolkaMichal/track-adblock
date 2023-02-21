@@ -34,10 +34,6 @@ export const AuthCardButton = styled(ButtonPrimary)`
   height: 50px;
 `;
 
-export const CardBaseMargin = styled.div`
-  margin-bottom: 15px;
-`;
-
 export const AuthCardHrWithContent = styled(HrWithContent)`
   margin: 20px 0;
   color: ${({ theme }) => theme.text.primary};

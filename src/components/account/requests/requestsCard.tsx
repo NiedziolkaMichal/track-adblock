@@ -6,12 +6,13 @@ import { formatNumber } from "../../../util/format";
 import { Card } from "../card";
 import { useHostRequests } from "../../../hooks/apiHooks";
 import { CardTab, CardTabs } from "../cardTabs";
+import { MarginValue } from "../../margin";
 
-export function RequestsCard({ className }: { className?: string }) {
+export function RequestsCard({ className, $margin }: { className?: string; $margin?: MarginValue }) {
   const requestsData = useHostRequests();
 
   return (
-    <Card className={className}>
+    <Card className={className} $margin={$margin}>
       {requestsData && (
         <CardTabs>
           <MetricTab type="all" amount={formatNumber(requestsData.totalOrdinary + requestsData.totalUnblocked, 1)} />

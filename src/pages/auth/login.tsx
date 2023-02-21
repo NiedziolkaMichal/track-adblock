@@ -8,7 +8,7 @@ import { getAuthSharedLayout } from "../../components/auth";
 import { GetServerSideProps } from "next";
 import { getServerSession } from "../api/auth/[...nextauth]";
 import { GetServerSidePropsContext } from "next/types";
-import { AuthCard, AuthCardButton, AuthCardContent, AuthCardHrWithContent, CardBaseMargin } from "../../components/account/authCard";
+import { AuthCard, AuthCardButton, AuthCardContent, AuthCardHrWithContent } from "../../components/account/authCard";
 import { SignInOptions } from "next-auth/react/types";
 
 export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
@@ -66,14 +66,10 @@ export default function Page() {
 
   return (
     <>
-      <H1>Przejdź do panelu użytkownika</H1>
+      <H1 $margin="b-30px">Przejdź do panelu użytkownika</H1>
       <AuthCard>
         <AuthCardContent>
-          {errorMsg && (
-            <CardBaseMargin>
-              <ErrorBox>{errorMsg}</ErrorBox>
-            </CardBaseMargin>
-          )}
+          {errorMsg && <ErrorBox $margin="b-15px">{errorMsg}</ErrorBox>}
           {adjustedPageType === "LoginMethods" && <LoginMethods setPageType={setPageType} />}
           {adjustedPageType === "LoginWithPassword" && <LoginWithPassword setPageType={setPageType} />}
           {adjustedPageType === "ResetPassword" && <ResetPassword setPageType={setPageType} />}
@@ -114,18 +110,14 @@ function LoginWithPassword({ setPageType }: { setPageType: Dispatch<SetStateActi
 
   return (
     <>
-      <Label htmlFor={emailId} $light={true}>
+      <Label $margin="b-15px" $light={true} htmlFor={emailId}>
         Email
       </Label>
-      <CardBaseMargin>
-        <TextField id={emailId} name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </CardBaseMargin>
-      <Label htmlFor={passwordId} $light={true}>
+      <TextField $margin="b-15px" id={emailId} name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <Label $margin="b-15px" $light={true} htmlFor={passwordId}>
         Hasło
       </Label>
-      <CardBaseMargin>
-        <TextField id={passwordId} name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </CardBaseMargin>
+      <TextField $margin="b-15px" id={passwordId} name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <AuthCardButton
         onClick={() =>
           signIn("credentials", {
@@ -164,12 +156,10 @@ function ResetPassword({ setPageType }: { setPageType: Dispatch<SetStateAction<P
   const emailId = useId();
   return (
     <>
-      <Label htmlFor={emailId} $light={true}>
+      <Label $margin="b-15px" $light={true} htmlFor={emailId}>
         Email
       </Label>
-      <CardBaseMargin>
-        <TextField id={emailId} />
-      </CardBaseMargin>
+      <TextField $margin="b-15px" id={emailId} />
       <AuthCardButton>Zresetuj hasło</AuthCardButton>
 
       <AuthCardHrWithContent>lub</AuthCardHrWithContent>

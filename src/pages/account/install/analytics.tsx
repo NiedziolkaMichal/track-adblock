@@ -1,11 +1,12 @@
 import { H1, MeasurementCardSides, QuestionLink } from "../../../components/account/common";
 import { getAccountSharedLayout } from "../../../components/account/skeleton";
 import { ButtonShapeShifter } from "../../../components/account/button";
-import { Card, CardCodeBlock, CardH2, CardP } from "../../../components/account/card";
-import styled, { useTheme } from "styled-components";
-import { FileDownload } from "../../../components/account/install/fileDownload";
+import { Card, CardCodeBlock, CardH2 } from "../../../components/account/card";
+import { useTheme } from "styled-components";
+import { FileDownload, FileDownloadGroup } from "../../../components/account/install/fileDownload";
 import React from "react";
 import { CardTab, CardTabs } from "../../../components/account/cardTabs";
+import { P } from "../../../components/common";
 
 export default function Page() {
   const domain = "krainawiewiorek.pl";
@@ -14,7 +15,7 @@ export default function Page() {
   const measurementId = "G-XXXXXX";
   return (
     <>
-      <H1>Zainstaluj skrypt</H1>
+      <H1 $margin="b-30px">Zainstaluj skrypt</H1>
       <DomainCard domain={domain} measurementId={measurementId} />
       <FilesCard jsFileName={jsFileName} phpFileName={phpFileName} />
       <ScriptCard jsFileName={jsFileName} measurementId={measurementId} />
@@ -25,7 +26,7 @@ export default function Page() {
 function DomainCard({ domain, measurementId }: { domain: string; measurementId: string }) {
   const theme = useTheme();
   return (
-    <Card>
+    <Card $margin="b-25px">
       <CardTabs>
         <CardTab title="ADRES WITRYNY" value={domain} valueColor={theme.graph.requests.all} />
         <CardTab title="IDENTYFIKATOR POMIARU" value={measurementId} valueColor={theme.graph.requests.all} />
@@ -39,14 +40,14 @@ function FilesCard({ jsFileName, phpFileName }: { jsFileName: string; phpFileNam
   const onComplete = undefined;
 
   return (
-    <CardH2 headingContent="Dodaj wymagane pliki" innerPadding={true}>
+    <CardH2 $margin="b-25px" headingContent="Dodaj wymagane pliki" innerPadding={true}>
       <MeasurementCardSides>
         <div>
-          <CardP>Dodaj podane pliki do głównego katalogu strony internetowej</CardP>
-          <FilesContainer>
-            <StyledFileDownload iconSrc="/img/icon/php.svg" filePath="/img/icon/php.svg" fileName={phpFileName + ".php"} />
-            <StyledFileDownload iconSrc="/img/icon/javascript.svg" filePath="/img/icon/php.svg" fileName={jsFileName + ".js"} />
-          </FilesContainer>
+          <P $margin="b-10px">Dodaj podane pliki do głównego katalogu strony internetowej</P>
+          <FileDownloadGroup>
+            <FileDownload iconSrc="/img/icon/php.svg" filePath="/img/icon/php.svg" fileName={phpFileName + ".php"} />
+            <FileDownload iconSrc="/img/icon/javascript.svg" filePath="/img/icon/php.svg" fileName={jsFileName + ".js"} />
+          </FileDownloadGroup>
           <ButtonShapeShifter onClick={onComplete} $state={completed ? "valid" : "primary"} disabled={completed}>
             {!completed && "Pliki zostały dodane"}
             {completed && "Pliki są dodane prawidłowo"}
@@ -62,17 +63,6 @@ function FilesCard({ jsFileName, phpFileName }: { jsFileName: string; phpFileNam
   );
 }
 
-const FilesContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  margin: 15px 0 20px;
-`;
-
-const StyledFileDownload = styled(FileDownload)`
-  width: 90px;
-  height: 90px;
-`;
-
 function ScriptCard({ jsFileName, measurementId }: { jsFileName: string; measurementId: string }) {
   const completed = false;
   const onComplete = undefined;
@@ -81,10 +71,10 @@ function ScriptCard({ jsFileName, measurementId }: { jsFileName: string; measure
     <CardH2 headingContent="Zamień skrypt Google Analytics" innerPadding={true}>
       <MeasurementCardSides>
         <div>
-          <CardP>Znajdź poniższy kod Google Analytics w plikach strony internetowej</CardP>
-          <CodeBlockWithMargin>&lt;script async src=&quot;https://www.googletagmanager.com/gtag/js?id={measurementId}&quot;&gt;&lt;/script&gt;</CodeBlockWithMargin>
-          <CardP>Następnie zamień go na poniższą wersję</CardP>
-          <CodeBlockWithMargin>&lt;script async src=&quot;/{jsFileName}.js&quot;&gt;&lt;/script&gt;</CodeBlockWithMargin>
+          <P $margin="b-10px">Znajdź poniższy kod Google Analytics w plikach strony internetowej</P>
+          <CardCodeBlock $margin="b-20px">&lt;script async src=&quot;https://www.googletagmanager.com/gtag/js?id={measurementId}&quot;&gt;&lt;/script&gt;</CardCodeBlock>
+          <P $margin="b-10px">Następnie zamień go na poniższą wersję</P>
+          <CardCodeBlock $margin="b-20px">&lt;script async src=&quot;/{jsFileName}.js&quot;&gt;&lt;/script&gt;</CardCodeBlock>
           <ButtonShapeShifter onClick={onComplete} $state={completed ? "valid" : "primary"} disabled={completed}>
             {!completed && "Skrypt został zamieniony"}
             {completed && "Skrypt jest zamieniony prawidłowo"}
@@ -99,9 +89,5 @@ function ScriptCard({ jsFileName, measurementId }: { jsFileName: string; measure
     </CardH2>
   );
 }
-
-const CodeBlockWithMargin = styled(CardCodeBlock)`
-  margin-bottom: 20px;
-`;
 
 Page.getSharedLayout = getAccountSharedLayout;
