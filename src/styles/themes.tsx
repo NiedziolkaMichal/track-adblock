@@ -60,9 +60,12 @@ export const THEME = {
     light: "#e7e7e7",
     back: "white",
   },
-  error: {
+  errorBlock: {
     background: "crimson",
     text: "white",
+  },
+  errorInline: {
+    text: "crimson",
   },
   graph: {
     line: "#00000014",

@@ -22,11 +22,16 @@ export const QuestionLink = styled(LinkSecondary)`
 `;
 
 export const ErrorBox = styled.div`
-  background-color: ${({ theme }) => theme.error.background};
-  color: ${({ theme }) => theme.error.text};
+  background-color: ${({ theme }) => theme.errorBlock.background};
+  color: ${({ theme }) => theme.errorBlock.text};
   padding: 8px;
   text-align: center;
   border-radius: 5px;
   font-size: 0.85rem;
   font-weight: 550;
+`;
+
+export const ErrorInline = styled.strong`
+  color: ${({ theme }) => theme.errorInline.text};
+  font-size: 0.8rem;
 `;

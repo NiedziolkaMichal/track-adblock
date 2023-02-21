@@ -18,8 +18,15 @@ export const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
   }
+  p {
+    font-size: 0.9rem;
+    font-weight: 440;
+  }
   a {
     text-decoration: none;
+  }
+  strong {
+    font-weight: 620;
   }
   button {
     cursor: pointer;

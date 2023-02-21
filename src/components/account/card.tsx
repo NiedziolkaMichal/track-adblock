@@ -35,12 +35,7 @@ export function CardH2({ className, headingContent, innerPadding, children }: { 
   );
 }
 
-//TODO same content as Label
 export const CardP = styled.p`
-  display: block;
-  width: fit-content;
-  font-size: 0.9rem;
-  font-weight: 440;
   margin-bottom: 10px;
 `;
 

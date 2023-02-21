@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { ReactNode } from "react";
 
 const stylePrimary = css`
-  display: block;
+  display: flex;
   width: fit-content;
   padding: 10px 18px;
   background-color: ${({ theme }) => theme.button.primary.background};
@@ -11,6 +11,8 @@ const stylePrimary = css`
   border-radius: 4px;
   font-weight: 480;
   font-size: 0.9rem;
+  place-content: center;
+  place-items: center;
 
   :hover {
     background-color: ${({ theme }) => theme.button.primary.backgroundHover};
@@ -113,6 +115,7 @@ export const ButtonShapeShifter = styled.button<{ $state: "primary" | "valid" }>
 export const ButtonWithIcon = styled.button`
   display: flex;
   align-items: center;
+  justify-content: start;
   padding: 10px 18px;
   border-radius: 4px;
   font-weight: 480;

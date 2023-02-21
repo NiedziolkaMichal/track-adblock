@@ -1,4 +1,4 @@
-import { GitHubButton, GoogleButton, NegligibleLink, StyledLink, TrackAdBlockButton } from "../../components/account/button";
+import { GitHubButton, GoogleButton, LinkPrimary, NegligibleLink, StyledLink, TrackAdBlockButton } from "../../components/account/button";
 import { ErrorBox, H1 } from "../../components/account/common";
 import { signIn } from "next-auth/react";
 import { NextRouter, useRouter } from "next/router";
@@ -8,7 +8,8 @@ import { getAuthSharedLayout } from "../../components/auth";
 import { GetServerSideProps } from "next";
 import { getServerSession } from "../api/auth/[...nextauth]";
 import { GetServerSidePropsContext } from "next/types";
-import { AuthCard, AuthCardButton, AuthCardHrWithContent, CardBaseMargin } from "../../components/account/authCard";
+import { AuthCard, AuthCardButton, AuthCardContent, AuthCardHrWithContent, CardBaseMargin } from "../../components/account/authCard";
+import { SignInOptions } from "next-auth/react/types";
 
 export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);
@@ -27,6 +28,7 @@ export const getServerSideProps: GetServerSideProps<object> = async (context: Ge
   };
 };
 
+// Same list exists in register.tsx
 const errors: Record<string, string> = {
   // Sign-in page errors
   Signin: "Spróbuj zalogować się z innego konta.",
@@ -42,9 +44,14 @@ const errors: Record<string, string> = {
   default: "Nie udało się zalogować.",
   // Error page errors
   Configuration: "Wystąpił problem z konfiguracją serwera.",
-  AccessDenied: "Dane logowania są nieprawidłowe.", // Occurs when user tries to log in to oauth, without prior registering an account
+  AccessDenied: "Dane logowania są nieprawidłowe.",
   Verification: "Link do logowania stracił ważność.",
   Default: "Wystąpił problem z logowaniem",
+  // Errors thrown by `authorize` in [...nextauth]
+  MissingData: "Proszę spróbować ponownie",
+  AccountCreatedByOAuth: "Do tego konta można się zalogować poprzez Google lub GitHub",
+  InvalidPassword: "Hasło jest niepoprawne",
+  CannotRegister: "Przed zalogowniem, trzeba dokonać rejestracji",
 };
 
 type PageType = "LoginMethods" | "LoginWithPassword" | "ResetPassword";
@@ -53,7 +60,7 @@ export default function Page() {
   const [pageType, setPageType] = useState<PageType>("LoginMethods");
   const router = useRouter();
   const error = router.query.error;
-  const errorMsg = typeof error === "string" ? errors[error] || error : undefined; //TODO handle "|| error" in a better way
+  const errorMsg = typeof error === "string" ? errors[error] || error : ""; //TODO handle "|| error" in a better way
 
   const adjustedPageType = error === "CredentialsSignin" ? "LoginWithPassword" : pageType;
 
@@ -61,14 +68,16 @@ export default function Page() {
     <>
       <H1>Przejdź do panelu użytkownika</H1>
       <AuthCard>
-        {errorMsg && (
-          <CardBaseMargin>
-            <ErrorBox>{errorMsg}</ErrorBox>
-          </CardBaseMargin>
-        )}
-        {adjustedPageType === "LoginMethods" && <LoginMethods setPageType={setPageType} />}
-        {adjustedPageType === "LoginWithPassword" && <LoginWithPassword setPageType={setPageType} />}
-        {adjustedPageType === "ResetPassword" && <ResetPassword setPageType={setPageType} />}
+        <AuthCardContent>
+          {errorMsg && (
+            <CardBaseMargin>
+              <ErrorBox>{errorMsg}</ErrorBox>
+            </CardBaseMargin>
+          )}
+          {adjustedPageType === "LoginMethods" && <LoginMethods setPageType={setPageType} />}
+          {adjustedPageType === "LoginWithPassword" && <LoginWithPassword setPageType={setPageType} />}
+          {adjustedPageType === "ResetPassword" && <ResetPassword setPageType={setPageType} />}
+        </AuthCardContent>
       </AuthCard>
     </>
   );
@@ -89,30 +98,45 @@ function LoginMethods({ setPageType }: { setPageType: Dispatch<SetStateAction<Pa
         Zaloguj się z Track AdBlock
       </AuthCardButton>
       <AuthCardHrWithContent>lub</AuthCardHrWithContent>
-      <AuthCardButton>Załóż nowe konto</AuthCardButton>
+      <AuthCardButton as={LinkPrimary} href="/auth/register">
+        Załóż nowe konto
+      </AuthCardButton>
     </>
   );
 }
 
 function LoginWithPassword({ setPageType }: { setPageType: Dispatch<SetStateAction<PageType>> }) {
   const emailId = useId();
+  const [email, setEmail] = useState("");
   const passwordId = useId();
+  const [password, setPassword] = useState("");
   const router = useRouter();
+
   return (
     <>
       <Label htmlFor={emailId} $light={true}>
         Email
       </Label>
       <CardBaseMargin>
-        <TextField id={emailId} />
+        <TextField id={emailId} name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
       </CardBaseMargin>
       <Label htmlFor={passwordId} $light={true}>
         Hasło
       </Label>
       <CardBaseMargin>
-        <TextField id={passwordId} />
+        <TextField id={passwordId} name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </CardBaseMargin>
-      <AuthCardButton onClick={() => signIn("credentials", SIGN_IN_CALLBACK)}>Zaloguj się</AuthCardButton>
+      <AuthCardButton
+        onClick={() =>
+          signIn("credentials", {
+            ...SIGN_IN_CALLBACK,
+            email,
+            password,
+          })
+        }
+      >
+        Zaloguj się
+      </AuthCardButton>
       <StyledLink as="button" onClick={() => (clearUrlParameters(router), setPageType("ResetPassword"))}>
         Nie pamiętam hasła
       </StyledLink>
@@ -132,7 +156,7 @@ function clearUrlParameters(router: NextRouter) {
   });
 }
 
-const SIGN_IN_CALLBACK = {
+const SIGN_IN_CALLBACK: SignInOptions = {
   callbackUrl: "/account",
 };
 

@@ -15,6 +15,12 @@ const StyledTextField = styled.input`
   border: 1px solid ${({ theme }) => theme.border.primary};
   border-radius: 4px;
 
+  ${(props) =>
+    props.type === "password" &&
+    css`
+      font-family: monospace;
+    `}
+
   ${({ disabled }) =>
     !disabled &&
     css`
