@@ -1,11 +1,10 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, getServerSession as _getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../../db/prisma";
 import { GetServerSidePropsContext } from "next/types";
-import { getServerSession as _getServerSession } from "next-auth";
 import { verifyEmail, verifyPassword } from "../../../util/verifyInput";
 import bcrypt from "bcrypt";
 
@@ -112,10 +111,3 @@ async function checkCredentials(email: string | undefined, password: string | un
 export async function getServerSession(context: GetServerSidePropsContext) {
   return await _getServerSession(context.req, context.res, authOptions);
 }
-
-export const MISSING_SESSION_REDIRECT = {
-  redirect: {
-    destination: "/api/auth/signin",
-    permanent: false,
-  },
-};

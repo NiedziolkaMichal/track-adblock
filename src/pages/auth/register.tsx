@@ -13,17 +13,13 @@ import { SignInOptions } from "next-auth/react/types";
 import { GetServerSideProps } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getServerSession } from "../api/auth/[...nextauth]";
+import { ACCOUNT_REDIRECT } from "../../util/redirects";
 
 export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);
 
   if (session) {
-    return {
-      redirect: {
-        destination: "/account",
-        permanent: false,
-      },
-    };
+    return ACCOUNT_REDIRECT;
   }
 
   return {
