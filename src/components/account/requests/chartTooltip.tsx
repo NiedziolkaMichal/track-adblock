@@ -3,13 +3,15 @@ import { SliceTooltipProps } from "@nivo/line";
 import { formatDate, formatNumber } from "../../../util/format";
 import { getRequestTypesTitle } from "./requestsCard";
 import { RequestsData } from "../../../pages/api/hostRequests";
+import { getDateFromXAxis } from "./requestsChart";
 
 export function ChartTooltip({ slice, requestsData }: { slice: SliceTooltipProps["slice"]; requestsData: RequestsData }) {
-  const day = Number(slice.points[0]?.data.x.toString());
+  const xData = slice.points[0]?.data.x;
+  const date = getDateFromXAxis(xData, requestsData);
 
   return (
     <Tooltip>
-      <TooltipDate>{formatDate(day, requestsData.month, requestsData.year)}</TooltipDate>
+      <TooltipDate>{formatDate(date.getDate(), date.getMonth() + 1, date.getFullYear())}</TooltipDate>
       <TooltipList>
         <TooltipItem label={getRequestTypesTitle("all")} value={slice.points[0].data.yStacked || 0} />
         {slice.points.map((point) => (

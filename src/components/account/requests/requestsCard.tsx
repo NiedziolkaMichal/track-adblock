@@ -8,8 +8,12 @@ import { useHostRequests } from "../../../hooks/apiHooks";
 import { CardTab, CardTabs } from "../cardTabs";
 import { MarginValue } from "../../margin";
 
-export function RequestsCard({ className, $margin }: { className?: string; $margin?: MarginValue }) {
-  const requestsData = useHostRequests();
+const DAYS_IN_THE_CHART = 30;
+const REFRESH_INTERVAL_MILLIS = 30000;
+
+export function RequestsCard({ host, className, $margin }: { host: string; className?: string; $margin?: MarginValue }) {
+  const startDate = getChartStartDate();
+  const requestsData = useHostRequests(host, startDate, DAYS_IN_THE_CHART, REFRESH_INTERVAL_MILLIS);
 
   return (
     <Card className={className} $margin={$margin}>
@@ -27,6 +31,11 @@ export function RequestsCard({ className, $margin }: { className?: string; $marg
       )}
     </Card>
   );
+}
+
+function getChartStartDate() {
+  const currentDate = new Date();
+  return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - DAYS_IN_THE_CHART + 1, currentDate.getHours());
 }
 
 export function getRequestTypesTitle(type: keyof typeof THEME.graph.requests) {

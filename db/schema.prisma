@@ -1,26 +1,26 @@
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -47,6 +47,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  hosts         Host[]
 }
 
 model VerificationToken {
@@ -55,4 +56,33 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Host {
+  userId String
+  host   String
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  requests HostRequest[]
+
+  @@id([userId, host])
+  @@index([userId])
+}
+
+model HostRequest {
+  userId       String
+  host         String
+  date         DateTime
+  type         HostRequestType
+  requestCount Int             @db.UnsignedInt
+
+  hostObject Host? @relation(fields: [userId, host], references: [userId, host])
+
+  @@id([userId, host, type, date])
+}
+
+enum HostRequestType {
+  ordinary
+  adblock
+  unauthorized
 }

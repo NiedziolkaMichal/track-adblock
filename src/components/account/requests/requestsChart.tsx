@@ -1,4 +1,4 @@
-import { ResponsiveLine } from "@nivo/line";
+import { DatumValue, ResponsiveLine } from "@nivo/line";
 import { THEME } from "../../../styles/themes";
 import { ChartTooltip } from "./chartTooltip";
 import { formatNumber } from "../../../util/format";
@@ -6,16 +6,22 @@ import { getRequestTypesTitle } from "./requestsCard";
 import { RequestsData } from "../../../pages/api/hostRequests";
 import { useTheme } from "styled-components";
 
+const X_AXIS_DATA_SEPARATOR = "|";
+
 function createChartData(requestsData: RequestsData) {
   /**
-   * Transforms array of request amounts, into array of objects, in which x is a day index and y is an amount
+   * Transforms array of request amounts, into array of objects, in which x is a day "index|day" and y is an amount of requests
    */
   function getPointsPerDay(points: number[]) {
+    const startDate = new Date(requestsData.startDate);
     const data: { x: string; y: number }[] = [];
+
     for (let i = 0; i < requestsData.days; i++) {
-      if (points[i]) {
+      if (points[i] !== undefined) {
+        const date = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i);
+
         data.push({
-          x: String(i + 1), // x is a day index on the chart
+          x: i + X_AXIS_DATA_SEPARATOR + date.getDate(), // Sending information about day index and the actual day number to the formatShownDaysOnAxis
           y: points[i] || 0,
         });
       }
@@ -35,12 +41,19 @@ function createChartData(requestsData: RequestsData) {
   ];
 }
 
+export function getDateFromXAxis(x: DatumValue, requestsData: RequestsData) {
+  const dayIndex = String(x).split(X_AXIS_DATA_SEPARATOR)[0] || "0";
+  const startDate = new Date(requestsData.startDate);
+  return new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + Number(dayIndex));
+}
+
 /**
  * This component requires fixed height in its parent.
  * Additionally, parent or any ancestor must have a fixed width, or chart will not resize correctly with the viewport.
  */
 export function RequestsChart({ requestsData }: { requestsData: RequestsData }) {
   const data = createChartData(requestsData);
+
   const graphTheme = useGraphTheme();
   return (
     <ResponsiveLine
@@ -73,7 +86,7 @@ export function RequestsChart({ requestsData }: { requestsData: RequestsData }) 
         tickPadding: 5,
         tickRotation: 0,
         tickValues: 5,
-        format: (s) => formatShownDaysOnAxis(Number(s), requestsData.days),
+        format: (s) => formatShownDaysOnAxis(s as string, requestsData.days),
       }}
       colors={[THEME.graph.requests.ordinary, THEME.graph.requests.unblocked]}
       enablePoints={true}
@@ -86,10 +99,15 @@ export function RequestsChart({ requestsData }: { requestsData: RequestsData }) 
   );
 }
 
-function formatShownDaysOnAxis(day: number, maxDays: number) {
-  const modulo = maxDays === 28 ? 7 : 5;
-  const show = day % modulo === 1 || (maxDays <= 30 && day === maxDays);
-  return show ? String(day) : "";
+/**
+ * Returns every 5th day and additionally the last day, while other indexes will be returned as an empty strings
+ * @param indexAndDay index on the X axis and day number in format "index|dayNumber"
+ * @param maxDays amount of days displayed on the X axis
+ */
+function formatShownDaysOnAxis(indexAndDay: string, maxDays: number) {
+  const [index, day] = indexAndDay.split("|");
+  // We display every 5th day and the last day
+  return Number(index) % 5 === 0 || Number(index) + 1 === maxDays ? day : "";
 }
 
 function useGraphTheme() {
