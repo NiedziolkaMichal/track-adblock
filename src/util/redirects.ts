@@ -14,7 +14,7 @@ export const LOGIN_REDIRECT = {
 
 export const ADD_HOST_REDIRECT = {
   redirect: {
-    destination: "/account/install/analytics",
+    destination: "/account/addHost",
     permanent: false,
   },
 };

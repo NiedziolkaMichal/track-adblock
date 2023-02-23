@@ -161,7 +161,7 @@ const signInWithCredentials = async (provider: BuiltInProviderType, router: Next
 };
 
 const SIGN_IN_CALLBACK = {
-  callbackUrl: "/account",
+  callbackUrl: "/account/addHost",
 } satisfies SignInOptions;
 
 Page.getSharedLayout = getAuthSharedLayout;

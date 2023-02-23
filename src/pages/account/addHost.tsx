@@ -1,15 +1,15 @@
-import { getAccountSharedLayout } from "../../../components/account/skeleton";
+import { getAccountSharedLayout } from "../../components/account/skeleton";
 import styled from "styled-components";
-import { CardH2 } from "../../../components/account/card";
+import { CardH2 } from "../../components/account/card";
 import { useCallback, useEffect, useState } from "react";
-import { ButtonShapeShifter } from "../../../components/account/button";
+import { ButtonShapeShifter } from "../../components/account/button";
 import isValidDomain from "is-valid-domain";
-import { InvalidInput, Label, TextField } from "../../../components/account/input";
+import { InvalidInput, Label, TextField } from "../../components/account/input";
 import { NextRouter, useRouter } from "next/router";
-import { useInputWithCallback } from "../../../hooks/inputHooks";
-import { H1, MeasurementCardSides, QuestionLink } from "../../../components/account/common";
-import { verifyMeasurementId } from "../../../util/verifyInput";
-import { MarginValue } from "../../../components/margin";
+import { useInputWithCallback } from "../../hooks/inputHooks";
+import { H1, MeasurementCardSides, QuestionLink } from "../../components/account/common";
+import { verifyMeasurementId } from "../../util/verifyInput";
+import { MarginValue } from "../../components/margin";
 
 const NEXT_PAGE = "/account/install/analytics";
 

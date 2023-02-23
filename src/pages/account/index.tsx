@@ -8,7 +8,7 @@ export default function Page() {
     <>
       <H1 $margin="b-30px">Statystyki strony: krainawiewiorek.pl</H1>
       <RequestsCard $margin="b-15px" />
-      <LinkPrimary href={"/account/integrate/analytics"}>Dodaj kolejną domenę</LinkPrimary>
+      <LinkPrimary href={"/account/addHost"}>Dodaj kolejną domenę</LinkPrimary>
     </>
   );
 }
