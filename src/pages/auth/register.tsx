@@ -49,7 +49,7 @@ export default function Page() {
 function RegisterDescription() {
   return (
     <>
-      <FullSizeImg src="/img/illustration/cooperation.png" alt="" width={460} height={284} />
+      <FullSizeImg src="/img/illustration/cooperation.svg" alt="" width={430} height={270} />
       <P $margin="bl-20px">
         Sprawdź jak zachowują się użytkownicy AdBlocka przez <strong>3 dni za darmo</strong>!
       </P>
