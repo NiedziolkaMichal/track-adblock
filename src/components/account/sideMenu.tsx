@@ -8,7 +8,7 @@ export function SideMenu() {
   return (
     <Base>
       <ItemGroup>
-        <MenuItemLink title="Strona główna" href="/account">
+        <MenuItemLink title="Statystyki" href="/account">
           <IconIndex />
         </MenuItemLink>
         <MenuItemLink title="Instalacja" href="/account/addHost" additionalPaths={["/account/install/analytics"]}>
