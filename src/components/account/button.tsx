@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styled, { css } from "styled-components";
 import { ReactNode } from "react";
+import { Margin, MarginValue } from "../margin";
 
 const stylePrimary = css`
   display: flex;
@@ -45,10 +46,6 @@ export const LinkSecondary = styled(Link)`
   ${styleSecondary}
 `;
 
-export const ButtonSecondary = styled.button`
-  ${styleSecondary}
-`;
-
 export const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.button.secondary.text};
   font-weight: 480;
@@ -59,10 +56,11 @@ export const StyledLink = styled(Link)`
   }
 `;
 
-export const NegligibleLink = styled(Link)<{ $centered?: boolean }>`
+export const NegligibleLink = styled(Link)<{ $centered?: boolean; $margin?: MarginValue }>`
   color: ${({ theme }) => theme.button.negligible.text};
   font-weight: 480;
   font-size: 0.9rem;
+  ${Margin}
 
   ${({ $centered }) =>
     $centered &&

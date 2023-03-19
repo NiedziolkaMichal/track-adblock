@@ -71,6 +71,9 @@ export default function Page() {
           {adjustedPageType === "ResetPassword" && <ResetPassword setPageType={setPageType} />}
         </AuthCardContent>
       </AuthCard>
+      <NegligibleLink href="/" $margin="bl-20px">
+        Powrót do strony głównej
+      </NegligibleLink>
     </>
   );
 }

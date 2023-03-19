@@ -3,7 +3,7 @@ import { NextRouter, useRouter } from "next/router";
 import { ErrorBox, ErrorInline, H1 } from "../../components/account/common";
 import { AuthCardButton, AuthCardContent, AuthCardHrWithContent, AuthCardMultipleContent } from "../../components/account/authCard";
 import { getAuthSharedLayout } from "../../components/auth";
-import { GitHubButton, GoogleButton, StyledLink, TrackAdBlockButton } from "../../components/account/button";
+import { GitHubButton, GoogleButton, NegligibleLink, StyledLink, TrackAdBlockButton } from "../../components/account/button";
 import { signIn } from "next-auth/react";
 import { Label, TextField } from "../../components/account/input";
 import { FullSizeImg, P } from "../../components/common";
@@ -39,6 +39,9 @@ export default function Page() {
           <RegisterContent />
         </AuthCardContent>
       </AuthCardMultipleContent>
+      <NegligibleLink href="/" $margin="bl-20px">
+        Powrót do strony głównej
+      </NegligibleLink>
     </>
   );
 }
