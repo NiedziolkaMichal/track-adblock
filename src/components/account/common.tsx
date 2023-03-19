@@ -3,7 +3,7 @@ import { LinkSecondary } from "./button";
 import { Margin, MarginValue } from "../margin";
 
 export const H1 = styled.h1<{ $margin?: MarginValue }>`
-  font-size: 1.25rem;
+  font-size: min(6vw, 1.25rem);
   font-weight: 500;
   color: ${({ theme }) => theme.text.heading};
   ${Margin}

@@ -1,7 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { NextRouter, useRouter } from "next/router";
 import { ErrorBox, ErrorInline, H1 } from "../../components/account/common";
-import { AuthCardButton, AuthCardContent, AuthCardHrWithContent, AuthCardMultipleContent } from "../../components/account/authCard";
+import { AuthCard, AuthCardButton, AuthCardContent, AuthCardHrWithContent } from "../../components/account/authCard";
 import { getAuthSharedLayout } from "../../components/auth";
 import { GitHubButton, GoogleButton, NegligibleLink, StyledLink, TrackAdBlockButton } from "../../components/account/button";
 import { signIn } from "next-auth/react";
@@ -31,14 +31,14 @@ export default function Page() {
   return (
     <>
       <H1 $margin="b-30px">Załóż nowe konto</H1>
-      <AuthCardMultipleContent>
+      <AuthCard>
         <AuthCardContent $center={true}>
           <RegisterDescription />
         </AuthCardContent>
         <AuthCardContent>
           <RegisterContent />
         </AuthCardContent>
-      </AuthCardMultipleContent>
+      </AuthCard>
       <NegligibleLink href="/" $margin="bl-20px">
         Powrót do strony głównej
       </NegligibleLink>
