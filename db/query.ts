@@ -23,17 +23,15 @@ export async function getHostRequests(email: string, host: string, startDate: Da
       user: {
         email,
       },
+    },
+    select: {
       requests: {
-        every: {
+        where: {
           date: {
             gte: startDate.toISOString(),
             lte: endDate.toISOString(),
           },
         },
-      },
-    },
-    select: {
-      requests: {
         select: {
           type: true,
           date: true,
