@@ -32,7 +32,7 @@ function TooltipItem({ label, value }: { label: string | number; value: number |
 }
 
 const Tooltip = styled.div`
-  background-color: ${({ theme }) => theme.background.primary};
+  background-color: ${({ theme }) => theme.tooltip.background};
   padding: 9px 12px;
   border: 1px solid ${({ theme }) => theme.border.primary};
   box-shadow: 0 0 5px ${({ theme }) => theme.border.primary};
@@ -42,7 +42,8 @@ const TooltipDate = styled.time`
   display: block;
   margin: 5px 0 15px;
   font-size: 0.8rem;
-  color: ${({ theme }) => theme.text.light};
+  font-weight: 600;
+  color: ${({ theme }) => theme.text.heading};
 `;
 
 const TooltipList = styled.dl`

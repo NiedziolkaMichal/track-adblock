@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { Margin, MarginValue } from "../margin";
 
 const Base = styled.div<{ $margin?: MarginValue }>`
-  background-color: ${({ theme }) => theme.background.primary};
+  background: ${({ theme }) => theme.background.glass};
   border: 1px solid ${({ theme }) => theme.border.primary};
   border-radius: 8px;
   color: ${({ theme }) => theme.text.heading};
@@ -41,7 +41,7 @@ export function CardH2({ className, headingContent, innerPadding, $margin, child
 }
 
 export const CardCodeBlock = styled.pre<{ $margin?: MarginValue }>`
-  background-color: ${({ theme }) => theme.background.secondary};
+  background-color: ${({ theme }) => theme.codeBlock.background};
   border: 1px solid ${({ theme }) => theme.border.primary};
   padding: 10px;
   border-radius: 4px;

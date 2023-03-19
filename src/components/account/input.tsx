@@ -11,6 +11,7 @@ export const Label = styled.label<{ $light?: boolean; $margin?: MarginValue }>`
 
 export const TextField = styled.input<{ $margin?: MarginValue }>`
   color: ${({ theme, disabled }) => (disabled ? theme.text.disabled : "inherit")};
+  background-color: ${({ theme }) => theme.textField.background};
   width: 100%;
   padding: 10px;
   border: 1px solid ${({ theme }) => theme.border.primary};

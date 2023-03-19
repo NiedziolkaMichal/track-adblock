@@ -15,7 +15,7 @@ export default function Page() {
   const measurementId = "G-XXXXXX";
   return (
     <>
-      <H1 $margin="b-30px">Zainstaluj skrypt</H1>
+      <H1 $margin="t-4px b-30px">Zainstaluj skrypt</H1>
       <DomainCard domain={domain} measurementId={measurementId} />
       <FilesCard jsFileName={jsFileName} phpFileName={phpFileName} />
       <ScriptCard jsFileName={jsFileName} measurementId={measurementId} />

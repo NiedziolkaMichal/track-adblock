@@ -4,20 +4,21 @@ export const THEME = {
       color_1: "#341bc1",
       color_2: "#b921ad",
       image: "linear-gradient(164deg, #341bc1, #b921ad)",
+      text: "white",
+      focusVisible: "#b921ad",
     },
   },
   text: {
-    heading: "#202124",
+    heading: "#303030",
     primary: "#5F6368",
     secondary: "white",
-    light: "#989898",
     disabled: "#626262",
     invalid: "red",
   },
   background: {
-    primary: "white",
     secondary: "#F8F9FA",
     glass: "#ffffff57",
+    tab: "#a6aac310",
   },
   border: {
     primary: "#DADCE0",
@@ -26,14 +27,15 @@ export const THEME = {
   },
   button: {
     primary: {
-      background: "#1A73E8",
-      backgroundHover: "#1B66CA",
+      background: "#48349f",
+      backgroundHover: "#2c1b75",
       text: "#F8F9FA",
+      focusVisible: "#48349f",
     },
     secondary: {
       text: "#1A73E8",
-      textHover: "#1B66CA",
-      backgroundHover: "#F6FAFE",
+      textHover: "#0a4ba8",
+      focusVisible: "#1A73E8",
     },
     valid: {
       background: "#3ba12f",
@@ -61,11 +63,15 @@ export const THEME = {
       text: "#202124",
     },
   },
-  selected: {
-    fore: "#F9AB00",
-    foreHover: "#ffb31a",
-    light: "#e7e7e7",
-    back: "white",
+  textField: {
+    background: "rgb(255,255,255,0.3)",
+  },
+  codeBlock: {
+    background: "rgb(255,255,255,0.3)",
+  },
+  sideMenu: {
+    hover: "#9a9eb919",
+    focusVisible: "#303030",
   },
   errorBlock: {
     background: "crimson",
@@ -74,13 +80,16 @@ export const THEME = {
   errorInline: {
     text: "crimson",
   },
+  tooltip: {
+    background: "rgb(255,255,255,0.92)",
+  },
   graph: {
     line: "#00000014",
     tick: "#a4a4a4",
     requests: {
       all: "black",
-      ordinary: "#1a73e8",
-      unblocked: "#37c8df",
+      ordinary: "#041db9",
+      unblocked: "#008aff",
     },
   },
 };

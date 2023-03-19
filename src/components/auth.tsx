@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 
@@ -31,11 +31,19 @@ const Main = styled.main`
   }
 `;
 
-export function getAuthSharedLayout(page: ReactElement): ReactElement {
+export function AuthAndAccountSharedLayout({ children }: { children: ReactNode }) {
   return (
     <Container>
       <Background src="/img/bg/login.webp" width={2109} height={2422} sizes="100vw" alt="" quality={100} loading="eager" priority={true} />
-      <Main>{page}</Main>
+      {children}
     </Container>
+  );
+}
+
+export function getAuthSharedLayout(page: ReactElement): ReactElement {
+  return (
+    <AuthAndAccountSharedLayout>
+      <Main>{page}</Main>
+    </AuthAndAccountSharedLayout>
   );
 }

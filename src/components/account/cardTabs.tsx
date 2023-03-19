@@ -33,7 +33,7 @@ const StyledCardTab = styled.div<{ roundedBottom?: boolean }>`
   }
 
   :hover {
-    background-color: ${({ theme }) => theme.selected.light};
+    background-color: ${({ theme }) => theme.background.tab};
   }
 `;
 

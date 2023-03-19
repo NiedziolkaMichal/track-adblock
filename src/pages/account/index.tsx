@@ -36,7 +36,7 @@ export default function Page({ hosts }: Props) {
   const host = hosts[0].host;
   return (
     <>
-      <H1 $margin="b-30px">Statystyki strony: {host}</H1>
+      <H1 $margin="t-4px b-30px">Statystyki strony: {host}</H1>
       <RequestsCard $margin="b-15px" host={host} />
       <LinkPrimary href={"/account/addHost"}>Dodaj kolejną domenę</LinkPrimary>
     </>

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { SideMenu } from "./sideMenu";
 import { ReactElement, ReactNode } from "react";
 import { Header } from "../header";
+import { AuthAndAccountSharedLayout } from "../auth";
 
 const BaseStructure = styled.div`
   display: grid;
@@ -9,12 +10,11 @@ const BaseStructure = styled.div`
 `;
 
 const MainBackground = styled.div`
-  background-color: ${({ theme }) => theme.background.secondary};
   display: flex;
 `;
 
 const Main = styled.main`
-  padding: 2rem 40px 0;
+  padding: 8px 40px 0 0;
   // RequestsChart required fixed width in order to be resized correctly with the viewport
   width: calc(100vw - 55px); // 55px is width of a side menu
   max-width: 1280px;
@@ -27,7 +27,7 @@ const UnevenMargin = styled.div`
 
 export function AccountBase({ children }: { children: ReactNode }) {
   return (
-    <>
+    <AuthAndAccountSharedLayout>
       <Header />
       <BaseStructure>
         <SideMenu />
@@ -36,7 +36,7 @@ export function AccountBase({ children }: { children: ReactNode }) {
           <UnevenMargin />
         </MainBackground>
       </BaseStructure>
-    </>
+    </AuthAndAccountSharedLayout>
   );
 }
 

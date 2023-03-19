@@ -30,6 +30,10 @@ export function FileDownload({ filePath, fileName, iconSrc, className }: { fileP
 
 const DownloadBtn = styled.button`
   position: relative;
+
+  :focus-visible {
+    outline-offset: 5px;
+  }
 `;
 
 const Img = styled(FillImg)`

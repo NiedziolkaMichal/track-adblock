@@ -7,20 +7,18 @@ import { signOut } from "next-auth/react";
 export function SideMenu() {
   return (
     <Base>
-      <ItemGroup>
-        <MenuItemLink title="Statystyki" href="/account">
-          <IconIndex />
-        </MenuItemLink>
-        <MenuItemLink title="Instalacja" href="/account/addHost" additionalPaths={["/account/install/analytics"]}>
-          <IconInstallation />
-        </MenuItemLink>
-        <MenuItemLink title="Płatności" href="/account/payments">
-          <IconPayment />
-        </MenuItemLink>
-        <MenuItemLink title="Profil" href="/account/profile">
-          <IconProfile />
-        </MenuItemLink>
-      </ItemGroup>
+      <MenuItemLink title="Statystyki" href="/account">
+        <IconIndex />
+      </MenuItemLink>
+      <MenuItemLink title="Instalacja" href="/account/addHost" additionalPaths={["/account/install/analytics"]}>
+        <IconInstallation />
+      </MenuItemLink>
+      <MenuItemLink title="Płatności" href="/account/payments">
+        <IconPayment />
+      </MenuItemLink>
+      <MenuItemLink title="Profil" href="/account/profile">
+        <IconProfile />
+      </MenuItemLink>
       <MenuItemButton
         title="Wyloguj się"
         onClick={() =>
@@ -38,25 +36,14 @@ export function SideMenu() {
 const Base = styled.nav`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
   padding-top: 8px;
   padding-bottom: 20px;
-  background-color: ${({ theme }) => theme.background.primary};
-  border-right: 1px solid ${({ theme }) => theme.border.primary};
   z-index: 1; // Placing it in foreground of the main section, when hover is active
 
   :hover {
     width: 240px;
   }
-`;
-
-/**
- * One group of items is placed on the top, while other is placed on the bottom
- */
-const ItemGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 
 const Item = styled(Link)<{ $active: boolean }>`
@@ -66,16 +53,19 @@ const Item = styled(Link)<{ $active: boolean }>`
   color: ${(props) => props.theme.text.heading};
   position: relative;
 
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+
   ${(props) =>
     props.$active &&
     css`
        {
-        background-color: ${props.theme.selected.fore};
-        border-top-right-radius: 25px;
-        border-bottom-right-radius: 25px;
+        background-image: ${({ theme }) => theme.gradient.primary.image};
+        color: ${({ theme }) => theme.gradient.primary.text};
 
         :hover {
-          background-color: ${props.theme.selected.foreHover};
+          background-image: ${({ theme }) => theme.gradient.primary.image}, linear-gradient(#0003, #0003);
+          background-blend-mode: hard-light;
         }
       }
     `}
@@ -83,24 +73,14 @@ const Item = styled(Link)<{ $active: boolean }>`
     !props.$active &&
     css`
       :hover {
-        background-color: ${props.theme.selected.light};
-        border-top-right-radius: 25px;
-        border-bottom-right-radius: 25px;
+        background-color: ${props.theme.sideMenu.hover};
       }
     `}
-`;
-/**
- * Blue Circle behind currently active item
- */
-const ActiveItemHighlight = styled.div`
-  background-color: ${({ theme }) => theme.selected.fore};
-  border-radius: 50%;
-  height: 36px;
-  left: 9px;
-  top: 9px;
-  position: absolute;
-  width: 36px;
-  z-index: -1;
+  
+  :focus-visible {
+    outline-color: ${({ theme, $active }) => ($active ? theme.gradient.primary.focusVisible : theme.sideMenu.focusVisible)};
+    outline-offset: ${({ $active }) => ($active ? "5px" : "0")};
+  }
 `;
 
 const ItemIcon = styled.svg`
@@ -124,7 +104,6 @@ function MenuItemLink({ title, href, additionalPaths, children }: { title: strin
   return (
     <Item href={href} $active={isActive}>
       {children}
-      {isActive && <ActiveItemHighlight />}
       <ItemTitle>{title}</ItemTitle>
     </Item>
   );

@@ -18,7 +18,7 @@ export default function Page() {
 
   return (
     <>
-      <H1 $margin="b-30px">Dodaj Google Analytics</H1>
+      <H1 $margin="t-4px b-30px">Dodaj Google Analytics</H1>
       <DomainCard setDomain={setDomain} />
       <MeasurementIdCard setMeasurementId={setMeasurementId} />
     </>

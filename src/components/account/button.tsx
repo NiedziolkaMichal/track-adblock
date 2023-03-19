@@ -18,6 +18,10 @@ const stylePrimary = css`
   :hover {
     background-color: ${({ theme }) => theme.button.primary.backgroundHover};
   }
+  :focus-visible {
+    outline-color: ${({ theme }) => theme.button.primary.focusVisible};
+    outline-offset: 5px;
+  }
 `;
 
 export const LinkPrimary = styled(Link)`
@@ -28,7 +32,7 @@ export const ButtonPrimary = styled.button`
   ${stylePrimary}
 `;
 
-const styleSecondary = css`
+export const LinkSecondary = styled(Link)`
   display: block;
   width: fit-content;
   padding: 10px 18px;
@@ -37,13 +41,11 @@ const styleSecondary = css`
   font-size: 0.9rem;
 
   :hover {
-    background-color: ${({ theme }) => theme.button.secondary.backgroundHover};
     color: ${({ theme }) => theme.button.secondary.textHover};
   }
-`;
-
-export const LinkSecondary = styled(Link)`
-  ${styleSecondary}
+  :focus-visible {
+    outline-color: ${({ theme }) => theme.button.secondary.focusVisible};
+  }
 `;
 
 export const StyledLink = styled(Link)`
