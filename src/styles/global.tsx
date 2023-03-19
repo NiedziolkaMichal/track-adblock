@@ -34,4 +34,21 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     background: none;
   }
+  
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: ${({ theme }) => theme.gradient.primary.color_1} transparent;
+    --scrollbar-width: 0px;
+  }
+  @supports (selector(::-webkit-scrollbar)) {
+    html {
+      --scrollbar-width: 7px;
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, ${({ theme }) => theme.gradient.primary.color_1}, ${({ theme }) => theme.gradient.primary.color_2});
+  }
 `;

@@ -1,4 +1,11 @@
 export const THEME = {
+  gradient: {
+    primary: {
+      color_1: "#341bc1",
+      color_2: "#b921ad",
+      image: "linear-gradient(164deg, #341bc1, #b921ad)",
+    },
+  },
   text: {
     heading: "#202124",
     primary: "#5F6368",
