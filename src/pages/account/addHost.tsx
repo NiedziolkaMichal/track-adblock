@@ -1,26 +1,27 @@
 import { getAccountSharedLayout } from "../../components/account/skeleton";
 import styled from "styled-components";
 import { CardH2 } from "../../components/account/card";
-import { useCallback, useEffect, useState } from "react";
-import { ButtonShapeShifter } from "../../components/account/button";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ButtonShapeShifter, LinkSecondary, QuestionLink } from "../../components/account/button";
 import isValidDomain from "is-valid-domain";
 import { InvalidInput, Label, TextField } from "../../components/account/input";
 import { NextRouter, useRouter } from "next/router";
 import { useInputWithCallback } from "../../hooks/inputHooks";
-import { H1, MeasurementCardSides, QuestionLink } from "../../components/account/common";
+import { ButtonList, H1, MeasurementCardSides } from "../../components/account/common";
 import { verifyMeasurementId } from "../../util/verifyInput";
 import { MarginValue } from "../../components/margin";
+import { fetchAnalyticsId } from "../../hooks/apiHooks";
 
 const NEXT_PAGE = "/account/install/analytics";
 
 export default function Page() {
-  const { setDomain, setMeasurementId } = useDomainAndMeasurementId();
+  const { domain, setDomain, setMeasurementId } = useDomainAndMeasurementId();
 
   return (
     <>
       <H1 $margin="t-4px b-30px">Dodaj Google Analytics</H1>
       <DomainCard setDomain={setDomain} />
-      <MeasurementIdCard setMeasurementId={setMeasurementId} />
+      <MeasurementIdCard domain={domain} setMeasurementId={setMeasurementId} />
     </>
   );
 }
@@ -54,7 +55,7 @@ function useDomainAndMeasurementId() {
     [domain, router]
   );
 
-  return { setDomain, setMeasurementId };
+  return { domain, setDomain, setMeasurementId };
 }
 
 function saveDataAndRedirect(domain: string, measurementId: string, router: NextRouter) {
@@ -93,8 +94,24 @@ function useMeasurementIdInputWithCallback(setMeasurementId: (id: string) => voi
   return useInputWithCallback(setMeasurementId, getValueFromInput);
 }
 
-function MeasurementIdCard({ setMeasurementId }: { setMeasurementId: (id: string) => void }) {
-  const { fieldId, completed, invalid, onAddId } = useMeasurementIdInputWithCallback(setMeasurementId);
+function MeasurementIdCard({ setMeasurementId, domain }: { setMeasurementId: (id: string) => void; domain: string | undefined }) {
+  const textFieldRef = useRef<HTMLInputElement>(null);
+  const { fieldId, completed, invalid, onAddId, setInvalid } = useMeasurementIdInputWithCallback(setMeasurementId);
+
+  async function onClickDetectId() {
+    if (!domain) {
+      setInvalid("DOMAIN");
+      return;
+    }
+    const measurementId = await fetchAnalyticsId(`https://${domain}`);
+    if (!measurementId) {
+      setInvalid("ANALYTICS_MISSING");
+      return;
+    }
+    if (textFieldRef.current) {
+      textFieldRef.current.value = measurementId;
+    }
+  }
 
   return (
     <CardH2 headingContent="Identyfikator pomiaru" innerPadding={true}>
@@ -103,12 +120,19 @@ function MeasurementIdCard({ setMeasurementId }: { setMeasurementId: (id: string
           <Label $margin="b-10px" htmlFor={fieldId}>
             Identyfikator Google Analytics w formacie &quot;G-XXXXXXXX&quot;
           </Label>
-          <UrlTextField $margin={invalid ? "b-10px" : "b-20px"} id={fieldId} placeholder="G-XXXXXXXX" disabled={completed} />
-          {invalid && <InvalidInput $margin="b-10px">Przekazany identyfikator jest nieprawidłowy</InvalidInput>}
-          <ButtonShapeShifter onClick={onAddId} $state={completed ? "valid" : "primary"} disabled={completed}>
-            {!completed && "Dodaj identyfikator"}
-            {completed && "Identyfikator dodany"}
-          </ButtonShapeShifter>
+          <UrlTextField $margin={invalid ? "b-10px" : "b-20px"} id={fieldId} ref={textFieldRef} placeholder="G-XXXXXXXX" disabled={completed} />
+          {invalid === "VALUE" && <InvalidInput $margin="b-10px">Przekazany identyfikator jest nieprawidłowy</InvalidInput>}
+          {invalid === "DOMAIN" && <InvalidInput $margin="b-10px">Pierwsze dodaj domenę</InvalidInput>}
+          {invalid === "ANALYTICS_MISSING" && <InvalidInput $margin="b-10px">Nie wykryto identyfikatora</InvalidInput>}
+          <ButtonList>
+            <ButtonShapeShifter onClick={onAddId} $state={completed ? "valid" : "primary"} disabled={completed}>
+              {!completed && "Dodaj identyfikator"}
+              {completed && "Identyfikator dodany"}
+            </ButtonShapeShifter>
+            <LinkSecondary as="button" onClick={onClickDetectId}>
+              Wykryj identyfikator
+            </LinkSecondary>
+          </ButtonList>
         </div>
         <div>
           <QuestionLink href="">Gdzie znajdę identyfikator?</QuestionLink>

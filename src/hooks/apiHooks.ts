@@ -1,6 +1,9 @@
 import useSWR from "swr";
 import { RequestsData } from "../pages/api/hostRequests";
 import { PublicConfiguration } from "swr/_internal";
+import { fullEncodeUriComponent } from "../util/format";
+import { fetchAbortable } from "../util/io";
+import { Response } from "../pages/api/inspect/[url]/analytics";
 
 const jsonFetcher = (path: string) => fetch(path).then((res) => res.json());
 
@@ -19,4 +22,17 @@ export function useHostRequests(host: string, startDate: Date, days: number, ref
   });
 
   return data as RequestsData | undefined;
+}
+
+/**
+ * Returns MeasurementId of Google Analytics found in a given URL address.
+ * @param url - should be a valid URL
+ */
+export async function fetchAnalyticsId(url: string) {
+  const response = await fetchAbortable(`/api/inspect/${fullEncodeUriComponent(url)}/analytics`).catch(() => undefined);
+  if (!response) {
+    return undefined;
+  }
+  const json = (await response.json()) as Response;
+  return json.measurementId || undefined;
 }

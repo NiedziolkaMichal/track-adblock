@@ -1,6 +1,6 @@
-import { H1, MeasurementCardSides, QuestionLink } from "../../../components/account/common";
+import { H1, MeasurementCardSides } from "../../../components/account/common";
 import { getAccountSharedLayout } from "../../../components/account/skeleton";
-import { ButtonShapeShifter } from "../../../components/account/button";
+import { ButtonShapeShifter, QuestionLink } from "../../../components/account/button";
 import { Card, CardCodeBlock, CardH2 } from "../../../components/account/card";
 import { useTheme } from "styled-components";
 import { FileDownload, FileDownloadGroup } from "../../../components/account/install/fileDownload";

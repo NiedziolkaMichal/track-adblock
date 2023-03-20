@@ -33,28 +33,54 @@ export const ButtonPrimary = styled.button`
 `;
 
 export const LinkSecondary = styled(Link)`
-  display: block;
+  display: flex;
   width: fit-content;
   padding: 10px 18px;
+  background-color: ${({ theme }) => theme.button.secondary.background};
   color: ${({ theme }) => theme.button.secondary.text};
+  border-radius: 4px;
   font-weight: 480;
   font-size: 0.9rem;
+  place-content: center;
+  place-items: center;
 
   :hover {
-    color: ${({ theme }) => theme.button.secondary.textHover};
+    background-color: ${({ theme }) => theme.button.secondary.backgroundHover};
   }
   :focus-visible {
     outline-color: ${({ theme }) => theme.button.secondary.focusVisible};
+    outline-offset: 5px;
+  }
+`;
+
+export const QuestionLink = styled(Link)`
+  display: block;
+  width: fit-content;
+  padding: 10px 18px;
+  color: ${({ theme }) => theme.button.anchor.text};
+  font-weight: 480;
+  font-size: 0.9rem;
+  margin-left: auto;
+
+  :hover {
+    color: ${({ theme }) => theme.button.anchor.textHover};
+  }
+  :focus-visible {
+    outline-color: ${({ theme }) => theme.button.anchor.focusVisible};
+  }
+
+  :first-child {
+    margin-top: -10px;
   }
 `;
 
 export const StyledLink = styled(Link)`
-  color: ${({ theme }) => theme.button.secondary.text};
+  color: ${({ theme }) => theme.button.anchor.text};
   font-weight: 480;
   font-size: 0.9rem;
 
   :hover {
-    color: ${({ theme }) => theme.button.secondary.textHover};
+    color: ${({ theme }) => theme.button.anchor.textHover};
   }
 `;
 
@@ -98,10 +124,6 @@ const styleValid = css<{ disabled?: boolean }>`
 `;
 
 export const LinkValid = styled(Link)`
-  ${styleValid}
-`;
-
-export const ButtonValid = styled.button`
   ${styleValid}
 `;
 

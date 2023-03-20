@@ -1,17 +1,24 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import isValidDomain from "is-valid-domain";
 import * as cheerio from "cheerio";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]";
+import { fetchAbortable } from "../../../../util/io";
 
 const ANALYTICS_URL_PATTERN = /https:\/\/www.googletagmanager.com\/gtag\/js\?id=(?<id>[A-Z0-9-]+)/i;
+
+export interface Response {
+  measurementId: string | null;
+}
 
 /**
  * Returns Measurement Id present in HTML document of provided URL, or any of its direct scripts
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const inputURL = req.headers["C-Analytics-URL"];
-  if (req.method !== "POST" || typeof inputURL !== "string") {
-    // TODO check for referrer
-    return res.status(200).json({
+  const session = await getServerSession(req, res, authOptions);
+  const inputURL = req.query.url;
+  if (!session || req.method !== "GET" || typeof inputURL !== "string") {
+    return res.status(400).json({
       measurementId: null,
     });
   }
@@ -67,16 +74,8 @@ function getAllScriptURLs(html: string) {
 }
 
 async function fetchText(url: string) {
-  const controller = new AbortController();
-
-  try {
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
-    const response = await fetch(url, { signal: controller.signal });
-    clearTimeout(timeoutId);
-    return response.text();
-  } catch (e) {
-    return undefined;
-  }
+  const result = await fetchAbortable(url).catch(() => undefined);
+  return result?.text();
 }
 
 function getURL(inputURL: string) {

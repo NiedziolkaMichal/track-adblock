@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { LinkSecondary } from "./button";
 import { Margin, MarginValue } from "../margin";
 
 export const H1 = styled.h1<{ $margin?: MarginValue }>`
@@ -13,14 +12,6 @@ export const H1 = styled.h1<{ $margin?: MarginValue }>`
 export const MeasurementCardSides = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-
-export const QuestionLink = styled(LinkSecondary)`
-  margin-left: auto;
-
-  :first-child {
-    margin-top: -10px;
-  }
 `;
 
 export const ErrorBox = styled.div<{ $margin?: MarginValue }>`
@@ -37,4 +28,10 @@ export const ErrorBox = styled.div<{ $margin?: MarginValue }>`
 export const ErrorInline = styled.strong`
   color: ${({ theme }) => theme.errorInline.text};
   font-size: 0.8rem;
+`;
+
+export const ButtonList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 `;

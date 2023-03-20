@@ -33,6 +33,12 @@ export const THEME = {
       focusVisible: "#48349f",
     },
     secondary: {
+      background: "#b921ad",
+      backgroundHover: "#93148d",
+      text: "#F8F9FA",
+      focusVisible: "#b921ad",
+    },
+    anchor: {
       text: "#1A73E8",
       textHover: "#0a4ba8",
       focusVisible: "#1A73E8",

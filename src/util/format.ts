@@ -35,3 +35,7 @@ export function formatDate(day: number, month: number, year: number) {
   const monthStr = MONTH_PL[month - 1];
   return `${dayAbbr} ${String(day).padStart(2, "0")} ${monthStr}`;
 }
+
+export function fullEncodeUriComponent(url: string) {
+  return encodeURIComponent(url).replace(/[!'()*]/g, (c) => "%" + c.charCodeAt(0).toString(16).toUpperCase());
+}
