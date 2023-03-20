@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { verifyMeasurementId, verifyPhpFilePath } from "../../util/verifyInput";
+import { verifyMeasurementId, verifyScriptFilePath } from "../../../util/verifyInput";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 
 const GTAG_URL_PREFIX = "https://www.googletagmanager.com/gtag/js?id=";
 /**
@@ -81,15 +83,16 @@ interface Replacement {
  * Returns Google Analytics scripts with replacements based on provided MeasurementId and path to the page meant for processing it
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const measurementId = req.headers["C-Measurement-Id"];
-  const redirectPath = req.headers["C-Redirect-Path"];
+  const measurementId = req.query.measurementId;
+  const redirectPath = req.query.redirectPath;
+  const session = await getServerSession(req, res, authOptions);
 
-  if (req.method !== "POST" || typeof measurementId !== "string" || !verifyMeasurementId(measurementId) || typeof redirectPath !== "string" || !verifyPhpFilePath(redirectPath)) {
-    // TODO check for referrer
-    return res.status(200).send("");
+  if (!session || req.method !== "GET" || typeof measurementId !== "string" || !verifyMeasurementId(measurementId) || typeof redirectPath !== "string" || !verifyScriptFilePath(redirectPath)) {
+    return res.status(400).send("");
   }
+
   const script = await getScript(measurementId, redirectPath);
-  return res.status(200).send(script || "");
+  return res.status(script ? 200 : 400).send(script || "");
 }
 
 async function getScript(measurementId: string, redirectPath: string) {

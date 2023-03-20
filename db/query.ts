@@ -54,3 +54,19 @@ export async function putIntegration(userId: string, host: string, type: Integra
     },
   });
 }
+
+export async function getIntegration(userId: string, host: string, type: IntegrationType) {
+  const response = await prisma.integration.findFirst({
+    where: {
+      userId,
+      host,
+      type,
+    },
+    select: {
+      measurementId: true,
+      jsFilePath: true,
+      phpFilePath: true,
+    },
+  });
+  return response || undefined;
+}

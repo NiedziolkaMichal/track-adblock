@@ -7,17 +7,58 @@ import { FileDownload, FileDownloadGroup } from "../../../components/account/ins
 import React from "react";
 import { CardTab, CardTabs } from "../../../components/account/cardTabs";
 import { P } from "../../../components/common";
+import { fullEncodeUriComponent, getLastPathComponent } from "../../../util/format";
+import { GetServerSidePropsContext } from "next/types";
+import { GetServerSideProps } from "next";
+import { getIntegration } from "../../../../db/query";
+import { getServerSession } from "../../api/auth/[...nextauth]";
+import { IntegrationType } from ".prisma/client";
+import { LOGIN_REDIRECT } from "../../../util/redirects";
 
-export default function Page() {
-  const domain = "krainawiewiorek.pl";
-  const jsFileName = "sddsuadksa";
-  const phpFileName = "dsjkdsnjasd";
-  const measurementId = "G-XXXXXX";
+interface Props {
+  host: string;
+  measurementId: string;
+  jsFilePath: string;
+  phpFilePath: string;
+}
+
+export const getServerSideProps: GetServerSideProps<Props> = async (context: GetServerSidePropsContext) => {
+  const host = context.query.host;
+  if (typeof host !== "string") {
+    return LOGIN_REDIRECT;
+  }
+
+  const session = await getServerSession(context);
+  const userId = session?.user.id;
+
+  if (!userId) {
+    return LOGIN_REDIRECT;
+  }
+
+  const integration = await getIntegration(userId, host, IntegrationType.googleAnalytics);
+
+  if (!integration) {
+    return LOGIN_REDIRECT;
+  }
+
+  return {
+    props: {
+      host,
+      ...integration,
+    },
+  };
+};
+
+export default function Page({ host, measurementId, jsFilePath, phpFilePath }: Props) {
+  const jsFileName = getLastPathComponent(jsFilePath);
+  const phpFileName = getLastPathComponent(phpFilePath);
+  const jsFileUrl = `/api/file/gtag?measurementId=${fullEncodeUriComponent(measurementId)}&redirectPath=${encodeURIComponent(phpFilePath)}`;
+
   return (
     <>
       <H1 $margin="t-4px b-30px">Zainstaluj skrypt</H1>
-      <DomainCard domain={domain} measurementId={measurementId} />
-      <FilesCard jsFileName={jsFileName} phpFileName={phpFileName} />
+      <DomainCard domain={host} measurementId={measurementId} />
+      <FilesCard jsFileName={jsFileName} jsFileUrl={jsFileUrl} phpFileName={phpFileName} />
       <ScriptCard jsFileName={jsFileName} measurementId={measurementId} />
     </>
   );
@@ -35,7 +76,7 @@ function DomainCard({ domain, measurementId }: { domain: string; measurementId: 
   );
 }
 
-function FilesCard({ jsFileName, phpFileName }: { jsFileName: string; phpFileName: string }) {
+function FilesCard({ jsFileName, jsFileUrl, phpFileName }: { jsFileName: string; jsFileUrl: string; phpFileName: string }) {
   const completed = false;
   const onComplete = undefined;
 
@@ -46,7 +87,7 @@ function FilesCard({ jsFileName, phpFileName }: { jsFileName: string; phpFileNam
           <P $margin="b-10px">Dodaj podane pliki do głównego katalogu strony internetowej</P>
           <FileDownloadGroup>
             <FileDownload iconSrc="/img/icon/php.svg" filePath="/img/icon/php.svg" fileName={phpFileName + ".php"} />
-            <FileDownload iconSrc="/img/icon/javascript.svg" filePath="/img/icon/php.svg" fileName={jsFileName + ".js"} />
+            <FileDownload iconSrc="/img/icon/javascript.svg" filePath={jsFileUrl} fileName={jsFileName + ".js"} />
           </FileDownloadGroup>
           <ButtonShapeShifter onClick={onComplete} $state={completed ? "valid" : "primary"} disabled={completed}>
             {!completed && "Pliki zostały dodane"}

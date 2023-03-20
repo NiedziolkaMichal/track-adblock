@@ -39,3 +39,14 @@ export function formatDate(day: number, month: number, year: number) {
 export function fullEncodeUriComponent(url: string) {
   return encodeURIComponent(url).replace(/[!'()*]/g, (c) => "%" + c.charCodeAt(0).toString(16).toUpperCase());
 }
+
+export function getLastPathComponent(path: string) {
+  const separatorIndex1 = path.lastIndexOf("/");
+  const separatorIndex2 = path.lastIndexOf("\\");
+  const largerIndex = separatorIndex2 > separatorIndex1 ? separatorIndex2 : separatorIndex1;
+  if (largerIndex === -1) {
+    return path;
+  } else {
+    return path.slice(largerIndex + 1);
+  }
+}

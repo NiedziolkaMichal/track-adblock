@@ -81,7 +81,7 @@ async function saveDataAndRedirect(domain: string, measurementId: string, router
   });
   const text = await response.text();
   if (text === "OK") {
-    router.push(NEXT_PAGE);
+    router.push(`${NEXT_PAGE}?host=${fullEncodeUriComponent(domain)}`);
   } else {
     router.push("/account");
   }
