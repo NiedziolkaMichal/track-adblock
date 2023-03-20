@@ -39,15 +39,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?       @unique
   emailVerified DateTime?
   password      String?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  hosts         Host[]
+  integrations  Integration[]
 }
 
 model VerificationToken {
@@ -58,18 +58,6 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Host {
-  userId String
-  host   String
-
-  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  requests HostRequest[]
-  integrations Integration[]
-
-  @@id([userId, host])
-  @@index([userId])
-}
-
 model Integration {
   userId        String
   host          String
@@ -78,9 +66,10 @@ model Integration {
   jsFilePath    String
   phpFilePath   String
 
-  hostObject Host? @relation(fields: [userId, host], references: [userId, host])
+  userObject User @relation(fields: [userId], references: [id])
 
   @@id([userId, host, type])
+  @@index([userId])
 }
 
 enum IntegrationType {
@@ -93,8 +82,6 @@ model HostRequest {
   date         DateTime
   type         HostRequestType
   requestCount Int             @db.UnsignedInt
-
-  hostObject Host? @relation(fields: [userId, host], references: [userId, host])
 
   @@id([userId, host, type, date])
 }

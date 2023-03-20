@@ -14,12 +14,13 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);
+  const userId = session?.user.id;
 
-  if (!session) {
+  if (!userId) {
     return LOGIN_REDIRECT;
   }
 
-  const hosts = session.user?.email ? await getHosts(session.user.email) : [];
+  const hosts = await getHosts(userId);
   if (hosts.length === 0) {
     return ADD_HOST_REDIRECT;
   }

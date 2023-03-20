@@ -1,45 +1,33 @@
 import prisma from "./prisma";
 import { IntegrationType } from ".prisma/client";
 
-export async function getHosts(email: string) {
-  const fetchedUser = await prisma.user.findFirst({
+export function getHosts(userId: string) {
+  return prisma.integration.findMany({
     where: {
-      email: email,
+      userId,
     },
     select: {
-      hosts: {
-        select: {
-          host: true,
-        },
-      },
+      host: true,
     },
   });
-  return fetchedUser?.hosts || [];
 }
 
-export async function getHostRequests(userId: string, host: string, startDate: Date, endDate: Date) {
-  const result = await prisma.host.findFirst({
+export function getHostRequests(userId: string, host: string, startDate: Date, endDate: Date) {
+  return prisma.hostRequest.findMany({
     where: {
       userId,
       host,
-    },
-    select: {
-      requests: {
-        where: {
-          date: {
-            gte: startDate.toISOString(),
-            lte: endDate.toISOString(),
-          },
-        },
-        select: {
-          type: true,
-          date: true,
-          requestCount: true,
-        },
+      date: {
+        gte: startDate.toISOString(),
+        lte: endDate.toISOString(),
       },
     },
+    select: {
+      type: true,
+      date: true,
+      requestCount: true,
+    },
   });
-  return result?.requests;
 }
 
 export async function putIntegration(userId: string, host: string, type: IntegrationType, measurementId: string, jsFilePath: string, phpFilePath: string) {
