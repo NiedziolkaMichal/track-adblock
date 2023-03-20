@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { RequestsData } from "../pages/api/hostRequests";
+import { RequestsData } from "../pages/api/host/[host]/requests";
 import { PublicConfiguration } from "swr/_internal";
 import { fullEncodeUriComponent } from "../util/format";
 import { fetchAbortable } from "../util/io";
@@ -17,7 +17,7 @@ const jsonFetcher = (path: string) => fetch(path).then((res) => res.json());
 export function useHostRequests(host: string, startDate: Date, days: number, refreshInterval?: PublicConfiguration["refreshInterval"]) {
   // We want to skip minutes, seconds & milliseconds, so SWR doesn't re-fetch the data all the time
   const roundedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startDate.getHours());
-  const { data } = useSWR(`/api/hostRequests?host=${host}&startDate=${roundedStartDate.toISOString()}&timeZoneOffset=${new Date().getTimezoneOffset()}&days=${days}`, jsonFetcher, {
+  const { data } = useSWR(`/api/host/${fullEncodeUriComponent(host)}/requests?startDate=${roundedStartDate.toISOString()}&timeZoneOffset=${new Date().getTimezoneOffset()}&days=${days}`, jsonFetcher, {
     refreshInterval,
   });
 

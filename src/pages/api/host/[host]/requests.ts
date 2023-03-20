@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./auth/[...nextauth]";
-import { sameOrigin } from "../../util/verifyInput";
-import { getHostRequests } from "../../../db/query";
+import { authOptions } from "../../auth/[...nextauth]";
+import { sameOrigin } from "../../../../util/verifyInput";
+import { getHostRequests } from "../../../../../db/query";
 import { HostRequestType } from "@prisma/client";
 
 export interface RequestsData {
