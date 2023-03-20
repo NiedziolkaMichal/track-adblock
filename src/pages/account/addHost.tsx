@@ -11,8 +11,24 @@ import { ButtonList, H1, MeasurementCardSides } from "../../components/account/c
 import { verifyMeasurementId } from "../../util/verifyInput";
 import { MarginValue } from "../../components/margin";
 import { fetchAnalyticsId } from "../../hooks/apiHooks";
+import { GetServerSideProps } from "next";
+import { GetServerSidePropsContext } from "next/types";
+import { getServerSession } from "../api/auth/[...nextauth]";
+import { LOGIN_REDIRECT } from "../../util/redirects";
 
 const NEXT_PAGE = "/account/install/analytics";
+
+export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
+  const session = await getServerSession(context);
+
+  if (!session) {
+    return LOGIN_REDIRECT;
+  }
+
+  return {
+    props: {},
+  };
+};
 
 export default function Page() {
   const { domain, setDomain, setMeasurementId } = useDomainAndMeasurementId();
