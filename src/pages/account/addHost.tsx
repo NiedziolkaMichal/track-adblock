@@ -67,7 +67,8 @@ const UrlTextField = styled(TextField)<{ $margin?: MarginValue }>`
 `;
 
 function useDomainInputWithCallback(setDomain: (domain: string) => void) {
-  const getValueFromInput = (input: string) => getDomainFromUrl(input);
+  const inputWithScheme = (input: string) => (input.startsWith("http:") || input.startsWith("https:") ? input : `https://${input}`);
+  const getValueFromInput = (input: string) => getDomainFromUrl(inputWithScheme(input));
   return useInputWithCallback(setDomain, getValueFromInput);
 }
 
