@@ -64,9 +64,27 @@ model Host {
 
   user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   requests HostRequest[]
+  integrations Integration[]
 
   @@id([userId, host])
   @@index([userId])
+}
+
+model Integration {
+  userId        String
+  host          String
+  type          IntegrationType
+  measurementId String
+  jsFilePath    String
+  phpFilePath   String
+
+  hostObject Host? @relation(fields: [userId, host], references: [userId, host])
+
+  @@id([userId, host, type])
+}
+
+enum IntegrationType {
+  googleAnalytics
 }
 
 model HostRequest {

@@ -1,4 +1,5 @@
 import prisma from "./prisma";
+import { IntegrationType } from ".prisma/client";
 
 export async function getHosts(email: string) {
   const fetchedUser = await prisma.user.findFirst({
@@ -39,4 +40,17 @@ export async function getHostRequests(userId: string, host: string, startDate: D
     },
   });
   return result?.requests;
+}
+
+export async function putIntegration(userId: string, host: string, type: IntegrationType, measurementId: string, jsFilePath: string, phpFilePath: string) {
+  await prisma.integration.create({
+    data: {
+      userId,
+      host,
+      type,
+      measurementId,
+      jsFilePath,
+      phpFilePath,
+    },
+  });
 }

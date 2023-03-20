@@ -15,6 +15,7 @@ import { GetServerSideProps } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getServerSession } from "../api/auth/[...nextauth]";
 import { LOGIN_REDIRECT } from "../../util/redirects";
+import { fullEncodeUriComponent } from "../../util/format";
 
 const NEXT_PAGE = "/account/install/analytics";
 
@@ -74,8 +75,16 @@ function useDomainAndMeasurementId() {
   return { domain, setDomain, setMeasurementId };
 }
 
-function saveDataAndRedirect(domain: string, measurementId: string, router: NextRouter) {
-  router.push(NEXT_PAGE);
+async function saveDataAndRedirect(domain: string, measurementId: string, router: NextRouter) {
+  const response = await fetch(`/api/host/${fullEncodeUriComponent(domain)}/analytics?measurementId=${fullEncodeUriComponent(measurementId)}`, {
+    method: "PUT",
+  });
+  const text = await response.text();
+  if (text === "OK") {
+    router.push(NEXT_PAGE);
+  } else {
+    router.push("/account");
+  }
 }
 
 const UrlTextField = styled(TextField)<{ $margin?: MarginValue }>`

@@ -1,11 +1,29 @@
 import { NextApiRequest } from "next";
+import { rnd } from "./math";
+
+const SCRIPT_FILE_NAME_MIN_LENGTH = 4;
+const SCRIPT_FILE_NAME_MAX_LENGTH = 8;
+const SCRIPT_FILE_ALLOWED_CHARACTERS = "qwertyuiopasdfghjklzxcvbnm";
 
 export function verifyMeasurementId(id: string) {
   return /^(?:G|UA)-[A-Z0-9]{3,12}$/i.test(id); // TODO Limits are guessed
 }
 
-export function verifyPhpFilePath(path: string) {
-  return /^\/[a-z]{4,8}$/i.test(path);
+export function generateScriptFilePath() {
+  const length = rnd(SCRIPT_FILE_NAME_MIN_LENGTH, SCRIPT_FILE_NAME_MAX_LENGTH);
+  return (
+    "/" +
+    Array.from(
+      {
+        length,
+      },
+      () => SCRIPT_FILE_ALLOWED_CHARACTERS[rnd(0, SCRIPT_FILE_ALLOWED_CHARACTERS.length)]
+    ).join("")
+  );
+}
+
+export function verifyScriptFilePath(path: string) {
+  return new RegExp(`^\\/[${SCRIPT_FILE_ALLOWED_CHARACTERS}]{${SCRIPT_FILE_NAME_MIN_LENGTH},${SCRIPT_FILE_NAME_MAX_LENGTH}}$`, "i").test(path);
 }
 
 export type VerifyPasswordResult = "min-length" | "max-length" | "digit" | "upper" | "ok";
