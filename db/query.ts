@@ -16,13 +16,11 @@ export async function getHosts(email: string) {
   return fetchedUser?.hosts || [];
 }
 
-export async function getHostRequests(email: string, host: string, startDate: Date, endDate: Date) {
+export async function getHostRequests(userId: string, host: string, startDate: Date, endDate: Date) {
   const result = await prisma.host.findFirst({
     where: {
+      userId,
       host,
-      user: {
-        email,
-      },
     },
     select: {
       requests: {

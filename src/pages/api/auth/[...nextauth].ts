@@ -1,4 +1,4 @@
-import NextAuth, { AuthOptions, getServerSession as _getServerSession } from "next-auth";
+import NextAuth, { AuthOptions, DefaultSession, getServerSession as _getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -43,9 +43,28 @@ export const authOptions: AuthOptions = {
     }),
   ],
   adapter: PrismaAdapter(prisma),
+  callbacks: {
+    session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.sub,
+        },
+      };
+    },
+  },
 };
 
 export default NextAuth(authOptions);
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string | undefined;
+    } & DefaultSession["user"];
+  }
+}
 
 async function checkCredentials(email: string | undefined, password: string | undefined, canRegister: boolean) {
   if (!email || !password) {

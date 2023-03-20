@@ -27,16 +27,16 @@ export interface RequestsData {
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
-  if (!session || !session.user?.email || req.method !== "GET" || !sameOrigin(req)) {
+  const userId = session?.user.id;
+  if (!userId || req.method !== "GET" || !sameOrigin(req)) {
     return res.status(400).send("");
   }
   const input = getRequestInput(req);
-  const email = session.user.email;
-  if (!input || !email) {
+  if (!input) {
     return res.status(400).send("");
   }
 
-  const data = await getRequestsData(email, input.host, input.startDate, input.timeZoneOffset, input.days);
+  const data = await getRequestsData(userId, input.host, input.startDate, input.timeZoneOffset, input.days);
   return res.status(200).json(data);
 }
 
@@ -63,10 +63,10 @@ function getRequestInput(req: NextApiRequest) {
   };
 }
 
-async function getRequestsData(email: string, host: string, startDate: Date, timeZoneOffset: number, days: number) {
-  //TODO use timeZoneOffset
+async function getRequestsData(userId: string, host: string, startDate: Date, timeZoneOffset: number, days: number) {
+  //TODO use timeZoneOffset - może da się to zrobić na podstawie godziny w odebranym obiekcie startDate? Tak żeby ta godzina była separatorem dnia
   const endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + days, startDate.getHours()); // Current date + amount of days to display in the chart
-  const hostRequests = await getHostRequests(email, host, startDate, endDate);
+  const hostRequests = await getHostRequests(userId, host, startDate, endDate);
 
   function countRequestsOfType(expectedType: HostRequestType) {
     return (hostRequests || []).filter(({ type }) => type === expectedType).reduce((p, { requestCount }) => p + requestCount, 0);
