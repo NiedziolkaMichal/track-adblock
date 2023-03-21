@@ -15,20 +15,18 @@ export function RequestsCard({ host, className, $margin }: { host: string; class
   const startDate = getChartStartDate();
   const requestsData = useHostRequests(host, startDate, DAYS_IN_THE_CHART, REFRESH_INTERVAL_MILLIS);
 
+  const amountAll = requestsData ? formatNumber(requestsData.totalOrdinary + requestsData.totalUnblocked, 1) : "⟳";
+  const amountOrdinary = requestsData ? formatNumber(requestsData.totalOrdinary, 1) : "⟳";
+  const amountUnblocked = requestsData ? formatNumber(requestsData.totalUnblocked, 1) : "⟳";
+
   return (
     <Card className={className} $margin={$margin}>
-      {requestsData && (
-        <CardTabs>
-          <MetricTab type="all" amount={formatNumber(requestsData.totalOrdinary + requestsData.totalUnblocked, 1)} />
-          <MetricTab type="ordinary" amount={formatNumber(requestsData.totalOrdinary, 1)} />
-          <MetricTab type="unblocked" amount={formatNumber(requestsData.totalUnblocked, 1)} />
-        </CardTabs>
-      )}
-      {requestsData && (
-        <ChartContainer>
-          <RequestsChart requestsData={requestsData} />
-        </ChartContainer>
-      )}
+      <CardTabs>
+        <MetricTab type="all" amount={amountAll} />
+        <MetricTab type="ordinary" amount={amountOrdinary} />
+        <MetricTab type="unblocked" amount={amountUnblocked} />
+      </CardTabs>
+      <ChartContainer>{requestsData && <RequestsChart requestsData={requestsData} />}</ChartContainer>
     </Card>
   );
 }
