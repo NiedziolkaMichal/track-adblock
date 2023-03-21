@@ -49,6 +49,7 @@ export function getRequestTypesTitle(type: keyof typeof THEME.graph.requests) {
 
 const ChartContainer = styled.div`
   height: 300px;
+  overflow: hidden; // Overflow can happen while showing tooltip close to the edge of the viewport
 `;
 
 function MetricTab({ type, amount }: { type: keyof typeof THEME.graph.requests; amount: number | string }) {
