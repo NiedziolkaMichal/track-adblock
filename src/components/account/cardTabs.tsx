@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 
 export const CardTabs = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 export function CardTab({ title, value, roundedBottom = false, valueColor }: { title: ReactNode; value: ReactNode; roundedBottom?: boolean; valueColor: string }) {

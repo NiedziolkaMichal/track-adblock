@@ -11,7 +11,13 @@ export const H1 = styled.h1<{ $margin?: MarginValue }>`
 
 export const MeasurementCardSides = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
   justify-content: space-between;
+
+  > * {
+    flex: 1 1 auto;
+  }
 `;
 
 export const ErrorBox = styled.div<{ $margin?: MarginValue }>`

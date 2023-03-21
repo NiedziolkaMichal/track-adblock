@@ -76,7 +76,8 @@ export const THEME = {
     background: "rgb(255,255,255,0.3)",
   },
   sideMenu: {
-    hover: "#9a9eb919",
+    background: "#edf1f4",
+    hover: "#d9dddd",
     focusVisible: "#303030",
   },
   errorBlock: {

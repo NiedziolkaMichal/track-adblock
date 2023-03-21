@@ -6,7 +6,15 @@ import { AuthAndAccountSharedLayout } from "../auth";
 
 const BaseStructure = styled.div`
   display: grid;
-  grid-template: 1fr / minmax(55px, 240px) 1fr; // 55px is used in sideMenu and account/index
+  grid-template: 1fr / 240px 1fr;
+
+  @media (max-width: 1200px) {
+    grid-template: 1fr / 55px 1fr;
+  }
+  // It's repeated in sideMenu.tsx
+  @media (max-width: calc(29rem + 85px)) {
+    display: block;
+  }
 `;
 
 const MainBackground = styled.div`
@@ -14,15 +22,26 @@ const MainBackground = styled.div`
 `;
 
 const Main = styled.main`
-  padding: 8px 40px 0 0;
+  padding: 8px 40px 0;
   // RequestsChart required fixed width in order to be resized correctly with the viewport
-  width: calc(100vw - 55px); // 55px is width of a side menu
+  width: calc(100vw - 240px - var(--scrollbar-width));
   max-width: 1280px;
   margin-left: auto;
+
+  @media (max-width: 1200px) {
+    width: calc(100vw - 55px - var(--scrollbar-width));
+  }
+  @media (max-width: calc(29rem + 85px)) {
+    width: 100%;
+    padding: 8px 10px 0;
+  }
 `;
 
 const UnevenMargin = styled.div`
   flex-grow: 0.7;
+  @media (max-width: 1280px) {
+    flex-grow: 0;
+  }
 `;
 
 export function AccountBase({ children }: { children: ReactNode }) {

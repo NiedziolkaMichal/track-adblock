@@ -57,7 +57,7 @@ export const LinkSecondary = styled(Link)`
 export const QuestionLink = styled(Link)`
   display: block;
   width: fit-content;
-  padding: 10px 18px;
+  padding: 10px 18px 10px 0;
   color: ${({ theme }) => theme.button.anchor.text};
   font-weight: 480;
   font-size: 0.9rem;

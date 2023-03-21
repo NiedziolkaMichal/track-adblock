@@ -38,11 +38,20 @@ const Base = styled.nav`
   flex-direction: column;
   justify-content: start;
   padding-top: 8px;
-  padding-bottom: 20px;
+  height: fit-content;
   z-index: 1; // Placing it in foreground of the main section, when hover is active
 
   :hover {
     width: 240px;
+  }
+
+  @media (max-width: 1200px) {
+    :hover {
+      background-color: ${({ theme }) => theme.sideMenu.background};
+    }
+  }
+  @media (max-width: calc(29rem + 85px)) {
+    display: none;
   }
 `;
 
@@ -87,7 +96,7 @@ const ItemIcon = styled.svg`
   height: 24px;
   width: 24px;
   min-width: 24px;
-  margin: auto 15px; // 15px is (55px(side menu width) - 1px(side menu border-width) - 24px(icon width)) / 2
+  margin: auto 15px;
 `;
 
 const ItemTitle = styled.div`
@@ -95,7 +104,7 @@ const ItemTitle = styled.div`
   margin: auto 0;
   font-size: 0.875rem;
   font-weight: 600;
-  overflow: hidden; //TODO handle it better way
+  overflow: hidden;
 `;
 
 function MenuItemLink({ title, href, additionalPaths, children }: { title: string; href: string; additionalPaths?: string[]; children: ReactNode }) {
