@@ -86,7 +86,7 @@ async function getRequestsData(userId: string, host: string, startDate: Date, ti
     startDate: startDate.toISOString(),
     days,
     ordinary: Array.from({ length: days }, (_, index) => countRequestsOfTypeAndDay(HostRequestType.ordinary, index)),
-    unblocked: Array.from({ length: days }, (_, index) => countRequestsOfTypeAndDay(HostRequestType.ordinary, index)),
+    unblocked: Array.from({ length: days }, (_, index) => countRequestsOfTypeAndDay(HostRequestType.adblock, index)),
     totalOrdinary: countRequestsOfType(HostRequestType.ordinary),
     totalUnblocked: countRequestsOfType(HostRequestType.adblock),
   };

@@ -3,7 +3,7 @@ import { THEME } from "../../../styles/themes";
 import { ChartTooltip } from "./chartTooltip";
 import { formatNumber } from "../../../util/format";
 import { getRequestTypesTitle } from "./requestsCard";
-import { RequestsData } from "../../../pages/api/hostRequests";
+import { RequestsData } from "../../../pages/api/host/[host]/requests";
 import { useTheme } from "styled-components";
 
 const X_AXIS_DATA_SEPARATOR = "|";
