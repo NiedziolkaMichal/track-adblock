@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   html {
     text-size-adjust: 100%;
+    scrollbar-gutter: stable;
   }
   * {
     font-family: MonserratMini, sans-serif;
@@ -45,5 +46,19 @@ export const GlobalStyle = createGlobalStyle`
   }
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(to bottom, ${({ theme }) => theme.gradient.primary.color_1}, ${({ theme }) => theme.gradient.primary.color_2});
+  }
+`;
+
+export const BaseBackground = createGlobalStyle`
+  body {
+    --body-bg-line: ${({ theme }) => theme.background.baseLine};
+    --body-bg: ${({ theme }) => theme.background.base};
+    background: repeating-linear-gradient(178deg, var(--body-bg-line) 1px, transparent 2px 83px, var(--body-bg-line) 84px), repeating-linear-gradient(88deg, var(--body-bg-line) 1px, transparent 2px 83px, var(--body-bg-line) 84px), var(--body-bg);
+  }
+`;
+
+export const AccountBackground = createGlobalStyle`
+  body {
+    --body-bg: ${({ theme }) => theme.background.account};
   }
 `;

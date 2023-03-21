@@ -1,37 +1,89 @@
 import styled, { css } from "styled-components";
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 
 export function SideMenu() {
+  const sideMenuItems = getSideMenuItems();
   return (
     <Base>
-      <MenuItemLink title="Statystyki" href="/account">
-        <IconIndex />
-      </MenuItemLink>
-      <MenuItemLink title="Instalacja" href="/account/addHost" additionalPaths={["/account/install/analytics"]}>
-        <IconInstallation />
-      </MenuItemLink>
-      <MenuItemLink title="Płatności" href="/account/payments">
-        <IconPayment />
-      </MenuItemLink>
-      <MenuItemLink title="Profil" href="/account/profile">
-        <IconProfile />
-      </MenuItemLink>
-      <MenuItemButton
-        title="Wyloguj się"
-        onClick={() =>
-          signOut({
-            callbackUrl: "/",
-          })
-        }
-      >
-        <IconLogout />
-      </MenuItemButton>
+      {sideMenuItems.map((i) => (
+        <MenuItem key={i.title} item={i} />
+      ))}
     </Base>
   );
 }
+
+function MenuItem({ item }: { item: MenuItemButton | MenuItemLink }) {
+  if (item.type === "button") {
+    return (
+      <MenuItemButton title={item.title} onClick={item.onClick}>
+        <item.icon />
+      </MenuItemButton>
+    );
+  }
+  return (
+    <MenuItemLink title={item.title} href={item.href} additionalPaths={item.additionalPaths}>
+      <item.icon />
+    </MenuItemLink>
+  );
+}
+
+interface MenuItem {
+  title: string;
+  icon: () => JSX.Element;
+}
+export interface MenuItemLink extends MenuItem {
+  type: "link";
+  href: string;
+  additionalPaths?: string[];
+}
+export interface MenuItemButton extends MenuItem {
+  type: "button";
+  onClick: MouseEventHandler;
+}
+
+export function getSideMenuItems(): Array<MenuItemButton | MenuItemLink> {
+  return [
+    {
+      title: "Statystyki",
+      href: "/account",
+      type: "link",
+      icon: IconIndex,
+    },
+    {
+      title: "Instalacja",
+      href: "/account/addHost",
+      additionalPaths: ["/account/install/analytics"],
+      type: "link",
+      icon: IconInstallation,
+    },
+    {
+      title: "Płatności",
+      href: "/account/payments",
+      type: "link",
+      icon: IconPayment,
+    },
+    {
+      title: "Profil",
+      href: "/account/profile",
+      type: "link",
+      icon: IconProfile,
+    },
+    {
+      title: "Wyloguj się",
+      onClick: onClickSignOut,
+      type: "button",
+      icon: IconLogout,
+    },
+  ];
+}
+
+const onClickSignOut = () =>
+  signOut({
+    callbackUrl: "/",
+  });
 
 const Base = styled.nav`
   display: flex;

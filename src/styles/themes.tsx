@@ -16,7 +16,11 @@ export const THEME = {
     invalid: "red",
   },
   background: {
-    secondary: "#F8F9FA",
+    base: "linear-gradient(88deg, #F1F6F7, #f5efff)",
+    baseLine: "#efe8ff",
+    account: "#f1f6f7",
+  },
+  card: {
     glass: "#ffffff57",
     tab: "#a6aac310",
   },

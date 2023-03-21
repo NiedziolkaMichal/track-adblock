@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { Margin, MarginValue } from "../margin";
 
 const Base = styled.div<{ $margin?: MarginValue }>`
-  background: ${({ theme }) => theme.background.glass};
+  background: ${({ theme }) => theme.card.glass};
   border: 1px solid ${({ theme }) => theme.border.primary};
   border-radius: 8px;
   color: ${({ theme }) => theme.text.heading};

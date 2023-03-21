@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode } from "react";
 import styled from "styled-components";
 import Image from "next/image";
+import { AccountBackground } from "../styles/global";
 
 const Container = styled.div`
   display: flow-root;
@@ -34,6 +35,7 @@ const Main = styled.main`
 export function AuthAndAccountSharedLayout({ children }: { children: ReactNode }) {
   return (
     <Container>
+      <AccountBackground />
       <Background src="/img/bg/login.webp" width={2109} height={2422} sizes="100vw" alt="" quality={100} loading="eager" priority={true} />
       {children}
     </Container>

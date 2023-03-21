@@ -9,7 +9,7 @@ export const AuthCard = styled(Card)`
   gap: 35px;
   width: max-content;
 
-  background: ${({ theme }) => theme.background.glass};
+  background: ${({ theme }) => theme.card.glass};
   --horizontal-padding: 45px;
   padding: 30px var(--horizontal-padding);
   margin: 0 10px;
