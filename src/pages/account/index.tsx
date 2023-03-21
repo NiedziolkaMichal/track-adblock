@@ -40,9 +40,9 @@ export default function Page({ hosts }: Props) {
     <>
       {hosts
         .map((host) => host.host)
-        .map((host) => (
+        .map((host, index) => (
           <React.Fragment key={host}>
-            <H1 $margin="t-4px b-30px">Statystyki strony: {host}</H1>
+            <H1 $margin={`t-${index === 0 ? 4 : 50}px b-30px`}>Statystyki strony: {host}</H1>
             <RequestsCard $margin="b-15px" host={host} />
           </React.Fragment>
         ))}
