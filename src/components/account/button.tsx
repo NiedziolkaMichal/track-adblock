@@ -24,8 +24,9 @@ const stylePrimary = css`
   }
 `;
 
-export const LinkPrimary = styled(Link)`
+export const LinkPrimary = styled(Link)<{ $margin: MarginValue }>`
   ${stylePrimary}
+  ${Margin}
 `;
 
 export const ButtonPrimary = styled.button`

@@ -22,8 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { jsFilePath, phpFilePath } = getScriptFilePaths();
 
   try {
-    await putIntegration(userId, host, IntegrationType.googleAnalytics, measurementId, jsFilePath, phpFilePath);
-    return res.status(200).send("OK");
+    const ok = await putIntegration(userId, host, IntegrationType.googleAnalytics, measurementId, jsFilePath, phpFilePath);
+    return res.status(ok ? 200 : 400).send(ok ? "OK" : "LIMIT_REACHED");
   } catch (e) {
     // Name collision is resolved as an exception
     return res.status(400).send("ALREADY_EXISTS");

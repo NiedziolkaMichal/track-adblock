@@ -1,6 +1,8 @@
 import { NextApiRequest } from "next";
 import { rnd } from "./math";
 
+export const MAX_HOSTS_PER_USER = 3;
+
 const SCRIPT_FILE_NAME_MIN_LENGTH = 4;
 const SCRIPT_FILE_NAME_MAX_LENGTH = 8;
 const SCRIPT_FILE_ALLOWED_CHARACTERS = "qwertyuiopasdfghjklzxcvbnm";

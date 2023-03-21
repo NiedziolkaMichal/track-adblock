@@ -8,22 +8,29 @@ import { InvalidInput, Label, TextField } from "../../components/account/input";
 import { NextRouter, useRouter } from "next/router";
 import { useInputWithCallback } from "../../hooks/inputHooks";
 import { ButtonList, H1, MeasurementCardSides } from "../../components/account/common";
-import { verifyMeasurementId } from "../../util/verifyInput";
+import { MAX_HOSTS_PER_USER, verifyMeasurementId } from "../../util/verifyInput";
 import { MarginValue } from "../../components/margin";
 import { fetchAnalyticsId } from "../../hooks/apiHooks";
 import { GetServerSideProps } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getServerSession } from "../api/auth/[...nextauth]";
-import { LOGIN_REDIRECT } from "../../util/redirects";
+import { ACCOUNT_REDIRECT, LOGIN_REDIRECT } from "../../util/redirects";
 import { fullEncodeUriComponent } from "../../util/format";
+import { getHosts } from "../../../db/query";
 
 const NEXT_PAGE = "/account/install/analytics";
 
 export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);
+  const userId = session?.user.id;
 
-  if (!session) {
+  if (!userId) {
     return LOGIN_REDIRECT;
+  }
+
+  const hosts = await getHosts(userId);
+  if (hosts.length >= MAX_HOSTS_PER_USER) {
+    return ACCOUNT_REDIRECT;
   }
 
   return {

@@ -7,6 +7,8 @@ import { GetServerSidePropsContext } from "next/types";
 import { getServerSession } from "../api/auth/[...nextauth]";
 import { getHosts } from "../../../db/query";
 import { ADD_HOST_REDIRECT, LOGIN_REDIRECT } from "../../util/redirects";
+import React from "react";
+import { MAX_HOSTS_PER_USER } from "../../util/verifyInput";
 
 interface Props {
   hosts: { host: string }[];
@@ -34,12 +36,21 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
 };
 
 export default function Page({ hosts }: Props) {
-  const host = hosts[0].host;
   return (
     <>
-      <H1 $margin="t-4px b-30px">Statystyki strony: {host}</H1>
-      <RequestsCard $margin="b-15px" host={host} />
-      <LinkPrimary href={"/account/addHost"}>Dodaj kolejną domenę</LinkPrimary>
+      {hosts
+        .map((host) => host.host)
+        .map((host) => (
+          <React.Fragment key={host}>
+            <H1 $margin="t-4px b-30px">Statystyki strony: {host}</H1>
+            <RequestsCard $margin="b-15px" host={host} />
+          </React.Fragment>
+        ))}
+      {hosts.length < MAX_HOSTS_PER_USER && (
+        <LinkPrimary $margin="b-15px" href={"/account/addHost"}>
+          Dodaj kolejną domenę
+        </LinkPrimary>
+      )}
     </>
   );
 }
