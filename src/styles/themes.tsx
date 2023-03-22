@@ -8,6 +8,9 @@ export const THEME = {
       focusVisible: "#b921ad",
     },
   },
+  hero: {
+    wordColors: ["#341bc1", "#383096", "#573096", "#9921b9", "#9321b9", "#b921ad"],
+  },
   text: {
     heading: "#303030",
     primary: "#5F6368",
@@ -79,6 +82,7 @@ export const THEME = {
   codeBlock: {
     background: "rgb(255,255,255,0.3)",
   },
+  mobileMenuHr: "#f2d3ff",
   sideMenu: {
     background: "#edf1f4",
     hover: "#d9dddd",
@@ -102,6 +106,10 @@ export const THEME = {
       ordinary: "#041db9",
       unblocked: "#008aff",
     },
+  },
+  footer: {
+    background: "#303030",
+    text: "#d1d1d1",
   },
 };
 type ThemeType = typeof THEME;

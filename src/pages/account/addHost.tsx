@@ -7,7 +7,7 @@ import isValidDomain from "is-valid-domain";
 import { InvalidInput, Label, TextField } from "../../components/account/input";
 import { NextRouter, useRouter } from "next/router";
 import { useInputWithCallback } from "../../hooks/inputHooks";
-import { ButtonList, H1, MeasurementCardSides } from "../../components/account/common";
+import { H1, MeasurementCardSides } from "../../components/account/common";
 import { MAX_HOSTS_PER_USER, verifyMeasurementId } from "../../util/verifyInput";
 import { MarginValue } from "../../components/margin";
 import { fetchAnalyticsId } from "../../hooks/apiHooks";
@@ -17,6 +17,7 @@ import { getServerSession } from "../api/auth/[...nextauth]";
 import { ACCOUNT_REDIRECT, LOGIN_REDIRECT } from "../../util/redirects";
 import { fullEncodeUriComponent } from "../../util/format";
 import { getHosts } from "../../../db/query";
+import { ButtonList } from "../../components/common";
 
 const NEXT_PAGE = "/account/install/analytics";
 

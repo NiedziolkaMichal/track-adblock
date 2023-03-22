@@ -35,9 +35,3 @@ export const ErrorInline = styled.strong`
   color: ${({ theme }) => theme.errorInline.text};
   font-size: 0.8rem;
 `;
-
-export const ButtonList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-`;

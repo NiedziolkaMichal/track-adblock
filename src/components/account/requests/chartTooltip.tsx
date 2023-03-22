@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { SliceTooltipProps } from "@nivo/line";
 import { formatDate, formatNumber } from "../../../util/format";
 import { getRequestTypesTitle } from "./requestsCard";
-import { RequestsData } from "../../../pages/api/hostRequests";
+import { RequestsData } from "../../../pages/api/host/[host]/requests";
 import { getDateFromXAxis } from "./requestsChart";
 
 export function ChartTooltip({ slice, requestsData }: { slice: SliceTooltipProps["slice"]; requestsData: RequestsData }) {

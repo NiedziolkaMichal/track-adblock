@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { MouseEvent, MutableRefObject, RefObject, useRef, useState } from "react";
+import { MouseEvent, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { getSideMenuItems, MenuItemButton, MenuItemLink } from "./account/sideMenu";
+import { convertRemToPixels } from "../util/dom";
 
 export function Header() {
   const mobileNavBgRef = useRef<HTMLDivElement>(null);
   const hamburgerIconRef = useRef<HTMLObjectElement>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  useHideMobileNavOnResize(hamburgerIconRef, mobileNavBgRef, mobileNavOpen, setMobileNavOpen);
 
   return (
     <StyledHeader>
@@ -25,6 +27,18 @@ export function Header() {
       </MobileNavBackground>
     </StyledHeader>
   );
+}
+
+function useHideMobileNavOnResize(iconRef: RefObject<HTMLObjectElement>, mobileNavRef: RefObject<HTMLElement>, opened: boolean, setOpened: (opened: boolean) => void) {
+  useEffect(() => {
+    const listener = () => {
+      if (opened && window.innerWidth >= convertRemToPixels(29) + 86) {
+        openOrCloseMobileNav(iconRef, mobileNavRef, opened, setOpened, true);
+      }
+    };
+    addEventListener("resize", listener);
+    return () => removeEventListener("resize", listener);
+  }, [iconRef, mobileNavRef, opened, setOpened]);
 }
 
 function NavLinks({ mobileNav }: { mobileNav: boolean }) {
@@ -104,6 +118,8 @@ const HamburgerParent = styled.div`
 const HamburgerButton = styled.button`
   position: absolute;
   inset: 0;
+  width: 100%; // Setting width & height is required to make it work on firefox
+  height: 100%;
 `;
 
 const StyledHeader = styled.header`
@@ -132,6 +148,7 @@ const MobileNavBackground = styled.div`
   position: fixed;
   z-index: 999;
   inset: 0;
+  padding-left: 25px;
   background: var(--body-bg);
   transform: translateY(100vh);
   transition: transform ease-out 0.3s;
@@ -160,7 +177,7 @@ const MobileNav = styled.nav`
     width: 100%;
     height: 0;
     transform: translateY(20px);
-    border-bottom: 1px solid #f2d3ff;
+    border-bottom: 1px solid ${({ theme }) => theme.mobileMenuHr};
   }
 `;
 

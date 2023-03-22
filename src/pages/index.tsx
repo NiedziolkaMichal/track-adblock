@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { Header } from "../components/header";
+import { HeroImage, HeroSection } from "../components/hero";
 import { BaseBackground } from "../styles/global";
 
 export default function Home() {
@@ -13,7 +14,11 @@ export default function Home() {
       </Head>
       <BaseBackground />
       <Header />
-      <main>TODO</main>
+      <main>
+        <HeroSection heading="Śledź użytkowników AdBlocka" paragraph="Wtyczka która zwiększa dokładność Google Analytics i pozwala lepiej oszacować skuteczność reklam." buttons>
+          <HeroImage src="/img/illustration/hero.svg" width={700} height={466} alt="" />
+        </HeroSection>
+      </main>
     </>
   );
 }
