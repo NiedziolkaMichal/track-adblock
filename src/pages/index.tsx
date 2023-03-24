@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { BigOrderedList, BigP, FullSizeImg } from "../components/common";
 import { Header } from "../components/header";
 import { BaseSectionHeading, Section, SectionContent, SkewedSection, SkewedSectionHeading, SkewedSectionsJoiner } from "../components/section";
+import { Footer } from "../components/footer";
 import { PricingCardTrial } from "../components/pricingCard";
 import { PositionedImageLink, PositionedLinkGrid } from "../components/positionedLinks";
 import { HeroImage, HeroSection } from "../components/hero";
@@ -30,6 +31,7 @@ export default function Home() {
         <HowItWorksSection />
         <CompatibilitySection />
         <PricingSection />
+        <Footer />
       </main>
     </>
   );
