@@ -6,12 +6,14 @@ import { GlobalStyle } from "../styles/global";
 import { ComponentType, ReactElement } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ChatBot } from "../components/chatBot";
+import { SharedMetaData } from "../components/metadata";
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const getSharedLayout = isPageSharingLayout(Component) ? Component.getSharedLayout : (page: ReactElement) => page;
 
   return (
     <>
+      <SharedMetaData />
       <ThemeProvider theme={THEME}>
         <SessionProvider session={session} refetchOnWindowFocus={false} refetchWhenOffline={false} refetchInterval={43200}>
           <GlobalStyle />

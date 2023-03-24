@@ -9,6 +9,7 @@ import { getHosts } from "../../../db/query";
 import { ADD_HOST_REDIRECT, LOGIN_REDIRECT } from "../../util/redirects";
 import React from "react";
 import { MAX_HOSTS_PER_USER } from "../../util/verifyInput";
+import { PageMetaData } from "../../components/metadata";
 
 interface Props {
   hosts: { host: string }[];
@@ -37,6 +38,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
 export default function Page({ hosts }: Props) {
   return (
     <>
+      <PageMetaData title="Panel użytkownika | Track Adblock" />
       {hosts
         .map((host) => host.host)
         .map((host, index) => (

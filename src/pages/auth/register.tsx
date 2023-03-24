@@ -14,6 +14,7 @@ import { GetServerSideProps } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getServerSession } from "../api/auth/[...nextauth]";
 import { ACCOUNT_REDIRECT } from "../../util/redirects";
+import { PageMetaData } from "../../components/metadata";
 
 export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);
@@ -30,6 +31,7 @@ export const getServerSideProps: GetServerSideProps<object> = async (context: Ge
 export default function Page() {
   return (
     <>
+      <PageMetaData title="Załóż nowe konto | Track Adblock" />
       <H1 $margin="b-30px">Załóż nowe konto</H1>
       <AuthCard>
         <AuthCardContent $center={true}>

@@ -14,6 +14,7 @@ import { getIntegration } from "../../../../db/query";
 import { getServerSession } from "../../api/auth/[...nextauth]";
 import { IntegrationType } from ".prisma/client";
 import { LOGIN_REDIRECT } from "../../../util/redirects";
+import { PageMetaData } from "../../../components/metadata";
 
 interface Props {
   host: string;
@@ -56,6 +57,7 @@ export default function Page({ host, measurementId, jsFilePath, phpFilePath }: P
 
   return (
     <>
+      <PageMetaData title="Instalacja skryptu | Track Adblock" />
       <H1 $margin="t-4px b-30px">Zainstaluj skrypt</H1>
       <DomainCard domain={host} measurementId={measurementId} />
       <FilesCard jsFileName={jsFileName} jsFileUrl={jsFileUrl} phpFileName={phpFileName} />

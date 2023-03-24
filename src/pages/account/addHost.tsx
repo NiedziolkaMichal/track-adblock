@@ -18,6 +18,7 @@ import { ACCOUNT_REDIRECT, LOGIN_REDIRECT } from "../../util/redirects";
 import { fullEncodeUriComponent } from "../../util/format";
 import { getHosts } from "../../../db/query";
 import { ButtonList } from "../../components/common";
+import { PageMetaData } from "../../components/metadata";
 
 const NEXT_PAGE = "/account/install/analytics";
 
@@ -44,6 +45,7 @@ export default function Page() {
 
   return (
     <>
+      <PageMetaData title="Dodaj Google Analytics | Track Adblock" />
       <H1 $margin="t-4px b-30px">Dodaj Google Analytics</H1>
       <DomainCard setDomain={setDomain} />
       <MeasurementIdCard domain={domain} setMeasurementId={setMeasurementId} />

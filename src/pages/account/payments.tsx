@@ -13,6 +13,7 @@ import { getExpirationDetails, getPayments } from "../../../db/query";
 import { Payment } from "@prisma/client";
 import { ServiceExpirationBar } from "../../components/account/serviceExpiration";
 import { getPaymentState, PaymentState } from "../../payment/payment";
+import { PageMetaData } from "../../components/metadata";
 
 interface Props {
   products: PropsProduct[];
@@ -62,6 +63,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
 export default function Page({ products, paymentState, serviceExpiration }: Props) {
   return (
     <>
+      <PageMetaData title="Płatności | Track Adblock" />
       <H1 $center={true} $margin="b-40px">
         Wykup usługę
       </H1>

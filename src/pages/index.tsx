@@ -9,16 +9,12 @@ import { PositionedImageLink, PositionedLinkGrid } from "../components/positione
 import { HeroImage, HeroSection } from "../components/hero";
 import { BaseBackground } from "../styles/global";
 import { PRICES } from "../payment/prices";
+import { PageMetaData } from "../components/metadata";
 
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>TODO</title>
-        <meta name="description" content="TODO" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <PageMetaData title="Track Adblock" />
       <BaseBackground />
       <Header />
       <main>

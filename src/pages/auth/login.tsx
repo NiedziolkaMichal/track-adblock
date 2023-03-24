@@ -11,6 +11,7 @@ import { GetServerSidePropsContext } from "next/types";
 import { AuthCard, AuthCardButton, AuthCardContent, AuthCardHrWithContent } from "../../components/account/authCard";
 import { SignInOptions } from "next-auth/react/types";
 import { ACCOUNT_REDIRECT } from "../../util/redirects";
+import { PageMetaData } from "../../components/metadata";
 
 export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);
@@ -66,6 +67,7 @@ export default function Page() {
 
   return (
     <>
+      <PageMetaData title="Zaloguj się | Track Adblock" />
       <H1 $margin="b-30px">Przejdź do panelu użytkownika</H1>
       <AuthCard>
         <AuthCardContent>
