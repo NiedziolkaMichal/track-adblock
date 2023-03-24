@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Margin, MarginValue } from "./margin";
 
-// TODO image optimization
 export const FullSizeImg = styled.img`
   display: block;
   max-width: 100%;
@@ -19,6 +18,14 @@ export const FillImg = styled.img`
 `;
 
 export const P = styled.p<{ $margin: MarginValue }>`
+  ${Margin}
+`;
+
+export const BigP = styled.p<{ $margin?: MarginValue }>`
+  font-size: 1.1rem;
+  font-weight: 480;
+  color: ${({ theme }) => theme.text.heading};
+  line-height: 1.7;
   ${Margin}
 `;
 

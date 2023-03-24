@@ -22,6 +22,7 @@ export const THEME = {
     base: "linear-gradient(88deg, #F1F6F7, #f5efff)",
     baseLine: "#efe8ff",
     account: "#f1f6f7",
+    section_1: "#efefef",
   },
   card: {
     glass: "#ffffff57",
