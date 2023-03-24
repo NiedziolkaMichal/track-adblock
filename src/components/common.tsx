@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
 import { Margin, MarginValue } from "./margin";
 
 export const FullSizeImg = styled.img`
@@ -52,5 +52,25 @@ export const TransparentBorderGradient = styled.div`
     border-radius: var(--border-radius);
     background: ${({ theme }) => theme.gradient.primary.image};
     filter: blur(4px);
+  }
+`;
+
+export const BigOrderedList = styled.ol<{ $color: (theme: DefaultTheme) => string; $borderColor: (theme: DefaultTheme) => string; $size: string; $weight: string }>`
+  padding: 0;
+  list-style-type: none;
+  counter-reset: index;
+  > li {
+    display: grid;
+    grid-template-columns: ${({ $size }) => $size} 1fr;
+
+    counter-increment: index 1;
+  }
+  > li::before {
+    content: counter(index, decimal);
+    font-size: ${({ $size }) => $size};
+    font-weight: ${({ $weight }) => $weight};
+    color: ${({ theme, $color }) => $color(theme)};
+    --border-color: ${({ theme, $borderColor }) => $borderColor(theme)};
+    text-shadow: 1px 1px 1px var(--border-color), -1px 1px 1px var(--border-color), -1px -1px 1px var(--border-color), 1px -1px 1px var(--border-color);
   }
 `;

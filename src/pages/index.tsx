@@ -1,8 +1,8 @@
 import Head from "next/head";
 import styled from "styled-components";
-import { BigP, FullSizeImg } from "../components/common";
+import { BigOrderedList, BigP, FullSizeImg } from "../components/common";
 import { Header } from "../components/header";
-import { SectionContent, SkewedSection, SkewedSectionHeading, SkewedSectionsJoiner } from "../components/section";
+import { BaseSectionHeading, Section, SectionContent, SkewedSection, SkewedSectionHeading, SkewedSectionsJoiner } from "../components/section";
 import { PositionedImageLink, PositionedLinkGrid } from "../components/positionedLinks";
 import { HeroImage, HeroSection } from "../components/hero";
 import { BaseBackground } from "../styles/global";
@@ -25,6 +25,7 @@ export default function Home() {
         <ExplanationSection />
         <SkewedSectionsJoiner $bgColor={(theme) => theme.section.explanation.bg} />
         <AdBlocksSection />
+        <HowItWorksSection />
       </main>
     </>
   );
@@ -96,3 +97,52 @@ function AdBlocksSection() {
     </SkewedSection>
   );
 }
+
+function HowItWorksSection() {
+  return (
+    <Section $margin="t-140px b-140px">
+      <BaseSectionHeading $color={(theme) => theme.section.howItWorks.text} $margin="b-50px" id="how-it-works">
+        Jak to działa?
+      </BaseSectionHeading>
+      <SectionContent $gap="50px">
+        <HowItWorksImg src="/img/illustration/laptop.svg" width={600} height={420} alt="" />
+        <HowItWorksList $color={(theme) => theme.section.howItWorks.liMarkerColor} $borderColor={(theme) => theme.section.howItWorks.liMarkerBorder}>
+          <li>
+            <BigP>AdBlocki działają poprzez blokowanie adresów URL które zostały dodane do czarnej listy</BigP>
+          </li>
+          <li>
+            <BigP>Nasza wtyczka tworzy plik o losowej nazwie, który będzie przekierowywał analitykę</BigP>
+          </li>
+          <li>
+            <BigP>Dodatkowo codziennie skanujemy czarne listy, upewniając się że wszystko działa poprawnie</BigP>
+          </li>
+        </HowItWorksList>
+      </SectionContent>
+    </Section>
+  );
+}
+
+const HowItWorksImg = styled(FullSizeImg)`
+  max-width: 31rem;
+`;
+
+export const HowItWorksList = styled(BigOrderedList).attrs(() => ({
+  $size: "4rem",
+  $weight: 900,
+}))`
+  > li {
+    max-width: 27rem;
+    margin-bottom: 30px;
+
+    @media (max-width: 15rem) {
+      grid-template-columns: initial;
+      text-align: center;
+    }
+  }
+
+  > li::before {
+    @media (max-width: 15rem) {
+      margin: auto;
+    }
+  }
+`;

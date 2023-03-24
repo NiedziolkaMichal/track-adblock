@@ -31,6 +31,11 @@ export const THEME = {
       bg: "#d72d2d",
       text: "#fff",
     },
+    howItWorks: {
+      text: "#d72d2d",
+      liMarkerColor: "#f3f2fb",
+      liMarkerBorder: "#d72d2d",
+    },
   },
   card: {
     glass: "#ffffff57",

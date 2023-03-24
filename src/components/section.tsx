@@ -60,3 +60,11 @@ export const SkewedSectionHeading = styled.h2<{ $color: (theme: DefaultTheme) =>
     text-align: center;
   }
 `;
+
+export const BaseSectionHeading = styled.h2<{ $color: (theme: DefaultTheme) => string; $margin?: MarginValue }>`
+  font-size: min(11vw, 2.5rem);
+  font-weight: 800;
+  color: ${({ theme, $color }) => $color(theme)};
+  text-align: center;
+  ${Margin}
+`;
