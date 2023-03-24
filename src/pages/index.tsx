@@ -26,6 +26,7 @@ export default function Home() {
         <SkewedSectionsJoiner $bgColor={(theme) => theme.section.explanation.bg} />
         <AdBlocksSection />
         <HowItWorksSection />
+        <CompatibilitySection />
       </main>
     </>
   );
@@ -146,3 +147,32 @@ export const HowItWorksList = styled(BigOrderedList).attrs(() => ({
     }
   }
 `;
+
+function CompatibilitySection() {
+  return (
+    <SkewedSection $bgColor={(theme) => theme.section.compatibility.bg} $skew="-2deg">
+      <SectionContent $margin="t-60px b-60px" $gap="0 50px" $wrapReverse={true}>
+        <div>
+          <SkewedSectionHeading $color={(theme) => theme.section.compatibility.text} $skew="-2deg" $margin="l-auto">
+            Nasza wtyczka
+            <br /> zadziała na
+            <br /> każdej stronie
+            <br /> internetowej!
+          </SkewedSectionHeading>
+        </div>
+        <PositionedLinkGrid>
+          <PositionedImageLink href="https://wordpress.org" src="/img/icon/wordpress.svg" alt="WordPress" width={122} height={122} y={2} x={5} />
+          <PositionedImageLink href="https://www.shopify.com" src="/img/icon/shopify.svg" alt="Shopify" width={61} height={61} y={12} x={70} />
+          <PositionedImageLink href="https://typo3.org" src="/img/icon/typo3.svg" alt="TYPO3" width={99} height={99} y={32} x={-1} />
+          <PositionedImageLink href="https://www.blogger.com" src="/img/icon/blogger.svg" alt="Blogger" width={62} height={62} y={30} x={40} />
+          <PositionedImageLink href="https://www.drupal.org" src="/img/icon/drupal.svg" alt="Drupal" width={166} height={44} y={50} x={0} />
+          <PositionedImageLink href="https://www.hubspot.com" src="/img/icon/hubspot.svg" alt="HubSpot" width={106} height={31} y={65} x={15} />
+          <PositionedImageLink href="https://www.joomla.org" src="/img/icon/joomla.svg" alt="Joomla" width={80} height={80} y={78} x={0} />
+          <PositionedImageLink href="https://business.adobe.com/pl/products/magento/magento-commerce.html" src="/img/icon/magento.svg" alt="Magento" width={91} height={91} y={85} x={35} />
+          <PositionedImageLink href="https://pl.wix.com" src="/img/icon/wix.svg" alt="Wix" width={64} height={64} y={60} x={60} />
+          <PositionedImageLink href="https://woocommerce.com/" src="/img/icon/woocommerce.svg" alt="WooCommerce" width={85} height={51} y={80} x={-1} />
+        </PositionedLinkGrid>
+      </SectionContent>
+    </SkewedSection>
+  );
+}

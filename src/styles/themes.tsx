@@ -36,6 +36,10 @@ export const THEME = {
       liMarkerColor: "#f3f2fb",
       liMarkerBorder: "#d72d2d",
     },
+    compatibility: {
+      bg: "#303030",
+      text: "#fff",
+    },
   },
   card: {
     glass: "#ffffff57",
