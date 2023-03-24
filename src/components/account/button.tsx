@@ -194,7 +194,7 @@ const ButtonTrackAdBlock = styled(ButtonWithIcon)`
 export function TrackAdBlockButton({ className, children, ...rest }: { className?: string; children: ReactNode } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <ButtonTrackAdBlock className={className} {...rest}>
-      <ButtonIcon src="/favicon.svg" width={24} height={24} />
+      <ButtonIcon src="/favicon/favicon.svg" width={24} height={24} />
       {children}
     </ButtonTrackAdBlock>
   );

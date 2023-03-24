@@ -27,7 +27,7 @@ const Main = styled.main`
   position: relative;
   margin: 100px auto 0;
 
-  @media (max-height: 640px) {
+  @media (max-width: 700px) {
     margin: 20px auto 0;
   }
 `;
