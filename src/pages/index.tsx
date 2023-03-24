@@ -129,7 +129,7 @@ function HowItWorksSection() {
 }
 
 const HowItWorksImg = styled(FullSizeImg)`
-  max-width: 31rem;
+  max-width: min(100%, 31rem);
 `;
 
 export const HowItWorksList = styled(BigOrderedList).attrs(() => ({
