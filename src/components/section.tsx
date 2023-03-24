@@ -35,3 +35,28 @@ export const SkewedSection = styled.section<{ $bgColor: (theme: DefaultTheme) =>
     }
   }
 `;
+
+export const SkewedSectionsJoiner = styled.div<{ $bgColor: (theme: DefaultTheme) => string }>`
+  height: 200px;
+  background-color: ${({ theme, $bgColor }) => $bgColor(theme)};
+  position: absolute;
+  width: 100%;
+  transform: translateY(-100px);
+  z-index: -2;
+`;
+
+export const SkewedSectionHeading = styled.h2<{ $color: (theme: DefaultTheme) => string; $skew: string; $margin?: MarginValue }>`
+  text-shadow: 0 1px 3px #00000054;
+  color: ${({ theme, $color }) => $color(theme)};
+  font-size: min(9vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.8;
+  text-align: left;
+  transform: rotate(${({ $skew }) => $skew});
+  ${Margin};
+
+  @media (max-width: calc(31.5rem + 56px)) {
+    transform: initial;
+    text-align: center;
+  }
+`;
