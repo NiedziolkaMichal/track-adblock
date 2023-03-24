@@ -50,3 +50,34 @@ export function getLastPathComponent(path: string) {
     return path.slice(largerIndex + 1);
   }
 }
+
+export function formatTimeToExpire(date: Date | null) {
+  if (!date || isNaN(date.getTime())) {
+    return undefined;
+  }
+  const days = getDaysToExpire(date);
+  if (days > 2) {
+    return `${days} dni`;
+  }
+  const hours = getHoursToExpire(date);
+  if (hours > 2) {
+    return `${hours} godzin`;
+  }
+  const minutes = getMinutesToExpire(date);
+  return `${minutes} minut`;
+}
+
+function getDaysToExpire(date: Date) {
+  const dayInMillis = 1000 * 60 * 60 * 24;
+  return Math.round((date.getTime() - Date.now()) / dayInMillis);
+}
+
+function getHoursToExpire(date: Date) {
+  const hoursInMillis = 1000 * 60 * 60;
+  return Math.round((date.getTime() - Date.now()) / hoursInMillis);
+}
+
+function getMinutesToExpire(date: Date) {
+  const minutesInMillis = 1000 * 60;
+  return Math.round((date.getTime() - Date.now()) / minutesInMillis);
+}

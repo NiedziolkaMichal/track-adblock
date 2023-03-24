@@ -85,6 +85,18 @@ export async function getIntegration(userId: string, host: string, type: Integra
   return response || undefined;
 }
 
+export function getExpirationDetails(userId: string) {
+  return prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      trial: true,
+      serviceExpiration: true,
+    },
+  });
+}
+
 export function getExpirationDetailsByEmail(email: string) {
   return prisma.user.findUnique({
     where: {

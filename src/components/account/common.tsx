@@ -1,11 +1,16 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Margin, MarginValue } from "../margin";
 
-export const H1 = styled.h1<{ $margin?: MarginValue }>`
+export const H1 = styled.h1<{ $margin?: MarginValue; $center?: boolean }>`
   font-size: min(6vw, 1.5rem);
   line-height: 1.5;
   font-weight: 510;
   color: ${({ theme }) => theme.text.heading};
+  ${({ $center }) =>
+    $center &&
+    css`
+      text-align: center;
+    `}
   ${Margin}
 `;
 

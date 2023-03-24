@@ -4,7 +4,7 @@ import { WaistedHeading } from "./waistedHeading";
 import { ShortSpace, TransparentBorderGradient } from "./common";
 import { BaseLink, GradientLink } from "./button";
 import { ProductPrice } from "../payment/prices";
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 
 export function PricingCardTrial({ productPrice }: { productPrice: ProductPrice }) {
   const Link = productPrice.topOffer ? SpecialCardLink : GradientLink;
@@ -13,6 +13,18 @@ export function PricingCardTrial({ productPrice }: { productPrice: ProductPrice 
       <OrdinaryText>3-dniowy okres próbny</OrdinaryText>
       <Link $margin="t-1.5rem in-auto b-50px" href="/auth/register">
         Wypróbuj za darmo
+      </Link>
+    </PricingCard>
+  );
+}
+
+export function PricingCardPurchase({ productPrice, onClick, children }: { productPrice: ProductPrice; onClick: MouseEventHandler; children?: ReactNode }) {
+  const Link = productPrice.topOffer ? SpecialCardLink : GradientLink;
+  return (
+    <PricingCard productPrice={productPrice}>
+      {children}
+      <Link as="button" $margin="t-1.5rem in-auto b-50px" onClick={onClick}>
+        Wykup pakiet
       </Link>
     </PricingCard>
   );
