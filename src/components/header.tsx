@@ -4,6 +4,7 @@ import { MouseEvent, MutableRefObject, RefObject, useEffect, useRef, useState } 
 import { useRouter } from "next/router";
 import { getSideMenuItems, MenuItemButton, MenuItemLink } from "./account/sideMenu";
 import { convertRemToPixels } from "../util/dom";
+import { useSession } from "next-auth/react";
 
 export function Header() {
   const mobileNavBgRef = useRef<HTMLDivElement>(null);
@@ -46,12 +47,15 @@ function NavLinks({ mobileNav }: { mobileNav: boolean }) {
   const pageHasSideMenu = router.pathname.startsWith("/account");
   const includeSideMenuItems = pageHasSideMenu && mobileNav;
 
+  const session = useSession();
+  const userPanelLink = session.status === "authenticated" ? "/account" : "/auth/login";
+
   return (
     <>
       <NavLink href="/">Start</NavLink>
       <NavLink href="/#how-it-works">Jak to działa</NavLink>
       <NavLink href="/#pricing">Cennik</NavLink>
-      {!includeSideMenuItems && <NavLink href="/auth/login">Panel klienta</NavLink>}
+      {!includeSideMenuItems && <NavLink href={userPanelLink}>Panel klienta</NavLink>}
       {includeSideMenuItems && getSideMenuItems().map((i) => <MobileNavLink key={i.title} item={i} />)}
     </>
   );

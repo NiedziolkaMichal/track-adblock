@@ -2,7 +2,7 @@ import { GitHubButton, GoogleButton, LinkPrimary, NegligibleLink, StyledLink, Tr
 import { ErrorBox, H1 } from "../../components/account/common";
 import { signIn } from "next-auth/react";
 import { NextRouter, useRouter } from "next/router";
-import { Dispatch, SetStateAction, useId, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useId, useState } from "react";
 import { Label, TextField } from "../../components/account/input";
 import { getAuthSharedLayout } from "../../components/auth";
 import { GetServerSideProps } from "next";
@@ -59,6 +59,10 @@ export default function Page() {
   const errorMsg = typeof error === "string" ? errors[error] || error : ""; //TODO handle "|| error" in a better way
 
   const adjustedPageType = error === "CredentialsSignin" ? "LoginWithPassword" : pageType;
+
+  useEffect(() => {
+    router.prefetch("/account");
+  });
 
   return (
     <>

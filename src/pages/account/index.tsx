@@ -29,7 +29,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
 
   return {
     props: {
-      session,
       hosts,
     },
   };
