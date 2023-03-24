@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { BigOrderedList, BigP, FullSizeImg } from "../components/common";
 import { Header } from "../components/header";
 import { BaseSectionHeading, Section, SectionContent, SkewedSection, SkewedSectionHeading, SkewedSectionsJoiner } from "../components/section";
+import { PricingCardTrial } from "../components/pricingCard";
 import { PositionedImageLink, PositionedLinkGrid } from "../components/positionedLinks";
 import { HeroImage, HeroSection } from "../components/hero";
 import { BaseBackground } from "../styles/global";
+import { PRICES } from "../payment/prices";
 
 export default function Home() {
   return (
@@ -27,6 +29,7 @@ export default function Home() {
         <AdBlocksSection />
         <HowItWorksSection />
         <CompatibilitySection />
+        <PricingSection />
       </main>
     </>
   );
@@ -174,5 +177,20 @@ function CompatibilitySection() {
         </PositionedLinkGrid>
       </SectionContent>
     </SkewedSection>
+  );
+}
+
+function PricingSection() {
+  return (
+    <Section $margin="t-100px b-100px">
+      <BaseSectionHeading $color={(theme) => theme.section.pricing.text} $margin="b-75px" id="pricing">
+        Cennik
+      </BaseSectionHeading>
+      <SectionContent $gap="30px">
+        {PRICES.map((p) => (
+          <PricingCardTrial key={p.productId} productPrice={p} />
+        ))}
+      </SectionContent>
+    </Section>
   );
 }

@@ -35,6 +35,15 @@ export const ButtonList = styled.div`
   gap: 20px;
 `;
 
+const StyledShortSpace = styled.span`
+  word-spacing: -2px;
+  white-space: nowrap;
+`;
+
+export function ShortSpace() {
+  return <StyledShortSpace> </StyledShortSpace>;
+}
+
 export const TransparentBorderGradient = styled.div`
   position: absolute;
   inset: calc(-10px);

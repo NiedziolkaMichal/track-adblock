@@ -40,6 +40,28 @@ export const THEME = {
       bg: "#303030",
       text: "#fff",
     },
+    pricing: {
+      text: "#303030",
+    },
+  },
+  pricingCard: {
+    ordinary: {
+      text: "#303030",
+      background: "#ffffff52",
+      lightText: "#5f6368",
+    },
+    special: {
+      text: "#fff",
+      lightText: "#FFFFFF7F",
+      link: {
+        text: "#fff",
+        bg: "#520856",
+        bgHover: "#3b053d",
+      },
+    },
+    waistedHeading: {
+      bg: "#c9c9c947",
+    },
   },
   card: {
     glass: "#ffffff57",
