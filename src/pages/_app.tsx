@@ -5,6 +5,7 @@ import { THEME } from "../styles/themes";
 import { GlobalStyle } from "../styles/global";
 import { ComponentType, ReactElement } from "react";
 import { SessionProvider } from "next-auth/react";
+import { ChatBot } from "../components/chatBot";
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const getSharedLayout = isPageSharingLayout(Component) ? Component.getSharedLayout : (page: ReactElement) => page;
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
           {getSharedLayout(<Component {...pageProps} />)}
         </SessionProvider>
       </ThemeProvider>
+      <ChatBot />
     </>
   );
 }
