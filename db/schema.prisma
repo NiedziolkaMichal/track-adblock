@@ -39,15 +39,18 @@ model Session {
 }
 
 model User {
-  id            String        @id @default(cuid())
-  name          String?
-  email         String?       @unique
-  emailVerified DateTime?
-  password      String?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  integrations  Integration[]
+  id                String        @id @default(cuid())
+  name              String?
+  email             String?       @unique
+  emailVerified     DateTime?
+  password          String?
+  image             String?
+  trial             Boolean       @default(true)
+  serviceExpiration DateTime?
+  accounts          Account[]
+  sessions          Session[]
+  integrations      Integration[]
+  payments          Payment[]
 }
 
 model VerificationToken {
@@ -66,7 +69,7 @@ model Integration {
   jsFilePath    String
   phpFilePath   String
 
-  userObject User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, host, type])
   @@index([userId])
@@ -90,4 +93,15 @@ enum HostRequestType {
   ordinary
   adblock
   unauthorized
+}
+
+model Payment {
+  orderId   String   @id
+  userId    String
+  date      DateTime
+  extension Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

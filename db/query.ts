@@ -84,3 +84,53 @@ export async function getIntegration(userId: string, host: string, type: Integra
   });
   return response || undefined;
 }
+
+export function getExpirationDetailsByEmail(email: string) {
+  return prisma.user.findUnique({
+    where: {
+      email,
+    },
+    select: {
+      id: true,
+      serviceExpiration: true,
+    },
+  });
+}
+
+export async function updateExpirationDetails(userId: string, trial: boolean, serviceExpiration: Date) {
+  await prisma.user.update({
+    data: {
+      trial,
+      serviceExpiration,
+    },
+    where: {
+      id: userId,
+    },
+  });
+}
+
+export async function putPayment(orderId: string, userId: string, date: Date, extension: number) {
+  await prisma.payment.upsert({
+    create: {
+      orderId,
+      userId,
+      date,
+      extension,
+    },
+    update: {},
+    where: {
+      orderId,
+    },
+  });
+}
+
+export function getPayments(userId: string) {
+  return prisma.payment.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      date: "desc",
+    },
+  });
+}
