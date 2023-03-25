@@ -47,3 +47,14 @@ export const CardCodeBlock = styled.pre<{ $margin?: MarginValue }>`
   border-radius: 4px;
   ${Margin}
 `;
+
+export const AlertCard = styled.div<{ $center?: boolean }>`
+  background: ${({ theme }) => theme.card.glass};
+  border: 1px solid ${({ theme }) => theme.border.primary};
+  border-radius: 8px;
+  color: ${({ theme }) => theme.text.heading};
+  font-weight: 520;
+  text-align: ${({ $center }) => ($center ? "center" : "initial")};
+  padding: 30px;
+  margin-bottom: 45px;
+`;

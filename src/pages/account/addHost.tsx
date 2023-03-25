@@ -1,6 +1,6 @@
 import { getAccountSharedLayout } from "../../components/account/skeleton";
 import styled from "styled-components";
-import { CardH2 } from "../../components/account/card";
+import { AlertCard, CardH2 } from "../../components/account/card";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ButtonShapeShifter, LinkSecondary, QuestionLink } from "../../components/account/button";
 import isValidDomain from "is-valid-domain";
@@ -14,13 +14,17 @@ import { fetchAnalyticsId } from "../../hooks/apiHooks";
 import { GetServerSideProps } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getServerSession } from "../api/auth/[...nextauth]";
-import { ACCOUNT_REDIRECT, LOGIN_REDIRECT } from "../../util/redirects";
+import { LOGIN_REDIRECT } from "../../util/redirects";
 import { fullEncodeUriComponent } from "../../util/format";
 import { getHosts } from "../../../db/query";
 import { ButtonList } from "../../components/common";
 import { PageMetaData } from "../../components/metadata";
 
 const NEXT_PAGE = "/account/install/googleAnalytics";
+
+interface Props {
+  hosts: { host: string }[];
+}
 
 export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);
@@ -31,24 +35,28 @@ export const getServerSideProps: GetServerSideProps<object> = async (context: Ge
   }
 
   const hosts = await getHosts(userId);
-  if (hosts.length >= MAX_HOSTS_PER_USER) {
-    return ACCOUNT_REDIRECT;
-  }
 
   return {
-    props: {},
+    props: {
+      hosts,
+    },
   };
 };
 
-export default function Page() {
+export default function Page({ hosts }: Props) {
   const { domain, setDomain, setMeasurementId } = useDomainAndMeasurementId();
 
   return (
     <>
       <PageMetaData title="Dodaj Google Analytics | Track Adblock" />
       <H1 $margin="t-4px b-30px">Dodaj Google Analytics</H1>
-      <DomainCard setDomain={setDomain} />
-      <MeasurementIdCard domain={domain} setMeasurementId={setMeasurementId} />
+      {hosts.length >= MAX_HOSTS_PER_USER && <LimitReached />}
+      {hosts.length < MAX_HOSTS_PER_USER && (
+        <>
+          <DomainCard setDomain={setDomain} />
+          <MeasurementIdCard domain={domain} setMeasurementId={setMeasurementId} />
+        </>
+      )}
     </>
   );
 }
@@ -188,6 +196,10 @@ function getDomainFromUrl(url: string) {
   } catch (e) {
     return undefined;
   }
+}
+
+function LimitReached() {
+  return <AlertCard>Osiągnięto limit domen dla pojedynczej usługi. Jeśli potrzebujesz kolejnej integracji, skontaktuj się z nami.</AlertCard>;
 }
 
 Page.getSharedLayout = getAccountSharedLayout;
