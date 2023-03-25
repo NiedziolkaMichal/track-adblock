@@ -7,6 +7,7 @@ import prisma from "../../../../db/prisma";
 import { GetServerSidePropsContext } from "next/types";
 import { verifyEmail, verifyPassword } from "../../../util/verifyInput";
 import bcrypt from "bcrypt";
+import { logError } from "../../../util/log";
 
 export const authOptions: AuthOptions = {
   pages: {
@@ -27,9 +28,9 @@ export const authOptions: AuthOptions = {
       },
       async authorize(options: { email?: string; password?: string; canRegister?: string } | undefined) {
         if (!options) {
+          logError("Missing data while checking credentials");
           throw new Error("MissingData");
         }
-        //TODO try-catch + log
         return checkCredentials(options.email, options.password, Boolean(options.canRegister));
       },
     }),
@@ -68,6 +69,7 @@ declare module "next-auth" {
 
 async function checkCredentials(email: string | undefined, password: string | undefined, canRegister: boolean) {
   if (!email || !password) {
+    logError("Missing email or password while checking credentials");
     throw new Error("MissingData");
   }
 
@@ -102,9 +104,11 @@ async function checkCredentials(email: string | undefined, password: string | un
     }
   } else if (canRegister) {
     if (!verifyEmail(email)) {
+      logError("Invalid input email while checking credentials");
       throw new Error("MissingData");
     }
     if (verifyPassword(password) !== "ok") {
+      logError("Invalid input password while checking credentials");
       throw new Error("MissingData");
     }
 

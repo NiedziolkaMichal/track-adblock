@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { verifyMeasurementId, verifyScriptFilePath } from "../../../util/verifyInput";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
+import { logError } from "../../../util/log";
 
 const GTAG_URL_PREFIX = "https://www.googletagmanager.com/gtag/js?id=";
 /**
@@ -88,6 +89,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const session = await getServerSession(req, res, authOptions);
 
   if (!session || req.method !== "GET" || typeof measurementId !== "string" || !verifyMeasurementId(measurementId) || typeof redirectPath !== "string" || !verifyScriptFilePath(redirectPath)) {
+    logError("Invalid GTag api route input");
     return res.status(400).send("");
   }
 
@@ -99,6 +101,7 @@ async function getScript(measurementId: string, redirectPath: string) {
   const url = GTAG_URL_PREFIX + measurementId;
   const script = await fetchText(url);
   if (!script) {
+    logError("Couldn't fetch GTag script");
     return undefined;
   }
   return addAllReplacementsAndVerify(script, redirectPath);
@@ -108,7 +111,7 @@ function addAllReplacementsAndVerify(script: string, redirectPath: string) {
   let output = script;
   output = applyReplacements(output, SCRIPT_REDIRECT_REPLACEMENTS, redirectPath, true);
   if (!verifyReplacements(output)) {
-    console.error("Failed to perform correct replacements to Googly Analytics script");
+    logError("Failed to perform correct replacements to Googly Analytics script");
     return undefined;
   }
   output = applyReplacements(output, SCRIPT_ADDON, redirectPath, true);

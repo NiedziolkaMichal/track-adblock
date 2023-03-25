@@ -14,6 +14,7 @@ import { Payment } from "@prisma/client";
 import { ServiceExpirationBar } from "../../components/account/serviceExpiration";
 import { getPaymentState, PaymentState } from "../../payment/payment";
 import { PageMetaData } from "../../components/metadata";
+import { logError } from "../../util/log";
 
 interface Props {
   products: PropsProduct[];
@@ -39,7 +40,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
   const [payments, expiration] = await Promise.all([paymentsPromise, expirationPromise]);
 
   if (!expiration) {
-    //TODO sentry
+    logError("User is missing service expiration data");
     return ACCOUNT_REDIRECT;
   }
   const paymentState = getPaymentState(expiration.trial, expiration.serviceExpiration);
@@ -55,7 +56,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
       },
     };
   } catch (e) {
-    //TODO sentry
+    logError(e as Error);
     return ACCOUNT_REDIRECT;
   }
 };

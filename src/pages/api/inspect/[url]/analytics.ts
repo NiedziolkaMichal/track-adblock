@@ -4,6 +4,7 @@ import * as cheerio from "cheerio";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
 import { fetchAbortable } from "../../../../util/io";
+import { logError } from "../../../../util/log";
 
 const ANALYTICS_URL_PATTERN = /https:\/\/www.googletagmanager.com\/gtag\/js\?id=(?<id>[A-Z0-9-]+)/i;
 
@@ -18,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const session = await getServerSession(req, res, authOptions);
   const inputURL = req.query.url;
   if (!session || req.method !== "GET" || typeof inputURL !== "string") {
+    logError("Invalid input data while getting measurement id of a given page");
     return res.status(400).json({
       measurementId: null,
     });

@@ -4,6 +4,7 @@ import { authOptions } from "../../auth/[...nextauth]";
 import { sameOrigin } from "../../../../util/verifyInput";
 import { getHostRequests } from "../../../../../db/query";
 import { HostRequestType } from "@prisma/client";
+import { logError } from "../../../../util/log";
 
 export interface RequestsData {
   startDate: string;
@@ -29,6 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const session = await getServerSession(req, res, authOptions);
   const userId = session?.user.id;
   if (!userId || req.method !== "GET" || !sameOrigin(req)) {
+    logError("Invalid input data while getting host requests");
     return res.status(400).send("");
   }
   const input = getRequestInput(req);
@@ -47,12 +49,14 @@ function getRequestInput(req: NextApiRequest) {
   const daysStr = req.query.days;
 
   if (!host || typeof host !== "string" || typeof startDateStr !== "string" || typeof daysStr !== "string" || typeof timeZoneOffsetStr !== "string") {
+    logError("Invalid input data while getting host requests");
     return undefined;
   }
   const startDate = new Date(startDateStr);
   const timeZoneOffset = Number(timeZoneOffsetStr);
   const days = Number(daysStr);
   if (String(startDate) === "Invalid Date" || isNaN(timeZoneOffset) || isNaN(days)) {
+    logError("Invalid input data while getting host requests");
     return undefined;
   }
   return {

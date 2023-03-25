@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { withSentryConfig } = require("@sentry/nextjs");
+
 const CSP_GENERAL = {
   "default-src": ["'self'"],
   "style-src": ["'unsafe-inline'"],
@@ -95,4 +98,12 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withSentryConfig(
+  nextConfig,
+  {
+    silent: true,
+  },
+  {
+    hideSourceMaps: false,
+  }
+);

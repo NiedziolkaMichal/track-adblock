@@ -5,6 +5,7 @@ import { generateScriptFilePath, verifyMeasurementId } from "../../../../util/ve
 import isValidDomain from "is-valid-domain";
 import { putIntegration } from "../../../../../db/query";
 import { IntegrationType } from ".prisma/client";
+import { logError } from "../../../../util/log";
 
 /**
  * Adds Google Analytics integration to the database.
@@ -17,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const userId = session?.user.id;
 
   if (!userId || req.method !== "PUT" || typeof host !== "string" || !isValidDomain(host) || typeof measurementId !== "string" || !verifyMeasurementId(measurementId)) {
+    logError("Invalid input data while creating integration");
     return res.status(400).send("INVALID_INPUT");
   }
   const { jsFilePath, phpFilePath } = getScriptFilePaths();
@@ -26,6 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(ok ? 200 : 400).send(ok ? "OK" : "LIMIT_REACHED");
   } catch (e) {
     // Name collision is resolved as an exception
+    logError("Failed to put new integration");
     return res.status(400).send("ALREADY_EXISTS");
   }
 }
