@@ -1,6 +1,8 @@
 {
   "name": "track-adblock",
   "private": true,
+  "repository": "https://github.com/NiedziolkaMichal/track-adblock",
+  "license": "CC BY-NC-ND 4.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
