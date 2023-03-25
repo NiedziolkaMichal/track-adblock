@@ -161,7 +161,7 @@ const ButtonGitHub = styled(ButtonWithIcon)`
 export function GitHubButton({ className, children, ...rest }: { className?: string; children: ReactNode } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <ButtonGitHub className={className} {...rest}>
-      <ButtonIcon src="/img/icon/github-dark.svg" width={24} height={24} />
+      <ButtonIcon src="/img/icon/github-dark.svg" width={24} height={24} alt="" />
       {children}
     </ButtonGitHub>
   );
@@ -178,7 +178,7 @@ const ButtonGoogle = styled(ButtonWithIcon)`
 export function GoogleButton({ className, children, ...rest }: { className?: string; children: ReactNode } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <ButtonGoogle className={className} {...rest}>
-      <ButtonIcon src="/img/icon/google.svg" width={24} height={24} />
+      <ButtonIcon src="/img/icon/google.svg" width={24} height={24} alt="" />
       {children}
     </ButtonGoogle>
   );
@@ -194,7 +194,7 @@ const ButtonTrackAdBlock = styled(ButtonWithIcon)`
 export function TrackAdBlockButton({ className, children, ...rest }: { className?: string; children: ReactNode } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <ButtonTrackAdBlock className={className} {...rest}>
-      <ButtonIcon src="/favicon/favicon.svg" width={24} height={24} />
+      <ButtonIcon src="/favicon/favicon.svg" width={24} height={24} alt="" />
       {children}
     </ButtonTrackAdBlock>
   );

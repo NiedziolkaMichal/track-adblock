@@ -22,7 +22,7 @@ export function FileDownload({ filePath, fileName, iconSrc, className }: { fileP
   return (
     <DownloadBtn onClick={onClick}>
       <Img src={iconSrc} alt="Pobierz pliki" className={className} />
-      <DownloadImg src="/img/icon/download.svg" />
+      <DownloadImg src="/img/icon/download.svg" alt="" />
       <InvisibleAnchor id={anchorId} href={filePath} download={fileName} />
     </DownloadBtn>
   );
