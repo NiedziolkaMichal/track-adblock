@@ -80,11 +80,11 @@ export default function Page({ products, paymentState, serviceExpiration }: Prop
 
 const CardsContainer = styled.div`
   display: flex;
+  align-items: center;
   gap: 20px;
 
   @media (max-width: calc(62.5rem + 420px)) {
     flex-flow: column wrap;
-    align-content: center;
   }
 `;
 
