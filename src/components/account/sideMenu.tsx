@@ -55,7 +55,7 @@ export function getSideMenuItems(): Array<MenuItemButton | MenuItemLink> {
     {
       title: "Instalacja",
       href: "/account/addHost",
-      additionalPaths: ["/account/install/analytics"],
+      additionalPaths: ["/account/install/googleAnalytics"],
       type: "link",
       icon: IconInstallation,
     },

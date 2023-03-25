@@ -20,7 +20,7 @@ import { getHosts } from "../../../db/query";
 import { ButtonList } from "../../components/common";
 import { PageMetaData } from "../../components/metadata";
 
-const NEXT_PAGE = "/account/install/analytics";
+const NEXT_PAGE = "/account/install/googleAnalytics";
 
 export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);
@@ -86,7 +86,7 @@ function useDomainAndMeasurementId() {
 }
 
 async function saveDataAndRedirect(domain: string, measurementId: string, router: NextRouter) {
-  const response = await fetch(`/api/host/${fullEncodeUriComponent(domain)}/analytics?measurementId=${fullEncodeUriComponent(measurementId)}`, {
+  const response = await fetch(`/api/host/${fullEncodeUriComponent(domain)}/googleAnalytics?measurementId=${fullEncodeUriComponent(measurementId)}`, {
     method: "PUT",
   });
   const text = await response.text();

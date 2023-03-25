@@ -3,7 +3,7 @@ import { RequestsData } from "../pages/api/host/[host]/requests";
 import { PublicConfiguration } from "swr/_internal";
 import { fullEncodeUriComponent } from "../util/format";
 import { fetchAbortable } from "../util/io";
-import { Response } from "../pages/api/inspect/[url]/analytics";
+import { Response } from "../pages/api/inspect/[url]/googleAnalytics";
 
 const jsonFetcher = (path: string) => fetch(path).then((res) => res.json());
 
@@ -29,7 +29,7 @@ export function useHostRequests(host: string, startDate: Date, days: number, ref
  * @param url - should be a valid URL
  */
 export async function fetchAnalyticsId(url: string) {
-  const response = await fetchAbortable(`/api/inspect/${fullEncodeUriComponent(url)}/analytics`).catch(() => undefined);
+  const response = await fetchAbortable(`/api/inspect/${fullEncodeUriComponent(url)}/googleAnalytics`).catch(() => undefined);
   if (!response) {
     return undefined;
   }
