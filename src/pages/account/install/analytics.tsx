@@ -53,6 +53,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
 export default function Page({ host, measurementId, jsFilePath, phpFilePath }: Props) {
   const jsFileName = getLastPathComponent(jsFilePath);
   const phpFileName = getLastPathComponent(phpFilePath);
+  const phpFileUrl = `/api/file/proxy?host=${fullEncodeUriComponent(host)}`;
   const jsFileUrl = `/api/file/gtag?measurementId=${fullEncodeUriComponent(measurementId)}&redirectPath=${encodeURIComponent(phpFilePath)}`;
 
   return (
@@ -60,7 +61,7 @@ export default function Page({ host, measurementId, jsFilePath, phpFilePath }: P
       <PageMetaData title="Instalacja skryptu | Track Adblock" />
       <H1 $margin="t-4px b-30px">Zainstaluj skrypt</H1>
       <DomainCard domain={host} measurementId={measurementId} />
-      <FilesCard jsFileName={jsFileName} jsFileUrl={jsFileUrl} phpFileName={phpFileName} />
+      <FilesCard jsFileName={jsFileName} jsFileUrl={jsFileUrl} phpFileName={phpFileName} phpFileUrl={phpFileUrl} />
       <ScriptCard jsFileName={jsFileName} measurementId={measurementId} />
     </>
   );
@@ -78,7 +79,7 @@ function DomainCard({ domain, measurementId }: { domain: string; measurementId: 
   );
 }
 
-function FilesCard({ jsFileName, jsFileUrl, phpFileName }: { jsFileName: string; jsFileUrl: string; phpFileName: string }) {
+function FilesCard({ jsFileName, jsFileUrl, phpFileName, phpFileUrl }: { jsFileName: string; jsFileUrl: string; phpFileName: string; phpFileUrl: string }) {
   const completed = false;
   const onComplete = undefined;
 
@@ -88,7 +89,7 @@ function FilesCard({ jsFileName, jsFileUrl, phpFileName }: { jsFileName: string;
         <div>
           <P $margin="b-10px">Dodaj podane pliki do głównego katalogu strony internetowej</P>
           <FileDownloadGroup>
-            <FileDownload iconSrc="/img/icon/php.svg" filePath="/img/icon/php.svg" fileName={phpFileName + ".php"} />
+            <FileDownload iconSrc="/img/icon/php.svg" filePath={phpFileUrl} fileName={phpFileName + ".php"} />
             <FileDownload iconSrc="/img/icon/javascript.svg" filePath={jsFileUrl} fileName={jsFileName + ".js"} />
           </FileDownloadGroup>
           <ButtonShapeShifter onClick={onComplete} $state={completed ? "valid" : "primary"} disabled={completed}>
