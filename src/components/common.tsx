@@ -29,6 +29,11 @@ export const BigP = styled.p<{ $margin?: MarginValue }>`
   ${Margin}
 `;
 
+export const UnStyledOl = styled.ol`
+  margin: 0;
+  padding-left: 1rem;
+`;
+
 export const ButtonList = styled.div`
   display: flex;
   flex-wrap: wrap;

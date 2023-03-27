@@ -2,11 +2,11 @@ import { getAccountSharedLayout } from "../../components/account/skeleton";
 import styled from "styled-components";
 import { AlertCard, CardH2 } from "../../components/account/card";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ButtonShapeShifter, LinkSecondary, QuestionLink } from "../../components/account/button";
+import { ButtonShapeShifter, LinkSecondary } from "../../components/account/button";
 import isValidDomain from "is-valid-domain";
 import { InvalidInput, Label, TextField } from "../../components/account/input";
 import { NextRouter, useRouter } from "next/router";
-import { useInputWithCallback } from "../../hooks/inputHooks";
+import { useInputWithCallback } from "../../hooks/webHooks";
 import { H1, MeasurementCardSides } from "../../components/account/common";
 import { MAX_HOSTS_PER_USER, verifyMeasurementId } from "../../util/verifyInput";
 import { MarginValue } from "../../components/margin";
@@ -19,6 +19,7 @@ import { fullEncodeUriComponent } from "../../util/format";
 import { getHosts } from "../../../db/query";
 import { ButtonList } from "../../components/common";
 import { PageMetaData } from "../../components/metadata";
+import { HowToGetMeasurementId, IsItSafeToShareMeasurementId, WhyWeNeedMeasurementId } from "../../components/account/questions";
 
 const NEXT_PAGE = "/account/install/googleAnalytics";
 
@@ -179,9 +180,9 @@ function MeasurementIdCard({ setMeasurementId, domain }: { setMeasurementId: (id
           </ButtonList>
         </div>
         <div>
-          <QuestionLink href="">Gdzie znajdę identyfikator?</QuestionLink>
-          <QuestionLink href="">Dlaczego wymagamy tej informacji?</QuestionLink>
-          <QuestionLink href="">Czy dzielenie się identyfikatorem jest bezpieczne?</QuestionLink>
+          <HowToGetMeasurementId />
+          <WhyWeNeedMeasurementId />
+          <IsItSafeToShareMeasurementId />
         </div>
       </MeasurementCardSides>
     </CardH2>

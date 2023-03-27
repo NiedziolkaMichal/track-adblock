@@ -1,6 +1,6 @@
 import { H1, MeasurementCardSides } from "../../../components/account/common";
 import { getAccountSharedLayout } from "../../../components/account/skeleton";
-import { ButtonShapeShifter, QuestionLink } from "../../../components/account/button";
+import { ButtonShapeShifter } from "../../../components/account/button";
 import { Card, CardCodeBlock, CardH2 } from "../../../components/account/card";
 import { useTheme } from "styled-components";
 import { FileDownload, FileDownloadGroup } from "../../../components/account/install/fileDownload";
@@ -15,6 +15,7 @@ import { getServerSession } from "../../api/auth/[...nextauth]";
 import { IntegrationType } from ".prisma/client";
 import { LOGIN_REDIRECT } from "../../../util/redirects";
 import { PageMetaData } from "../../../components/metadata";
+import { IsItSafeToAddOurScripts, WhatAreScriptsUsedFor, WhyReplaceGoogleAnalyticsScript, WhyScriptsHaveRandomNames, WhyToFindGoogleAnalyticsScript } from "../../../components/account/questions";
 
 interface Props {
   host: string;
@@ -98,9 +99,9 @@ function FilesCard({ jsFileName, jsFileUrl, phpFileName, phpFileUrl }: { jsFileN
           </ButtonShapeShifter>
         </div>
         <div>
-          <QuestionLink href="">Do czego służą te pliki?</QuestionLink>
-          <QuestionLink href="">Dlaczego mają nietypowe nazwy?</QuestionLink>
-          <QuestionLink href="">Czy dodanie tych plików jest bezpieczne?</QuestionLink>
+          <WhatAreScriptsUsedFor />
+          <WhyScriptsHaveRandomNames />
+          <IsItSafeToAddOurScripts />
         </div>
       </MeasurementCardSides>
     </CardH2>
@@ -125,9 +126,8 @@ function ScriptCard({ jsFileName, measurementId }: { jsFileName: string; measure
           </ButtonShapeShifter>
         </div>
         <div>
-          <QuestionLink href="">Do czego służy ta zmiana?</QuestionLink>
-          <QuestionLink href="">Jak mogę znaleźć ten kod?</QuestionLink>
-          <QuestionLink href="">Czy jest to bezpieczne?</QuestionLink>
+          <WhyReplaceGoogleAnalyticsScript />
+          <WhyToFindGoogleAnalyticsScript />
         </div>
       </MeasurementCardSides>
     </CardH2>

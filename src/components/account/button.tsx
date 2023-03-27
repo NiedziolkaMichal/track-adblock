@@ -54,7 +54,7 @@ export const LinkSecondary = styled(Link)`
   }
 `;
 
-export const QuestionLink = styled(Link)`
+export const QuestionBtn = styled.button`
   display: block;
   width: fit-content;
   padding: 10px 18px 10px 0;
@@ -68,10 +68,6 @@ export const QuestionLink = styled(Link)`
   }
   :focus-visible {
     outline-color: ${({ theme }) => theme.button.anchor.focusVisible};
-  }
-
-  :first-child {
-    margin-top: -10px;
   }
 `;
 

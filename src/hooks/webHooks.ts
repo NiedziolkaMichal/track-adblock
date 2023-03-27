@@ -1,4 +1,4 @@
-import { useCallback, useId, useState } from "react";
+import { RefObject, useCallback, useEffect, useId, useState } from "react";
 
 export function useInputWithCallback(callback: (value: string) => void, getValueFromInput: (input: string) => string | undefined) {
   const fieldId = useId();
@@ -18,4 +18,22 @@ export function useInputWithCallback(callback: (value: string) => void, getValue
   }, [fieldId, setCompleted, setInvalid, callback, getValueFromInput]);
 
   return { fieldId, completed, invalid, onAddId, setInvalid };
+}
+
+export function useOnHover(ref: RefObject<HTMLElement>, onMouseOver: () => void, onMouseLeave: () => void) {
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+    ref.current.addEventListener("mouseover", onMouseOver);
+    return () => ref.current?.removeEventListener("mouseover", onMouseOver);
+  });
+
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+    ref.current.addEventListener("mouseleave", onMouseLeave);
+    return () => ref.current?.removeEventListener("mouseleave", onMouseLeave);
+  });
 }
