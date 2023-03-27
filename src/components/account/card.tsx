@@ -45,6 +45,8 @@ export const CardCodeBlock = styled.pre<{ $margin?: MarginValue }>`
   border: 1px solid ${({ theme }) => theme.border.primary};
   padding: 10px;
   border-radius: 4px;
+  white-space: normal;
+  word-break: break-all;
   ${Margin}
 `;
 
