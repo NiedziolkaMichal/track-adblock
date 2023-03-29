@@ -22,18 +22,20 @@ export function useInputWithCallback(callback: (value: string) => void, getValue
 
 export function useOnHover(ref: RefObject<HTMLElement>, onMouseOver: () => void, onMouseLeave: () => void) {
   useEffect(() => {
-    if (!ref.current) {
+    const current = ref.current;
+    if (!current) {
       return;
     }
-    ref.current.addEventListener("mouseover", onMouseOver);
-    return () => ref.current?.removeEventListener("mouseover", onMouseOver);
-  });
+    current.addEventListener("mouseover", onMouseOver);
+    return () => current?.removeEventListener("mouseover", onMouseOver);
+  }, [ref, onMouseOver, onMouseLeave]);
 
   useEffect(() => {
-    if (!ref.current) {
+    const current = ref.current;
+    if (!current) {
       return;
     }
-    ref.current.addEventListener("mouseleave", onMouseLeave);
-    return () => ref.current?.removeEventListener("mouseleave", onMouseLeave);
-  });
+    current.addEventListener("mouseleave", onMouseLeave);
+    return () => current?.removeEventListener("mouseleave", onMouseLeave);
+  }, [ref, onMouseOver, onMouseLeave]);
 }

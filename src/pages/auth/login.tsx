@@ -63,7 +63,7 @@ export default function Page() {
 
   useEffect(() => {
     router.prefetch("/account");
-  });
+  }, [router]);
 
   return (
     <>

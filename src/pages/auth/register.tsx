@@ -98,7 +98,7 @@ function RegisterContent() {
 
   useEffect(() => {
     router.prefetch("/account");
-  });
+  }, [router]);
 
   function tryRegister() {
     const email = (document.getElementById(emailId) as HTMLInputElement).value;

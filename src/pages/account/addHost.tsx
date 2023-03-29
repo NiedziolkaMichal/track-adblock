@@ -69,7 +69,7 @@ function useDomainAndMeasurementId() {
 
   useEffect(() => {
     router.prefetch(NEXT_PAGE);
-  });
+  }, [router]);
 
   const setDomain = useCallback(
     (domain: string) => {

@@ -30,7 +30,7 @@ function useIsCloseToFooter() {
     };
     addEventListener("scroll", listener);
     return () => removeEventListener("scroll", listener);
-  }, [closeToFooter]);
+  }, [closeToFooter, setCloseToFooter]);
 
   return closeToFooter;
 }
