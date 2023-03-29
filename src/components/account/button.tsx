@@ -19,7 +19,7 @@ const stylePrimary = css`
     background-color: ${({ theme }) => theme.button.primary.backgroundHover};
   }
   :focus-visible {
-    outline-color: ${({ theme }) => theme.button.primary.focusVisible};
+    outline: solid medium ${({ theme }) => theme.button.primary.focusVisible};
     outline-offset: 5px;
   }
 `;
@@ -49,7 +49,7 @@ export const LinkSecondary = styled(Link)`
     background-color: ${({ theme }) => theme.button.secondary.backgroundHover};
   }
   :focus-visible {
-    outline-color: ${({ theme }) => theme.button.secondary.focusVisible};
+    outline: solid medium ${({ theme }) => theme.button.secondary.focusVisible};
     outline-offset: 5px;
   }
 `;
@@ -67,7 +67,7 @@ export const QuestionBtn = styled.button`
     color: ${({ theme }) => theme.button.anchor.textHover};
   }
   :focus-visible {
-    outline-color: ${({ theme }) => theme.button.anchor.focusVisible};
+    outline: solid medium ${({ theme }) => theme.button.anchor.focusVisible};
   }
 `;
 
@@ -78,6 +78,10 @@ export const StyledLink = styled(Link)`
 
   :hover {
     color: ${({ theme }) => theme.button.anchor.textHover};
+  }
+  :focus-visible {
+    outline: solid medium ${({ theme }) => theme.button.primary.focusVisible};
+    outline-offset: 5px;
   }
 `;
 
@@ -96,6 +100,10 @@ export const NegligibleLink = styled(Link)<{ $centered?: boolean; $margin?: Marg
 
   :hover {
     color: ${({ theme }) => theme.button.negligible.textHover};
+  }
+  :focus-visible {
+    outline: solid medium ${({ theme }) => theme.gradient.primary.focusVisible};
+    outline-offset: 5px;
   }
 `;
 
@@ -149,9 +157,6 @@ const ButtonGitHub = styled(ButtonWithIcon)`
   color: ${({ theme }) => theme.button.gitHub.text};
   :hover {
     background-color: ${({ theme }) => theme.button.gitHub.backgroundHover};
-  }
-  :focus-visible {
-    outline-color: ${({ theme }) => theme.button.gitHub.focusVisibleOutline};
   }
 `;
 export function GitHubButton({ className, children, ...rest }: { className?: string; children: ReactNode } & React.ButtonHTMLAttributes<HTMLButtonElement>) {

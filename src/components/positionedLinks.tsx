@@ -29,6 +29,10 @@ const PositionedLink = styled.a<{ $x: number; $y: number }>`
       transform: scale(1.2);
     }
   }
+  :focus-visible {
+    outline: solid medium ${({ theme }) => theme.positionedLink.focusVisible};
+    outline-offset: 5px;
+  }
 `;
 
 export function PositionedImageLink({ href, src, alt, width, height, y, x }: { href: string; src: string; alt: string; width: number; height: number; y: number; x: number }) {

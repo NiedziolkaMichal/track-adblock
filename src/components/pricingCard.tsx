@@ -119,4 +119,8 @@ const SpecialCardLink = styled(BaseLink)`
   :hover {
     background-color: ${({ theme }) => theme.pricingCard.special.link.bgHover};
   }
+  :focus-visible {
+    outline: solid medium ${({ theme }) => theme.pricingCard.special.link.focusVisible};
+    outline-offset: 5px;
+  }
 `;

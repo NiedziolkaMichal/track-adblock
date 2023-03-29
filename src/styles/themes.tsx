@@ -57,6 +57,7 @@ export const THEME = {
         text: "#fff",
         bg: "#520856",
         bgHover: "#3b053d",
+        focusVisible: "#fff",
       },
     },
     waistedHeading: {
@@ -77,7 +78,7 @@ export const THEME = {
       background: "#48349f",
       backgroundHover: "#2c1b75",
       text: "#F8F9FA",
-      focusVisible: "#48349f",
+      focusVisible: "#b921ad",
     },
     secondary: {
       background: "#b921ad",
@@ -102,7 +103,6 @@ export const THEME = {
     gitHub: {
       background: "#303030",
       backgroundHover: "#444444",
-      focusVisibleOutline: "#28f946",
       text: "white",
     },
     google: {
@@ -116,6 +116,9 @@ export const THEME = {
       text: "#202124",
     },
   },
+  positionedLink: {
+    focusVisible: "#fff",
+  },
   textField: {
     background: "rgb(255,255,255,0.3)",
   },
@@ -126,7 +129,6 @@ export const THEME = {
   sideMenu: {
     background: "#edf1f4",
     hover: "#d9dddd",
-    focusVisible: "#303030",
   },
   errorBlock: {
     background: "crimson",

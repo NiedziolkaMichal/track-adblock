@@ -114,6 +114,7 @@ function onMobileNavClick(e: MouseEvent<HTMLElement>, iconRef: RefObject<HTMLObj
 const HamburgerParent = styled.div`
   position: relative;
   z-index: 1000;
+  height: 50px;
 
   @media (min-width: calc(29rem + 86px)) {
     display: none;
@@ -124,6 +125,10 @@ const HamburgerButton = styled.button`
   inset: 0;
   width: 100%; // Setting width & height is required to make it work on firefox
   height: 100%;
+
+  :focus-visible {
+    outline: solid medium ${({ theme }) => theme.gradient.primary.focusVisible};
+  }
 `;
 
 const StyledHeader = styled.header`
@@ -178,22 +183,25 @@ const MobileNav = styled.nav`
   > :not(:last-child)::after {
     content: "";
     display: block;
-    width: 100%;
+    position: absolute;
+    width: 100vw;
     height: 0;
     transform: translateY(20px);
     border-bottom: 1px solid ${({ theme }) => theme.mobileMenuHr};
   }
+
+  > * {
+    margin: 20px auto 20px 0;
+  }
 `;
 
 const NavLink = styled(Link)`
-  padding: 20px 0;
-
   color: transparent;
   font-size: 1.1rem;
   font-weight: 600;
 
   :focus-visible {
-    outline-color: ${({ theme }) => theme.gradient.primary.focusVisible};
+    outline: solid medium ${({ theme }) => theme.gradient.primary.focusVisible};
     outline-offset: 5px;
   }
   :hover {

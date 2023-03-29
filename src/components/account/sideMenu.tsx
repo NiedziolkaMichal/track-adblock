@@ -139,7 +139,7 @@ const Item = styled(Link)<{ $active: boolean }>`
     `}
   
   :focus-visible {
-    outline-color: ${({ theme, $active }) => ($active ? theme.gradient.primary.focusVisible : theme.sideMenu.focusVisible)};
+    outline: solid medium ${({ theme }) => theme.gradient.primary.focusVisible};
     outline-offset: ${({ $active }) => ($active ? "5px" : "0")};
   }
 `;

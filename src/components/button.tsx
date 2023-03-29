@@ -21,6 +21,10 @@ export const GradientLink = styled(BaseLink)`
     background-image: ${({ theme }) => theme.gradient.primary.image}, linear-gradient(#0006, #0006);
     background-blend-mode: hard-light;
   }
+  :focus-visible {
+    outline: solid medium ${({ theme }) => theme.gradient.primary.focusVisible};
+    outline-offset: 5px;
+  }
 `;
 
 const StyledGradientBorderLink = styled(BaseLink)`
@@ -36,6 +40,10 @@ const StyledGradientBorderLink = styled(BaseLink)`
   }
   :hover::before {
     inset: -2px;
+  }
+  :focus-visible {
+    outline: solid medium ${({ theme }) => theme.gradient.primary.focusVisible};
+    outline-offset: 5px;
   }
 `;
 

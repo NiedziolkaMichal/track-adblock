@@ -32,6 +32,7 @@ const DownloadBtn = styled.button`
   position: relative;
 
   :focus-visible {
+    outline: solid medium ${({ theme }) => theme.gradient.primary.focusVisible};
     outline-offset: 5px;
   }
 `;
