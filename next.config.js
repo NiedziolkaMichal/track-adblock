@@ -86,6 +86,24 @@ const nextConfig = {
         ],
       },
       {
+        source: "/:path?",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "max-age=86400",
+          },
+        ],
+      },
+      {
+        source: "/:path([^/]+[^.]*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "private, no-cache",
+          },
+        ],
+      },
+      {
         source: "/:path((?:img|font|favicon)/[\\s\\S]+|[^\\/]+(?:\\.ico|\\.webp))",
         headers: [
           {
