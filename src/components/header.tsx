@@ -92,14 +92,18 @@ function openOrCloseMobileNav(iconRef: RefObject<HTMLObjectElement>, mobileNavRe
 
 function closeMobileNav(svgElement: HTMLElement, mobileNav: HTMLElement) {
   svgElement.classList.remove("opened");
+  mobileNav.style.visibility = "hidden";
   mobileNav.dataset.opened = "false";
-  document.documentElement.style.overflow = "visible";
+  document.documentElement.style.visibility = "visible";
 }
 
 function openMobileNav(svgElement: HTMLElement, mobileNav: HTMLElement) {
   svgElement.classList.add("opened");
+  mobileNav.style.visibility = "visible";
   mobileNav.dataset.opened = "true"; // We don't want to add class in here, because Styled Components can override it
-  document.documentElement.style.overflow = "hidden";
+  setTimeout(() => {
+    document.documentElement.style.visibility = "hidden";
+  }, 300); // Delaying until transition is complete
   window.scroll({
     top: 0,
   });
@@ -140,6 +144,7 @@ const StyledHeader = styled.header`
   max-width: 1300px;
   padding-inline: 30px;
   margin: auto;
+  visibility: visible; // Making sure header is visible, while body is hidden
 `;
 
 const DesktopNav = styled.nav`
@@ -161,6 +166,7 @@ const MobileNavBackground = styled.div`
   background: var(--body-bg);
   transform: translateY(100vh);
   transition: transform ease-out 0.3s;
+  visibility: hidden; // overwritten by JS code
   &[data-opened="true"] {
     transform: translateY(0vh);
   }
