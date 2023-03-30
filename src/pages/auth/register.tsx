@@ -10,23 +10,7 @@ import { FullSizeImg, P } from "../../components/common";
 import { BuiltInProviderType } from "next-auth/providers";
 import { getPasswordWarning, verifyEmail, verifyPassword, VerifyPasswordResult } from "../../util/verifyInput";
 import { SignInOptions } from "next-auth/react/types";
-import { GetServerSideProps } from "next";
-import { GetServerSidePropsContext } from "next/types";
-import { getServerSession } from "../api/auth/[...nextauth]";
-import { ACCOUNT_REDIRECT } from "../../util/redirects";
 import { PageMetaData } from "../../components/metadata";
-
-export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
-  const session = await getServerSession(context);
-
-  if (session) {
-    return ACCOUNT_REDIRECT;
-  }
-
-  return {
-    props: {},
-  };
-};
 
 export default function Page() {
   return (

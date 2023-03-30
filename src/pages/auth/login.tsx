@@ -5,25 +5,9 @@ import { NextRouter, useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useId, useState } from "react";
 import { Label, TextField } from "../../components/account/input";
 import { getAuthSharedLayout } from "../../components/auth";
-import { GetServerSideProps } from "next";
-import { getServerSession } from "../api/auth/[...nextauth]";
-import { GetServerSidePropsContext } from "next/types";
 import { AuthCard, AuthCardButton, AuthCardContent, AuthCardHrWithContent } from "../../components/account/authCard";
 import { SignInOptions } from "next-auth/react/types";
-import { ACCOUNT_REDIRECT } from "../../util/redirects";
 import { PageMetaData } from "../../components/metadata";
-
-export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
-  const session = await getServerSession(context);
-
-  if (session) {
-    return ACCOUNT_REDIRECT;
-  }
-
-  return {
-    props: {},
-  };
-};
 
 // Same list exists in register.tsx
 const errors: Record<string, string> = {
