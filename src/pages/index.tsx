@@ -1,4 +1,3 @@
-import Head from "next/head";
 import styled from "styled-components";
 import { BigOrderedList, BigP, FullSizeImg } from "../components/common";
 import { Header } from "../components/header";
@@ -40,7 +39,11 @@ function ExplanationSection() {
         <ColumnWithImg>
           <FullSizeImg src="img/illustration/blocked.svg" width={2536} height={1272} alt="" />
           <BigP $margin="t-30px">
-            W Polsce <b>44%</b> użytkowników korzysta z różnego rodzaju oprogramowania blokującego reklamy, które przy okazji blokuje dane przesyłane do Google Analytics.
+            W Polsce{" "}
+            <Usage href="https://backlinko.com/ad-blockers-users" target="_blank">
+              44%
+            </Usage>{" "}
+            użytkowników korzysta z różnego rodzaju oprogramowania blokującego reklamy, które przy okazji blokuje dane przesyłane do Google Analytics.
           </BigP>
         </ColumnWithImg>
         <ColumnWithImg>
@@ -55,6 +58,11 @@ function ExplanationSection() {
     </SkewedSection>
   );
 }
+
+export const Usage = styled.a`
+  font-weight: 600;
+  color: inherit;
+`;
 
 const ColumnWithImg = styled.div`
   max-width: 350px;
