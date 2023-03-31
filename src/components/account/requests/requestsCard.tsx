@@ -1,6 +1,5 @@
 import styled, { useTheme } from "styled-components";
-import React from "react";
-import { RequestsChart } from "./requestsChart";
+import React, { lazy, Suspense } from "react";
 import { THEME } from "../../../styles/themes";
 import { formatNumber } from "../../../util/format";
 import { Card } from "../card";
@@ -10,6 +9,8 @@ import { MarginValue } from "../../margin";
 
 const DAYS_IN_THE_CHART = 30;
 const REFRESH_INTERVAL_MILLIS = 30000;
+
+const RequestsChart = lazy(() => import("./requestsChart"));
 
 export function RequestsCard({ host, className, $margin }: { host: string; className?: string; $margin?: MarginValue }) {
   const startDate = getChartStartDate();
@@ -26,7 +27,9 @@ export function RequestsCard({ host, className, $margin }: { host: string; class
         <MetricTab type="ordinary" amount={amountOrdinary} />
         <MetricTab type="unblocked" amount={amountUnblocked} />
       </CardTabs>
-      <ChartContainer>{requestsData && <RequestsChart requestsData={requestsData} />}</ChartContainer>
+      <ChartContainer>
+        <Suspense fallback="">{requestsData && <RequestsChart requestsData={requestsData} />}</Suspense>
+      </ChartContainer>
     </Card>
   );
 }

@@ -51,7 +51,7 @@ export function getDateFromXAxis(x: DatumValue, requestsData: RequestsData) {
  * This component requires fixed height in its parent.
  * Additionally, parent or any ancestor must have a fixed width, or chart will not resize correctly with the viewport.
  */
-export function RequestsChart({ requestsData }: { requestsData: RequestsData }) {
+export default function RequestsChart({ requestsData }: { requestsData: RequestsData }) {
   const data = createChartData(requestsData);
 
   const graphTheme = useGraphTheme();
