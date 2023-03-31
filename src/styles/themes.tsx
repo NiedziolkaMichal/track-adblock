@@ -52,7 +52,7 @@ export const THEME = {
     },
     special: {
       text: "#fff",
-      lightText: "#FFFFFF7F",
+      lightText: "#ffffffc0",
       link: {
         text: "#fff",
         bg: "#520856",
