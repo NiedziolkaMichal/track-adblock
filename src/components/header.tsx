@@ -18,8 +18,8 @@ export function Header() {
         <NavLinks mobileNav={false} />
       </DesktopNav>
       <HamburgerParent>
-        <object ref={hamburgerIconRef} data="/img/icon/hamburgerMenu.svg" type="image/svg+xml" width={50} height={50} />
-        <HamburgerButton onClick={() => openOrCloseMobileNav(hamburgerIconRef, mobileNavBgRef, mobileNavOpen, setMobileNavOpen)}></HamburgerButton>
+        <object ref={hamburgerIconRef} data="/img/icon/hamburgerMenu.svg" type="image/svg+xml" width={50} height={50} aria-hidden={true} />
+        <HamburgerButton onClick={() => openOrCloseMobileNav(hamburgerIconRef, mobileNavBgRef, mobileNavOpen, setMobileNavOpen)} aria-label="Menu główne"></HamburgerButton>
       </HamburgerParent>
       <MobileNavBackground onClick={(e) => onMobileNavClick(e, hamburgerIconRef, mobileNavBgRef, mobileNavOpen, setMobileNavOpen)} ref={mobileNavBgRef}>
         <MobileNav>
