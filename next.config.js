@@ -49,6 +49,9 @@ function getCSPValue() {
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  compiler: {
+    styledComponents: true,
+  },
   headers() {
     return [
       {
