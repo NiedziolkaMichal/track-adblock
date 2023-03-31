@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ReactNode, useRef } from "react";
-import { useOnHover } from "../hooks/webHooks";
+import { useOnClickOutside, useOnHover } from "../hooks/webHooks";
 
 export function Tooltip({ tooltip, className, children }: { tooltip: ReactNode; className?: string; children: ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -20,8 +20,20 @@ export function Tooltip({ tooltip, className, children }: { tooltip: ReactNode; 
     }
   );
 
+  function onClick() {
+    if (tooltipRef.current) {
+      tooltipRef.current.style.display = "block";
+    }
+  }
+
+  useOnClickOutside(() => {
+    if (tooltipRef.current) {
+      tooltipRef.current.style.display = "none";
+    }
+  }, containerRef);
+
   return (
-    <Container ref={containerRef} className={className}>
+    <Container ref={containerRef} className={className} onClick={onClick}>
       {children}
       <StyledTooltip ref={tooltipRef}>
         <Box>{tooltip}</Box>

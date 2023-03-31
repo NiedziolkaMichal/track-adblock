@@ -39,3 +39,17 @@ export function useOnHover(ref: RefObject<HTMLElement>, onMouseOver: () => void,
     return () => current?.removeEventListener("mouseleave", onMouseLeave);
   }, [ref, onMouseOver, onMouseLeave]);
 }
+
+export function useOnClickOutside(onClick: (event: MouseEvent) => void, insideAreaRef: RefObject<HTMLElement>) {
+  useEffect(() => {
+    const isInside = (event: MouseEvent) => insideAreaRef.current && event.target instanceof Node && insideAreaRef.current.contains(event.target);
+    const listener = (event: MouseEvent) => {
+      if (!isInside(event)) {
+        onClick(event);
+      }
+    };
+
+    document.body.addEventListener("click", listener);
+    return () => document.body.removeEventListener("click", listener);
+  }, [onClick, insideAreaRef]);
+}
