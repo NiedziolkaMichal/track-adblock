@@ -75,3 +75,12 @@ export function sameOrigin(req: NextApiRequest) {
   }
   return new URL(referrer).host === host;
 }
+
+export function verifyUrl(url: string) {
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}

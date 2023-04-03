@@ -6,6 +6,12 @@ const CUSTOMER_ID = '%USER_CUSTOMER_ID%';
 // Domain of our server
 const DESTINATION_HOST = 'https://proxy.trackadblock.com';
 
+// Special request used for verifying installation
+if($_GET['verifyInstallation'] === CUSTOMER_ID) {
+    echo 'ok';
+    return;
+}
+
 // Cancelling request if access token is not valid
 // Please don't remove this line, because our server will block request anyway
 // This is done, just so unnecessary requests are not made
