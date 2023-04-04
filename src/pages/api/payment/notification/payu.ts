@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (status !== "COMPLETED") {
     return res.status(200).send("");
   }
-  if (posId !== process.env.PAYU_POS_ID || typeof orderId !== "string" || typeof email !== "string" || isNaN(orderCreateDate.getTime()) || extensionInDays <= 0) {
+  if (posId !== process.env.PAYU_POS_ID || typeof orderId !== "string" || typeof email !== "string" || isNaN(orderCreateDate.getTime()) || isNaN(extensionInDays) || extensionInDays <= 0) {
     logError("Invalid input data while getting getting payu notification");
     return res.status(400).send("");
   }
