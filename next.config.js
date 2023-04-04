@@ -69,10 +69,6 @@ const nextConfig = {
             key: "X-Content-Type-Options",
             value: "nosniff",
           },
-          {
-            key: "Strict-transport-security",
-            value: "max-age=63072000; includeSubDomains; preload",
-          },
         ],
       },
       {
@@ -85,6 +81,10 @@ const nextConfig = {
           {
             key: "Cross-Origin-Opener-Policy",
             value: "same-origin",
+          },
+          {
+            key: "Strict-transport-security",
+            value: "max-age=63072000; includeSubDomains; preload",
           },
         ],
       },
