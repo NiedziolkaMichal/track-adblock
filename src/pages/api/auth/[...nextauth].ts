@@ -6,8 +6,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../../db/prisma";
 import { GetServerSidePropsContext } from "next/types";
 import { verifyEmail, verifyPassword } from "../../../util/verifyInput";
-import bcrypt from "bcrypt";
 import { logError } from "../../../util/log";
+import { hashPassword, samePassword } from "../../../util/web/auth";
 
 export const authOptions: AuthOptions = {
   pages: {
@@ -91,7 +91,7 @@ async function checkCredentials(email: string | undefined, password: string | un
       throw new Error("AccountCreatedByOAuth");
     }
 
-    const validPassword = await bcrypt.compare(password, existingUser.password);
+    const validPassword = await samePassword(password, existingUser.password);
     if (validPassword) {
       return {
         id: existingUser.id,
@@ -112,7 +112,7 @@ async function checkCredentials(email: string | undefined, password: string | un
       throw new Error("MissingData");
     }
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await hashPassword(password);
 
     return prisma.user.create({
       data: {

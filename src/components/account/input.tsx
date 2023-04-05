@@ -13,6 +13,7 @@ export const TextField = styled.input<{ $margin?: MarginValue }>`
   color: ${({ theme, disabled }) => (disabled ? theme.text.disabled : "inherit")};
   background-color: ${({ theme }) => theme.textField.background};
   width: 100%;
+  max-width: 400px;
   padding: 10px;
   border: 1px solid ${({ theme }) => theme.border.primary};
   border-radius: 4px;

@@ -146,3 +146,30 @@ export function getPayments(userId: string) {
     },
   });
 }
+
+export async function getPasswordByUser(userId: string) {
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      id: userId,
+    },
+    select: {
+      password: true,
+    },
+  });
+  // Created by OAuth or account doesn't exist
+  if (!existingUser || !existingUser.password) {
+    return undefined;
+  }
+  return existingUser.password;
+}
+
+export function setPassword(userId: string, password: string) {
+  return prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      password,
+    },
+  });
+}

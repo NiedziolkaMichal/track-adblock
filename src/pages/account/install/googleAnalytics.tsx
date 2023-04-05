@@ -16,7 +16,7 @@ import { IntegrationType } from ".prisma/client";
 import { LOGIN_REDIRECT } from "../../../util/redirects";
 import { PageMetaData } from "../../../components/metadata";
 import { IsItSafeToAddOurScripts, WhatAreScriptsUsedFor, WhyReplaceGoogleAnalyticsScript, WhyScriptsHaveRandomNames, WhyToFindGoogleAnalyticsScript } from "../../../components/account/questions";
-import { getGTagFileUrl, getProxyFileUrl, getVerifyGTagInstallationUrl, getVerifyProxyInstallationUrl } from "../../../util/api";
+import { getGTagFileUrl, getProxyFileUrl, getVerifyGTagInstallationUrl, getVerifyProxyInstallationUrl } from "../../../util/web/api";
 
 interface Props {
   host: string;
