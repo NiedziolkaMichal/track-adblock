@@ -9,11 +9,15 @@ import { HeroImage, HeroSection } from "../components/hero";
 import { BaseBackground } from "../styles/global";
 import { PRICES } from "../payment/prices";
 import { PageMetaData } from "../components/metadata";
+import Head from "next/head";
 
 export default function Home() {
   return (
     <>
       <PageMetaData title="Track Adblock" />
+      <Head>
+        <link rel="preload" as="image" href="/img/illustration/hero.svg" />
+      </Head>
       <BaseBackground />
       <Header />
       <main>
