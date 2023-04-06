@@ -1,7 +1,7 @@
 import { getExpirationDetailsByEmail, putPayment, updateExpirationDetails } from "../../db/query";
 import { logError, logInfo } from "../util/log";
 import { DAY_IN_MILLIS } from "../util/math";
-import { refreshAccessToWorker } from "../model/refreshWorker";
+import { addAccessToWorker } from "../model/refreshWorker";
 
 export type PaymentState = "TRIAL" | "BEFORE_TRIAL" | "PAID" | "EXPIRED";
 
@@ -25,6 +25,7 @@ export async function recordNewPayment(email: string, orderId: string, orderCrea
   }
   const currentEpoch = Date.now();
   const currentExpirationDate = expirationDetails.serviceExpiration;
+  const userId = expirationDetails.id;
 
   const expirationTimeLeft = currentExpirationDate && currentExpirationDate.getTime() > currentEpoch ? currentExpirationDate.getTime() - currentEpoch : 0;
   const extensionInMillis = extensionInDays * DAY_IN_MILLIS;
@@ -32,13 +33,13 @@ export async function recordNewPayment(email: string, orderId: string, orderCrea
 
   logInfo("Missing expiration details while receiving new payment");
 
-  const updatePromise = updateExpirationDetails(expirationDetails.id, false, newExpirationDate);
+  const updatePromise = updateExpirationDetails(userId, false, newExpirationDate);
   // Keep in mind that PayU can send multiple same requests
-  const putPromise = putPayment(orderId, expirationDetails.id, orderCreateDate, extensionInDays);
+  const putPromise = putPayment(orderId, userId, orderCreateDate, extensionInDays);
   await Promise.allSettled([updatePromise, putPromise]);
 
   const serviceBecameActive = expirationTimeLeft === 0;
   if (serviceBecameActive) {
-    await refreshAccessToWorker();
+    await addAccessToWorker(userId);
   }
 }

@@ -1,24 +1,26 @@
-import { getActiveUserIds, getMeta, updateMeta } from "../../db/query";
-import crypto from "crypto";
-import { addUnique } from "../util/collections";
+import { getActiveUserIds } from "../../db/query";
+import { uniqueArray } from "../util/collections";
 
 const WORKER_USER_IDS_SECRET_KEY = "ALLOWED_USER_IDS";
 const WORKER_USER_IDS_SEPARATOR = ";";
-const DATABASE_USER_IDS_CHECKSUM_KEY = "WorkerUserIdsChecksum";
 
-export async function refreshAccessToWorker(includeUserId?: string) {
-  const { userIds, currentValueChecksum } = await getUserIdsAndChecksum();
-  if (includeUserId) addUnique(userIds, includeUserId);
-  const userIdsString = userIds.join(WORKER_USER_IDS_SEPARATOR);
+export async function addAccessToWorker(...userIds: string[]) {
+  const currentUserIds = await getActiveUserIds();
+  const allUserIds = uniqueArray(...currentUserIds, ...userIds);
 
-  if (!userIdsUpdated(userIdsString, currentValueChecksum)) {
-    return;
-  }
+  return refreshAccessToWorker(allUserIds);
+}
 
-  const responsePromise = updateEnvironmentalVariable(WORKER_USER_IDS_SECRET_KEY, userIdsString);
-  const checksumPromise = updateChecksum(userIdsString);
-  const [response] = await Promise.all([responsePromise, checksumPromise]);
-  return response;
+export async function removeAccessToWorker(...userIds: string[]) {
+  const currentUserIds = await getActiveUserIds();
+  const allUserIds = currentUserIds.filter((id) => !userIds.includes(id));
+
+  return refreshAccessToWorker(allUserIds);
+}
+
+function refreshAccessToWorker(userIds: string[]) {
+  const joinedIds = userIds.join(WORKER_USER_IDS_SEPARATOR);
+  return updateEnvironmentalVariable(WORKER_USER_IDS_SECRET_KEY, joinedIds);
 }
 
 async function updateEnvironmentalVariable(key: string, value: string) {
@@ -35,27 +37,4 @@ async function updateEnvironmentalVariable(key: string, value: string) {
     body: JSON.stringify(body),
   });
   return response.json();
-}
-
-async function getUserIdsAndChecksum() {
-  const userIdsPromise = getActiveUserIds();
-  const currentValueChecksumPromise = getMeta(DATABASE_USER_IDS_CHECKSUM_KEY);
-  const [userIds, currentValueChecksum] = await Promise.all([userIdsPromise, currentValueChecksumPromise]);
-
-  return {
-    userIds: userIds,
-    currentValueChecksum: currentValueChecksum?.value || "",
-  };
-}
-
-function userIdsUpdated(userIds: string, checksum: string) {
-  return createUserIdsChecksum(userIds) !== checksum;
-}
-
-function createUserIdsChecksum(userIds: string) {
-  return crypto.createHash("sha256").update(userIds).digest("hex");
-}
-
-function updateChecksum(userIds: string) {
-  return updateMeta(DATABASE_USER_IDS_CHECKSUM_KEY, createUserIdsChecksum(userIds));
 }

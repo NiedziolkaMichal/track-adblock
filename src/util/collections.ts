@@ -1,5 +1,3 @@
-export function addUnique<T>(arr: T[], e: T) {
-  if (!arr.includes(e)) {
-    arr.push(e);
-  }
+export function uniqueArray<T>(...elements: T[]) {
+  return Array.from(new Set([...elements]));
 }

@@ -6,7 +6,7 @@ import { logError } from "../../../../util/log";
 import { startTrial, trialStarted } from "../../../../../db/query";
 import { DAY_IN_MILLIS } from "../../../../util/math";
 import { sameOrigin } from "../../../../util/verifyInput";
-import { refreshAccessToWorker } from "../../../../model/refreshWorker";
+import { addAccessToWorker } from "../../../../model/refreshWorker";
 
 const TRIAL_DURATION_MILLIS = 3 * DAY_IN_MILLIS;
 
@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const startTrialPromise = startTrial(userId, new Date(Date.now() + TRIAL_DURATION_MILLIS));
-  const refreshAccessPromise = refreshAccessToWorker(userId);
+  const refreshAccessPromise = addAccessToWorker(userId);
   await Promise.all([startTrialPromise, refreshAccessPromise]);
 
   return res.status(200).send("OK");

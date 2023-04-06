@@ -152,6 +152,28 @@ export async function getActiveUserIds() {
   return response.map((o) => o.id);
 }
 
+export function getActiveExpiredServices() {
+  return prisma.user.findMany({
+    where: {
+      serviceActive: true,
+      serviceExpiration: {
+        lt: new Date(),
+      },
+    },
+  });
+}
+
+export function inactivateUserIds(userIds: string[]) {
+  return prisma.user.updateMany({
+    data: {
+      serviceActive: false,
+    },
+    where: {
+      id: { in: userIds },
+    },
+  });
+}
+
 export async function putPayment(orderId: string, userId: string, date: Date, extension: number) {
   await prisma.payment.upsert({
     create: {
@@ -201,32 +223,6 @@ export function setPassword(userId: string, password: string) {
     },
     data: {
       password,
-    },
-  });
-}
-
-export function updateMeta(key: string, value: string) {
-  return prisma.meta.upsert({
-    create: {
-      key,
-      value,
-    },
-    update: {
-      value,
-    },
-    where: {
-      key,
-    },
-  });
-}
-
-export function getMeta(key: string) {
-  return prisma.meta.findUnique({
-    where: {
-      key,
-    },
-    select: {
-      value: true,
     },
   });
 }

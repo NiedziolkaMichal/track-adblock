@@ -106,8 +106,3 @@ model Payment {
 
   @@index([userId])
 }
-
-model Meta {
-  key   String @id
-  value String
-}
