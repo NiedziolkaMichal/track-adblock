@@ -109,6 +109,23 @@ export function getExpirationDetailsByEmail(email: string) {
   });
 }
 
+export async function trialStarted(userId: string) {
+  const expirationDetails = await getExpirationDetails(userId);
+  return !!expirationDetails?.serviceExpiration;
+}
+
+export async function startTrial(userId: string, serviceExpiration: Date) {
+  await prisma.user.update({
+    data: {
+      trial: true,
+      serviceExpiration: serviceExpiration,
+    },
+    where: {
+      id: userId,
+    },
+  });
+}
+
 export async function updateExpirationDetails(userId: string, trial: boolean, serviceExpiration: Date) {
   await prisma.user.update({
     data: {

@@ -1,10 +1,10 @@
 import { H1, MeasurementCardSides } from "../../../components/account/common";
 import { getAccountSharedLayout } from "../../../components/account/skeleton";
-import { ButtonShapeShifter } from "../../../components/account/button";
+import { ButtonPrimary, ButtonShapeShifter } from "../../../components/account/button";
 import { Card, CardCodeBlock, CardH2 } from "../../../components/account/card";
 import { useTheme } from "styled-components";
 import { FileDownload, FileDownloadGroup } from "../../../components/account/install/fileDownload";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CardTab, CardTabs } from "../../../components/account/cardTabs";
 import { P } from "../../../components/common";
 import { getLastPathComponent } from "../../../util/format";
@@ -16,7 +16,8 @@ import { IntegrationType } from ".prisma/client";
 import { LOGIN_REDIRECT } from "../../../util/redirects";
 import { PageMetaData } from "../../../components/metadata";
 import { IsItSafeToAddOurScripts, WhatAreScriptsUsedFor, WhyReplaceGoogleAnalyticsScript, WhyScriptsHaveRandomNames, WhyToFindGoogleAnalyticsScript } from "../../../components/account/questions";
-import { getGTagFileUrl, getProxyFileUrl, getVerifyGTagInstallationUrl, getVerifyProxyInstallationUrl } from "../../../util/web/api";
+import { getGTagFileUrl, getProxyFileUrl, getStartTrialUrl, getVerifyGTagInstallationUrl, getVerifyProxyInstallationUrl } from "../../../util/web/api";
+import { useRouter } from "next/router";
 
 interface Props {
   host: string;
@@ -53,6 +54,17 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
 };
 
 export default function Page({ host, measurementId, jsFilePath, phpFilePath }: Props) {
+  const router = useRouter();
+  function startTrial() {
+    fetch(getStartTrialUrl(host), {
+      method: "POST",
+    });
+    router.push("/account");
+  }
+  useEffect(() => {
+    router.prefetch("/account");
+  }, [router]);
+
   return (
     <>
       <PageMetaData title="Instalacja skryptu | Track Adblock" />
@@ -60,6 +72,9 @@ export default function Page({ host, measurementId, jsFilePath, phpFilePath }: P
       <DomainCard domain={host} measurementId={measurementId} />
       <FilesCard host={host} measurementId={measurementId} jsFilePath={jsFilePath} phpFilePath={phpFilePath} />
       <ScriptCard jsFilePath={jsFilePath} measurementId={measurementId} />
+      <ButtonPrimary $margin="t-15px b-10px" onClick={startTrial}>
+        Rozpocznij okres próbny
+      </ButtonPrimary>
     </>
   );
 }
@@ -112,9 +127,6 @@ function FilesCard({ host, measurementId, jsFilePath, phpFilePath }: { host: str
 }
 
 function ScriptCard({ jsFilePath, measurementId }: { jsFilePath: string; measurementId: string }) {
-  const completed = false;
-  const onComplete = undefined;
-
   return (
     <CardH2 headingContent="Zamień skrypt Google Analytics" innerPadding={true}>
       <MeasurementCardSides>
@@ -122,11 +134,7 @@ function ScriptCard({ jsFilePath, measurementId }: { jsFilePath: string; measure
           <P $margin="b-10px">Znajdź poniższy kod Google Analytics w plikach strony internetowej</P>
           <CardCodeBlock $margin="b-20px">&lt;script async src=&quot;https://www.googletagmanager.com/gtag/js?id={measurementId}&quot;&gt;&lt;/script&gt;</CardCodeBlock>
           <P $margin="b-10px">Następnie zamień go na poniższą wersję</P>
-          <CardCodeBlock $margin="b-20px">&lt;script async src=&quot;/{getLastPathComponent(jsFilePath)}.js&quot;&gt;&lt;/script&gt;</CardCodeBlock>
-          <ButtonShapeShifter onClick={onComplete} $state={completed ? "valid" : "primary"} disabled={completed}>
-            {!completed && "Skrypt został zamieniony"}
-            {completed && "Skrypt jest zamieniony prawidłowo"}
-          </ButtonShapeShifter>
+          <CardCodeBlock $margin="b-0">&lt;script async src=&quot;/{getLastPathComponent(jsFilePath)}.js&quot;&gt;&lt;/script&gt;</CardCodeBlock>
         </div>
         <div>
           <WhyReplaceGoogleAnalyticsScript />

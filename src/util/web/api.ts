@@ -26,3 +26,7 @@ export function getChangePasswordBody(oldPassword: string, newPassword: string) 
     newPassword: fullEncodeUriComponent(newPassword),
   });
 }
+
+export function getStartTrialUrl(host: string) {
+  return `/api/host/${fullEncodeUriComponent(host)}/startTrial`;
+}

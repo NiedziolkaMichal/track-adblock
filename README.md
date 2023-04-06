@@ -22,7 +22,6 @@ The website is not yet ready for commercial use. Those are the most important **
 - An ability to delete account
 - An ability to reset forgotten password
 - An ability to get back to the installation files after leaving the page
-- Automatic start of the trial period when integration is complete
 - Notifying Cloudflare worker whenever a list of user ids with active service has been updated
 - Privacy policy and terms of service
 - English translation
