@@ -47,6 +47,7 @@ model User {
   image             String?
   trial             Boolean       @default(true)
   serviceExpiration DateTime?
+  serviceActive     Boolean       @default(false)
   accounts          Account[]
   sessions          Session[]
   integrations      Integration[]
@@ -104,4 +105,9 @@ model Payment {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model Meta {
+  key   String @id
+  value String
 }

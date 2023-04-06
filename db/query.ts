@@ -119,6 +119,7 @@ export async function startTrial(userId: string, serviceExpiration: Date) {
     data: {
       trial: true,
       serviceExpiration: serviceExpiration,
+      serviceActive: true,
     },
     where: {
       id: userId,
@@ -131,11 +132,24 @@ export async function updateExpirationDetails(userId: string, trial: boolean, se
     data: {
       trial,
       serviceExpiration,
+      serviceActive: serviceExpiration.getTime() >= Date.now(),
     },
     where: {
       id: userId,
     },
   });
+}
+
+export async function getActiveUserIds() {
+  const response = await prisma.user.findMany({
+    where: {
+      serviceActive: true,
+    },
+    select: {
+      id: true,
+    },
+  });
+  return response.map((o) => o.id);
 }
 
 export async function putPayment(orderId: string, userId: string, date: Date, extension: number) {
@@ -187,6 +201,32 @@ export function setPassword(userId: string, password: string) {
     },
     data: {
       password,
+    },
+  });
+}
+
+export function updateMeta(key: string, value: string) {
+  return prisma.meta.upsert({
+    create: {
+      key,
+      value,
+    },
+    update: {
+      value,
+    },
+    where: {
+      key,
+    },
+  });
+}
+
+export function getMeta(key: string) {
+  return prisma.meta.findUnique({
+    where: {
+      key,
+    },
+    select: {
+      value: true,
     },
   });
 }
