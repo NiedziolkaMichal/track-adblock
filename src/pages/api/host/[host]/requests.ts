@@ -5,6 +5,7 @@ import { sameOrigin } from "../../../../util/verifyInput";
 import { getHostRequests } from "../../../../../db/query";
 import { HostRequestType } from "@prisma/client";
 import { logError } from "../../../../util/log";
+import { DAY_IN_MILLIS } from "../../../../util/math";
 
 export interface RequestsData {
   startDate: string;
@@ -38,37 +39,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).send("");
   }
 
-  const data = await getRequestsData(userId, input.host, input.startDate, input.timeZoneOffset, input.days);
+  const data = await getRequestsData(userId, input.host, input.startDate, input.days);
   return res.status(200).json(data);
 }
 
 function getRequestInput(req: NextApiRequest) {
   const host = req.query.host;
   const startDateStr = req.query.startDate;
-  const timeZoneOffsetStr = req.query.timeZoneOffset;
   const daysStr = req.query.days;
 
-  if (!host || typeof host !== "string" || typeof startDateStr !== "string" || typeof daysStr !== "string" || typeof timeZoneOffsetStr !== "string") {
+  if (!host || typeof host !== "string" || typeof startDateStr !== "string" || typeof daysStr !== "string") {
     logError("Invalid input data while getting host requests");
     return undefined;
   }
   const startDate = new Date(startDateStr);
-  const timeZoneOffset = Number(timeZoneOffsetStr);
   const days = Number(daysStr);
-  if (String(startDate) === "Invalid Date" || isNaN(timeZoneOffset) || isNaN(days)) {
+  if (String(startDate) === "Invalid Date" || isNaN(days)) {
     logError("Invalid input data while getting host requests");
     return undefined;
   }
   return {
     host,
     startDate,
-    timeZoneOffset,
     days,
   };
 }
 
-async function getRequestsData(userId: string, host: string, startDate: Date, timeZoneOffset: number, days: number) {
-  //TODO use timeZoneOffset - może da się to zrobić na podstawie godziny w odebranym obiekcie startDate? Tak żeby ta godzina była separatorem dnia
+async function getRequestsData(userId: string, host: string, startDate: Date, days: number) {
   const endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + days, startDate.getHours()); // Current date + amount of days to display in the chart
   const hostRequests = await getHostRequests(userId, host, startDate, endDate);
 
@@ -77,12 +74,13 @@ async function getRequestsData(userId: string, host: string, startDate: Date, ti
   }
 
   function countRequestsOfTypeAndDay(expectedType: HostRequestType, daysSinceStart: number) {
-    const expectedDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + daysSinceStart); //+1h
-    const isExpectedDate = (date: Date) => expectedDate.getMonth() === date.getMonth() && expectedDate.getDate() === date.getDate();
+    const minEpoch = startDate.getTime() + daysSinceStart * DAY_IN_MILLIS;
+    const maxEpoch = minEpoch + DAY_IN_MILLIS;
+    const isExpectedDate = (epoch: number) => epoch >= minEpoch && epoch < maxEpoch;
 
     return (hostRequests || [])
       .filter(({ type }) => type === expectedType)
-      .filter(({ date }) => isExpectedDate(date))
+      .filter(({ date }) => isExpectedDate(date.getTime()))
       .reduce((p, { requestCount }) => p + requestCount, 0);
   }
 

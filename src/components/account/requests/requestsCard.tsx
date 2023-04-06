@@ -36,7 +36,7 @@ export function RequestsCard({ host, className, $margin }: { host: string; class
 
 function getChartStartDate() {
   const currentDate = new Date();
-  return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - DAYS_IN_THE_CHART + 1, currentDate.getHours());
+  return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - DAYS_IN_THE_CHART + 1, 0);
 }
 
 export function getRequestTypesTitle(type: keyof typeof THEME.graph.requests) {

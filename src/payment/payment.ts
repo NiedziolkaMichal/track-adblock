@@ -1,5 +1,6 @@
 import { getExpirationDetailsByEmail, putPayment, updateExpirationDetails } from "../../db/query";
 import { logError, logInfo } from "../util/log";
+import { DAY_IN_MILLIS } from "../util/math";
 
 export type PaymentState = "TRIAL" | "BEFORE_TRIAL" | "PAID" | "EXPIRED";
 
@@ -25,7 +26,7 @@ export async function recordNewPayment(email: string, orderId: string, orderCrea
   const currentExpirationDate = expirationDetails.serviceExpiration;
 
   const expirationTimeLeft = currentExpirationDate && currentExpirationDate.getTime() > currentEpoch ? currentExpirationDate.getTime() - currentEpoch : 0;
-  const extensionInMillis = extensionInDays * 24 * 60 * 60 * 1000;
+  const extensionInMillis = extensionInDays * DAY_IN_MILLIS;
   const newExpirationDate = new Date(currentEpoch + expirationTimeLeft + extensionInMillis);
 
   logInfo("Missing expiration details while receiving new payment");
