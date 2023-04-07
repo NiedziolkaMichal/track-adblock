@@ -8,7 +8,7 @@ import { signIn } from "next-auth/react";
 import { Label, TextField } from "../../components/account/input";
 import { FullSizeImg, P } from "../../components/common";
 import { BuiltInProviderType } from "next-auth/providers";
-import { getPasswordWarning, verifyEmail, verifyPassword, VerifyPasswordResult } from "../../util/verifyInput";
+import { getPasswordWarning, verifyEmail, verifyPassword, VerifyPasswordResult } from "../../lib/util/verifyInput";
 import { SignInOptions } from "next-auth/react/types";
 import { PageMetaData } from "../../components/metadata";
 

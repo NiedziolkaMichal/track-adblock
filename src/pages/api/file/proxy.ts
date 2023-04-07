@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import path from "path";
 import { promises as fs } from "fs";
-import { logError } from "../../../util/log";
+import { logError } from "../../../lib/util/log";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const host = req.query.host;

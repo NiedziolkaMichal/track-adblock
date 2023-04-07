@@ -1,7 +1,7 @@
 import { DatumValue, ResponsiveLine } from "@nivo/line";
 import { THEME } from "../../../styles/themes";
 import { ChartTooltip } from "./chartTooltip";
-import { formatNumber } from "../../../util/format";
+import { formatNumber } from "../../../lib/util/format";
 import { getRequestTypesTitle } from "./requestsCard";
 import { RequestsData } from "../../../pages/api/host/[host]/requests";
 import { useTheme } from "styled-components";

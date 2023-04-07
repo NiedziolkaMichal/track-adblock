@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ReactNode, useRef } from "react";
-import { useOnClickOutside, useOnHover } from "../hooks/webHooks";
+import { useOnClickOutside, useOnHover } from "./hooks/webHooks";
 
 export function Tooltip({ tooltip, className, children }: { tooltip: ReactNode; className?: string; children: ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);

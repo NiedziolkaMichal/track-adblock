@@ -9,11 +9,11 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getServerSession } from "../api/auth/[...nextauth]";
-import { LOGIN_REDIRECT } from "../../util/redirects";
-import { getHosts } from "../../../db/query";
-import { getChangePasswordBody, getChangePasswordUrl } from "../../util/web/api";
+import { LOGIN_REDIRECT } from "../../lib/web/redirects";
+import { getHosts } from "../../lib/db/query";
+import { getChangePasswordBody, getChangePasswordUrl } from "../../lib/web/api";
 import { signOut } from "next-auth/react";
-import { getPasswordWarning, verifyPassword, VerifyPasswordResult } from "../../util/verifyInput";
+import { getPasswordWarning, verifyPassword, VerifyPasswordResult } from "../../lib/util/verifyInput";
 
 export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);

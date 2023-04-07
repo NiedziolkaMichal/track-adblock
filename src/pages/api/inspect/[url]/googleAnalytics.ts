@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import isValidDomain from "is-valid-domain";
 import * as cheerio from "cheerio";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
-import { fetchAbortable } from "../../../../util/io";
-import { logError } from "../../../../util/log";
+import { fetchAbortable } from "../../../../lib/util/io";
+import { logError } from "../../../../lib/util/log";
+import { getOrigin } from "../../../../lib/util/uri";
 
 const ANALYTICS_URL_PATTERN = /https:\/\/www.googletagmanager.com\/gtag\/js\?id=(?<id>[A-Z0-9-]+)/i;
 
@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 async function getMeasurementId(inputURL: string) {
-  const parsedURL = getURL(inputURL);
+  const parsedURL = getOrigin(inputURL);
   if (!parsedURL) {
     return undefined;
   }
@@ -78,18 +78,6 @@ function getAllScriptURLs(html: string) {
 async function fetchText(url: string) {
   const result = await fetchAbortable(url).catch(() => undefined);
   return result?.text();
-}
-
-function getURL(inputURL: string) {
-  try {
-    const parsedURL = new URL(inputURL);
-    if (!parsedURL.host || !isValidDomain(parsedURL.host)) {
-      return undefined;
-    }
-    return `https://${parsedURL.host}`;
-  } catch (e) {
-    return undefined;
-  }
 }
 
 function detectAnalytics(html: string) {

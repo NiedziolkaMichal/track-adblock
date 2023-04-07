@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { sameOrigin, verifyPassword } from "../../../util/verifyInput";
-import { logError } from "../../../util/log";
+import { verifyPassword } from "../../../lib/util/verifyInput";
+import { sameOrigin } from "../../../lib/util/uri";
+import { logError } from "../../../lib/util/log";
 import { authOptions } from "./[...nextauth]";
-import { getPasswordByUser, setPassword } from "../../../../db/query";
-import { hashPassword, samePassword } from "../../../util/web/auth";
+import { getPasswordByUser, setPassword } from "../../../lib/db/query";
+import { hashPassword, samePassword } from "../../../lib/util/password";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { oldPassword, newPassword } = getInput(req);

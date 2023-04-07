@@ -2,11 +2,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
 import isValidDomain from "is-valid-domain";
-import { logError } from "../../../../util/log";
-import { startTrial, trialStarted } from "../../../../../db/query";
-import { DAY_IN_MILLIS } from "../../../../util/math";
-import { sameOrigin } from "../../../../util/verifyInput";
-import { addAccessToWorker } from "../../../../model/refreshWorker";
+import { logError } from "../../../../lib/util/log";
+import { startTrial, trialStarted } from "../../../../lib/db/query";
+import { DAY_IN_MILLIS } from "../../../../lib/util/misc";
+import { sameOrigin } from "../../../../lib/util/uri";
+import { addAccessToWorker } from "../../../../lib/refreshWorker";
 
 const TRIAL_DURATION_MILLIS = 3 * DAY_IN_MILLIS;
 

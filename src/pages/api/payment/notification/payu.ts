@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import requestIp from "request-ip";
-import { verifySignature } from "../../../../payment/payu";
-import { recordNewPayment } from "../../../../payment/payment";
-import { logError } from "../../../../util/log";
+import { verifySignature } from "../../../../lib/payment/payu";
+import { recordNewPayment } from "../../../../lib/payment/payment";
+import { logError } from "../../../../lib/util/log";
 
 const PRODUCTION_ALLOWED_IPS = ["185.68.12.10", "185.68.12.11", "185.68.12.12", "185.68.12.26", "185.68.12.27", "185.68.12.28"];
 const SANDBOX_ALLOWED_IPS = ["185.68.14.10", "185.68.14.11", "185.68.14.12", "185.68.14.26", "185.68.14.27", "185.68.14.28"];

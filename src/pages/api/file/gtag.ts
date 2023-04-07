@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { verifyMeasurementId, verifyScriptFilePath } from "../../../util/verifyInput";
+import { verifyMeasurementId, verifyScriptFilePath } from "../../../lib/util/verifyInput";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-import { logError } from "../../../util/log";
+import { logError } from "../../../lib/util/log";
 
 const GTAG_URL_PREFIX = "https://www.googletagmanager.com/gtag/js?id=";
 /**

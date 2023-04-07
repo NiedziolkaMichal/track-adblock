@@ -1,20 +1,20 @@
 import { getAccountSharedLayout } from "../../components/account/skeleton";
 import { GetServerSidePropsContext } from "next/types";
-import { ACCOUNT_REDIRECT, LOGIN_REDIRECT } from "../../util/redirects";
+import { ACCOUNT_REDIRECT, LOGIN_REDIRECT } from "../../lib/web/redirects";
 import { getServerSession } from "../api/auth/[...nextauth]";
-import { getPaymentFields, PaymentFields } from "../../payment/payu";
-import { PRICES } from "../../payment/prices";
+import { getPaymentFields, PaymentFields } from "../../lib/payment/payu";
+import { PRICES } from "../../lib/payment/prices";
 import { GetServerSideProps } from "next";
 import { useRef } from "react";
 import { PricingCardPurchase } from "../../components/pricingCard";
 import styled from "styled-components";
 import { H1 } from "../../components/account/common";
-import { getExpirationDetails, getPayments } from "../../../db/query";
+import { getExpirationDetails, getPayments } from "../../lib/db/query";
 import { Payment } from "@prisma/client";
 import { ServiceExpirationBar } from "../../components/account/serviceExpiration";
-import { getPaymentState, PaymentState } from "../../payment/payment";
+import { getPaymentState, PaymentState } from "../../lib/payment/payment";
 import { PageMetaData } from "../../components/metadata";
-import { logError } from "../../util/log";
+import { logError } from "../../lib/util/log";
 
 interface Props {
   products: PropsProduct[];

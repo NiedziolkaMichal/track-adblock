@@ -1,5 +1,5 @@
-import { PaymentState } from "../../payment/payment";
-import { formatTimeToExpire } from "../../util/format";
+import { PaymentState } from "../../lib/payment/payment";
+import { formatTimeToExpire } from "../../lib/util/format";
 import { AlertCard } from "./card";
 
 export function ServiceExpirationBar({ paymentState, serviceExpiration }: { paymentState: PaymentState; serviceExpiration: Date | null }) {

@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext } from "next/types";
-import { fullEncodeUriComponent } from "../util/format";
+import { fullEncodeUriComponent } from "../util/uri";
 import crypto from "crypto";
 import { ProductPrice } from "./prices";
 import requestIp from "request-ip";

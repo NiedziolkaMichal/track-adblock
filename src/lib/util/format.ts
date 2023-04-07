@@ -1,4 +1,4 @@
-import { DAY_IN_MILLIS, HOUR_IN_MILLIS, MINUTES_IN_MILLIS } from "./math";
+import { DAY_IN_MILLIS, HOUR_IN_MILLIS, MINUTES_IN_MILLIS } from "./misc";
 
 const BIG_NUMBER_SUFFIX_PL = [
   { value: 1, symbol: "" },
@@ -36,21 +36,6 @@ export function formatDate(day: number, month: number, year: number) {
   const dayAbbr = DAY_ABBR_PL[date.getDay()];
   const monthStr = MONTH_PL[month - 1];
   return `${dayAbbr} ${String(day).padStart(2, "0")} ${monthStr}`;
-}
-
-export function fullEncodeUriComponent(url: string) {
-  return encodeURIComponent(url).replace(/[!'()*]/g, (c) => "%" + c.charCodeAt(0).toString(16).toUpperCase());
-}
-
-export function getLastPathComponent(path: string) {
-  const separatorIndex1 = path.lastIndexOf("/");
-  const separatorIndex2 = path.lastIndexOf("\\");
-  const largerIndex = separatorIndex2 > separatorIndex1 ? separatorIndex2 : separatorIndex1;
-  if (largerIndex === -1) {
-    return path;
-  } else {
-    return path.slice(largerIndex + 1);
-  }
 }
 
 export function formatTimeToExpire(date: Date | null) {

@@ -1,6 +1,6 @@
 import prisma from "./prisma";
 import { IntegrationType } from ".prisma/client";
-import { MAX_HOSTS_PER_USER } from "../src/util/verifyInput";
+import { MAX_HOSTS_PER_USER } from "../util/verifyInput";
 
 export function getHosts(userId: string) {
   return prisma.integration.findMany({

@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from "next/types";
 import { GetServerSideProps } from "next";
-import { getHosts } from "../../../db/query";
+import { getHosts } from "../../lib/db/query";
 
 /**
  * This page is called automatically every few minutes by a worker.

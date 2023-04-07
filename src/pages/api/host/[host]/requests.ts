@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
-import { sameOrigin } from "../../../../util/verifyInput";
-import { getHostRequests } from "../../../../../db/query";
+import { sameOrigin } from "../../../../lib/util/uri";
+import { getHostRequests } from "../../../../lib/db/query";
 import { HostRequestType } from "@prisma/client";
-import { logError } from "../../../../util/log";
-import { DAY_IN_MILLIS } from "../../../../util/math";
+import { logError } from "../../../../lib/util/log";
+import { DAY_IN_MILLIS } from "../../../../lib/util/misc";
 
 export interface RequestsData {
   startDate: string;
@@ -23,7 +23,6 @@ export interface RequestsData {
  * Returns RequestsData for a provided input in form of a URL parameters:
  * - host - domain name.
  * - startDate - date since which requests should be returned. Any format which can be parsed by Date constructor is acceptable.
- * - timeZoneOffset - time zone shift in minutes. Result of new Date().getTimezoneOffset()
  * - days - amount of days for which requests should be returned.
  * If any parameter is incorrect, not set or user tries to access data for which he/she doesn't have an access, status 400 with empty body is returned.
  */

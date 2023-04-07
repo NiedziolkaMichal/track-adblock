@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
-import { generateScriptFilePath, verifyMeasurementId } from "../../../../util/verifyInput";
+import { generateScriptFilePath, verifyMeasurementId } from "../../../../lib/util/verifyInput";
 import isValidDomain from "is-valid-domain";
-import { putIntegration } from "../../../../../db/query";
+import { putIntegration } from "../../../../lib/db/query";
 import { IntegrationType } from ".prisma/client";
-import { logError } from "../../../../util/log";
+import { logError } from "../../../../lib/util/log";
 
 /**
  * Adds Google Analytics integration to the database.

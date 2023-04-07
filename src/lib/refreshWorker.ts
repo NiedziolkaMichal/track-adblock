@@ -1,5 +1,5 @@
-import { getActiveUserIds } from "../../db/query";
-import { uniqueArray } from "../util/collections";
+import { getActiveUserIds } from "./db/query";
+import { uniqueArray } from "./util/misc";
 
 const WORKER_USER_IDS_SECRET_KEY = "ALLOWED_USER_IDS";
 const WORKER_USER_IDS_SEPARATOR = ";";

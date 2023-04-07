@@ -7,16 +7,16 @@ import { FileDownload, FileDownloadGroup } from "../../../components/account/ins
 import React, { useEffect, useState } from "react";
 import { CardTab, CardTabs } from "../../../components/account/cardTabs";
 import { P } from "../../../components/common";
-import { getLastPathComponent } from "../../../util/format";
+import { getLastPathComponent } from "../../../lib/util/uri";
 import { GetServerSidePropsContext } from "next/types";
 import { GetServerSideProps } from "next";
-import { getIntegration } from "../../../../db/query";
+import { getIntegration } from "../../../lib/db/query";
 import { getServerSession } from "../../api/auth/[...nextauth]";
 import { IntegrationType } from ".prisma/client";
-import { LOGIN_REDIRECT } from "../../../util/redirects";
+import { LOGIN_REDIRECT } from "../../../lib/web/redirects";
 import { PageMetaData } from "../../../components/metadata";
 import { IsItSafeToAddOurScripts, WhatAreScriptsUsedFor, WhyReplaceGoogleAnalyticsScript, WhyScriptsHaveRandomNames, WhyToFindGoogleAnalyticsScript } from "../../../components/account/questions";
-import { getGTagFileUrl, getProxyFileUrl, getStartTrialUrl, getVerifyGTagInstallationUrl, getVerifyProxyInstallationUrl } from "../../../util/web/api";
+import { getGTagFileUrl, getProxyFileUrl, getStartTrialUrl, getVerifyGTagInstallationUrl, getVerifyProxyInstallationUrl } from "../../../lib/web/api";
 import { useRouter } from "next/router";
 
 interface Props {

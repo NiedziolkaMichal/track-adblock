@@ -3,7 +3,7 @@ import Link from "next/link";
 import { MouseEvent, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { getSideMenuItems, MenuItemButton, MenuItemLink } from "./account/sideMenu";
-import { convertRemToPixels } from "../util/dom";
+import { convertRemToPixels } from "../lib/util/misc";
 import { useSession } from "next-auth/react";
 
 export function Header() {

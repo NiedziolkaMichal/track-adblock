@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { SliceTooltipProps } from "@nivo/line";
-import { formatDate, formatNumber } from "../../../util/format";
+import { formatDate, formatNumber } from "../../../lib/util/format";
 import { getRequestTypesTitle } from "./requestsCard";
 import { RequestsData } from "../../../pages/api/host/[host]/requests";
 import { getDateFromXAxis } from "./requestsChart";

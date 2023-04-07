@@ -1,9 +1,9 @@
 import styled, { useTheme } from "styled-components";
 import React, { lazy, Suspense } from "react";
 import { THEME } from "../../../styles/themes";
-import { formatNumber } from "../../../util/format";
+import { formatNumber } from "../../../lib/util/format";
 import { Card } from "../card";
-import { useHostRequests } from "../../../hooks/apiHooks";
+import { useHostRequests } from "../../hooks/apiHooks";
 import { CardTab, CardTabs } from "../cardTabs";
 import { MarginValue } from "../../margin";
 

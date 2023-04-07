@@ -5,10 +5,10 @@ import { H1 } from "../../components/account/common";
 import { GetServerSideProps } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getServerSession } from "../api/auth/[...nextauth]";
-import { getHosts } from "../../../db/query";
-import { LOGIN_REDIRECT } from "../../util/redirects";
+import { getHosts } from "../../lib/db/query";
+import { LOGIN_REDIRECT } from "../../lib/web/redirects";
 import React from "react";
-import { MAX_HOSTS_PER_USER } from "../../util/verifyInput";
+import { MAX_HOSTS_PER_USER } from "../../lib/util/verifyInput";
 import { PageMetaData } from "../../components/metadata";
 import { AlertCard } from "../../components/account/card";
 

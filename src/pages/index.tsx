@@ -7,7 +7,7 @@ import { PricingCardTrial } from "../components/pricingCard";
 import { PositionedImageLink, PositionedLinkGrid } from "../components/positionedLinks";
 import { HeroImage, HeroSection } from "../components/hero";
 import { BaseBackground } from "../styles/global";
-import { PRICES } from "../payment/prices";
+import { PRICES } from "../lib/payment/prices";
 import { PageMetaData } from "../components/metadata";
 import Head from "next/head";
 

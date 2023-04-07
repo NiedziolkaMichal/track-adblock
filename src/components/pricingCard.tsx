@@ -3,7 +3,7 @@ import { Margin, MarginValue } from "./margin";
 import { WaistedHeading } from "./waistedHeading";
 import { ShortSpace, TransparentBorderGradient } from "./common";
 import { BaseLink, GradientLink } from "./button";
-import { ProductPrice } from "../payment/prices";
+import { ProductPrice } from "../lib/payment/prices";
 import { MouseEventHandler, ReactNode } from "react";
 
 export function PricingCardTrial({ productPrice }: { productPrice: ProductPrice }) {

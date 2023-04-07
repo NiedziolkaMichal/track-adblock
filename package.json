@@ -17,7 +17,7 @@
     "deploy": "vercel --force --prod"
   },
   "prisma": {
-    "schema": "db/schema.prisma"
+    "schema": "src/lib/db/schema.prisma"
   },
   "lint-staged": {
     "*": "prettier -w",

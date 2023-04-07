@@ -1,5 +1,4 @@
-import { NextApiRequest } from "next";
-import { rnd } from "./math";
+import { rnd } from "./misc";
 
 export const MAX_HOSTS_PER_USER = 3;
 
@@ -65,22 +64,4 @@ export function verifyEmail(email: string) {
   // Regex from https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
   const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regex.test(email);
-}
-
-export function sameOrigin(req: NextApiRequest) {
-  const host = req.headers.host?.toLowerCase();
-  const referrer = req.headers.referer?.toLowerCase();
-  if (!host || !referrer) {
-    return undefined;
-  }
-  return new URL(referrer).host === host;
-}
-
-export function verifyUrl(url: string) {
-  try {
-    new URL(url);
-    return true;
-  } catch (e) {
-    return false;
-  }
 }

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { logError } from "../../../util/log";
-import { removeAccessToWorker } from "../../../model/refreshWorker";
-import { getActiveExpiredServices, inactivateUserIds } from "../../../../db/query";
+import { logError } from "../../../lib/util/log";
+import { removeAccessToWorker } from "../../../lib/refreshWorker";
+import { getActiveExpiredServices, inactivateUserIds } from "../../../lib/db/query";
 
 /**
  * This route refreshes list of active user ids

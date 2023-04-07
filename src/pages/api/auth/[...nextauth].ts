@@ -3,11 +3,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "../../../../db/prisma";
+import prisma from "../../../lib/db/prisma";
 import { GetServerSidePropsContext } from "next/types";
-import { verifyEmail, verifyPassword } from "../../../util/verifyInput";
-import { logError } from "../../../util/log";
-import { hashPassword, samePassword } from "../../../util/web/auth";
+import { verifyEmail, verifyPassword } from "../../../lib/util/verifyInput";
+import { logError } from "../../../lib/util/log";
+import { hashPassword, samePassword } from "../../../lib/util/password";
 
 export const authOptions: AuthOptions = {
   pages: {

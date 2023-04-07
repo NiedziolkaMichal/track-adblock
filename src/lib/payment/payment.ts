@@ -1,7 +1,7 @@
-import { getExpirationDetailsByEmail, putPayment, updateExpirationDetails } from "../../db/query";
+import { getExpirationDetailsByEmail, putPayment, updateExpirationDetails } from "../db/query";
 import { logError, logInfo } from "../util/log";
-import { DAY_IN_MILLIS } from "../util/math";
-import { addAccessToWorker } from "../model/refreshWorker";
+import { DAY_IN_MILLIS } from "../util/misc";
+import { addAccessToWorker } from "../refreshWorker";
 
 export type PaymentState = "TRIAL" | "BEFORE_TRIAL" | "PAID" | "EXPIRED";
 
