@@ -62,12 +62,21 @@ const nextConfig = {
             value: "null" /* Vercel sets it to * by default, so we want to disable it */,
           },
           {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
             key: "Cross-Origin-Resource-Policy",
             value: "same-site",
           },
+        ],
+      },
+      {
+        source: "/img/email/:file*",
+        headers: [
           {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
+            key: "Cross-Origin-Resource-Policy",
+            value: "cross-origin",
           },
         ],
       },
