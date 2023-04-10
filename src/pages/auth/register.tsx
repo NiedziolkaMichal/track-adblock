@@ -3,7 +3,7 @@ import { NextRouter, useRouter } from "next/router";
 import { ErrorBox, ErrorInline, H1 } from "../../components/account/common";
 import { AuthCard, AuthCardButton, AuthCardContent, AuthCardHrWithContent } from "../../components/account/authCard";
 import { getAuthSharedLayout } from "../../components/auth";
-import { GitHubButton, GoogleButton, NegligibleLink, StyledLink, TrackAdBlockButton } from "../../components/account/button";
+import { GitHubButton, GoogleButton, NegligibleLink, OrdinaryLink, TrackAdBlockButton } from "../../components/account/button";
 import { signIn } from "next-auth/react";
 import { Label, TextField } from "../../components/account/input";
 import { FullSizeImg, P } from "../../components/common";
@@ -40,7 +40,7 @@ function RegisterDescription() {
         Sprawdź jak zachowują się użytkownicy AdBlocka przez <strong>3 dni za darmo</strong>!
       </P>
       <P $margin="b-20px">Zakładając konto, godzisz się na nasze warunki usługi oraz politykę prywatności.</P>
-      <StyledLink href="/auth/login">Mam już konto</StyledLink>
+      <OrdinaryLink href="/auth/login">Mam już konto</OrdinaryLink>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { rnd } from "./misc";
+import { randomOf, rnd } from "./misc";
 
 export const MAX_HOSTS_PER_USER = 3;
 
@@ -12,15 +12,7 @@ export function verifyMeasurementId(id: string) {
 
 export function generateScriptFilePath() {
   const length = rnd(SCRIPT_FILE_NAME_MIN_LENGTH, SCRIPT_FILE_NAME_MAX_LENGTH);
-  return (
-    "/" +
-    Array.from(
-      {
-        length,
-      },
-      () => SCRIPT_FILE_ALLOWED_CHARACTERS[rnd(0, SCRIPT_FILE_ALLOWED_CHARACTERS.length)]
-    ).join("")
-  );
+  return "/" + randomOf(SCRIPT_FILE_ALLOWED_CHARACTERS, length);
 }
 
 export function verifyScriptFilePath(path: string) {

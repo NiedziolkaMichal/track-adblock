@@ -1,5 +1,5 @@
-import { GitHubButton, GoogleButton, LinkPrimary, NegligibleLink, StyledLink, TrackAdBlockButton } from "../../components/account/button";
-import { ErrorBox, H1 } from "../../components/account/common";
+import { GitHubButton, GoogleButton, LinkPrimary, NegligibleLink, OrdinaryLink, TrackAdBlockButton } from "../../components/account/button";
+import { ErrorBox, ErrorInline, H1 } from "../../components/account/common";
 import { signIn } from "next-auth/react";
 import { NextRouter, useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useId, useState } from "react";
@@ -8,6 +8,10 @@ import { getAuthSharedLayout } from "../../components/auth";
 import { AuthCard, AuthCardButton, AuthCardContent, AuthCardHrWithContent } from "../../components/account/authCard";
 import { SignInOptions } from "next-auth/react/types";
 import { PageMetaData } from "../../components/metadata";
+import { getAskResetPasswordUrl } from "../../lib/web/api";
+import { verifyEmail } from "../../lib/util/verifyInput";
+import { P } from "../../components/common";
+import styled from "styled-components";
 
 // Same list exists in register.tsx
 const errors: Record<string, string> = {
@@ -35,7 +39,7 @@ const errors: Record<string, string> = {
   CannotRegister: "Przed zalogowniem, trzeba dokonać rejestracji",
 };
 
-type PageType = "LoginMethods" | "LoginWithPassword" | "ResetPassword";
+type PageType = "LoginMethods" | "LoginWithPassword" | "ResetPassword" | "AskedResetPassword";
 
 export default function Page() {
   const [pageType, setPageType] = useState<PageType>("LoginMethods");
@@ -59,6 +63,7 @@ export default function Page() {
           {adjustedPageType === "LoginMethods" && <LoginMethods setPageType={setPageType} />}
           {adjustedPageType === "LoginWithPassword" && <LoginWithPassword setPageType={setPageType} />}
           {adjustedPageType === "ResetPassword" && <ResetPassword setPageType={setPageType} />}
+          {adjustedPageType === "AskedResetPassword" && <AskedResetPassword />}
         </AuthCardContent>
       </AuthCard>
       <NegligibleLink href="/" $margin="bl-20px">
@@ -118,9 +123,9 @@ function LoginWithPassword({ setPageType }: { setPageType: Dispatch<SetStateActi
       >
         Zaloguj się
       </AuthCardButton>
-      <StyledLink as="button" onClick={() => (clearUrlParameters(router), setPageType("ResetPassword"))}>
+      <OrdinaryLink as="button" onClick={() => (clearUrlParameters(router), setPageType("ResetPassword"))}>
         Nie pamiętam hasła
-      </StyledLink>
+      </OrdinaryLink>
 
       <AuthCardHrWithContent>lub</AuthCardHrWithContent>
 
@@ -143,13 +148,29 @@ const SIGN_IN_CALLBACK: SignInOptions = {
 
 function ResetPassword({ setPageType }: { setPageType: Dispatch<SetStateAction<PageType>> }) {
   const emailId = useId();
+  const [incorrectEmail, setIncorrectEmail] = useState(false);
+
+  async function requestResetPassword() {
+    const email = (document.getElementById(emailId) as HTMLInputElement).value;
+    if (!verifyEmail(email)) {
+      setIncorrectEmail(true);
+    } else {
+      setIncorrectEmail(false);
+      await fetch(getAskResetPasswordUrl(), {
+        method: "POST",
+        body: email,
+      });
+      setPageType("AskedResetPassword");
+    }
+  }
+
   return (
     <>
       <Label $margin="b-15px" $light={true} htmlFor={emailId}>
-        Email
+        Email {incorrectEmail && <ErrorInline>- Niepoprawny adres</ErrorInline>}
       </Label>
-      <TextField $margin="b-15px" id={emailId} />
-      <AuthCardButton>Zresetuj hasło</AuthCardButton>
+      <TextField $margin="b-15px" id={emailId} name="email" />
+      <AuthCardButton onClick={requestResetPassword}>Zresetuj hasło</AuthCardButton>
 
       <AuthCardHrWithContent>lub</AuthCardHrWithContent>
 
@@ -159,3 +180,19 @@ function ResetPassword({ setPageType }: { setPageType: Dispatch<SetStateAction<P
     </>
   );
 }
+
+function AskedResetPassword() {
+  return (
+    <JustifiedDiv>
+      <img src="/img/icon/email.svg" width={111} height={100} alt="" />
+      <P>Jeśli podany adres jest zarejestrowany w naszym serwisie, w ciągu kilku minut zostanie dostarczona wiadomość email z linkem do resetu hasła.</P>
+    </JustifiedDiv>
+  );
+}
+
+const JustifiedDiv = styled.div`
+  display: grid;
+  justify-items: center;
+  text-align: justify;
+  gap: 20px;
+`;

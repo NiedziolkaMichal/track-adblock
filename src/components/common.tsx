@@ -17,7 +17,7 @@ export const FillImg = styled.img`
   height: 100%;
 `;
 
-export const P = styled.p<{ $margin: MarginValue }>`
+export const P = styled.p<{ $margin?: MarginValue }>`
   ${Margin}
 `;
 

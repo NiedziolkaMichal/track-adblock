@@ -27,6 +27,21 @@ export function getChangePasswordBody(oldPassword: string, newPassword: string) 
   });
 }
 
+export function getAskResetPasswordUrl() {
+  return "/api/auth/askResetPassword";
+}
+
+export function getConfirmResetPasswordUrl() {
+  return "/api/auth/confirmResetPassword";
+}
+
+export function getConfirmResetPasswordBody(code: string, newPassword: string) {
+  return JSON.stringify({
+    code,
+    newPassword: fullEncodeUriComponent(newPassword),
+  });
+}
+
 export function getStartTrialUrl(host: string) {
   return `/api/host/${fullEncodeUriComponent(host)}/startTrial`;
 }

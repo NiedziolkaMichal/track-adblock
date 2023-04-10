@@ -216,6 +216,18 @@ export async function getPasswordByUser(userId: string) {
   return existingUser.password;
 }
 
+export async function isEmailUsingOAuth(email: string) {
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+    select: {
+      password: true,
+    },
+  });
+  return (existingUser && !existingUser.password) || false;
+}
+
 export function setPassword(userId: string, password: string) {
   return prisma.user.update({
     where: {
@@ -223,6 +235,51 @@ export function setPassword(userId: string, password: string) {
     },
     data: {
       password,
+    },
+  });
+}
+
+export function setPasswordByEmail(email: string, password: string) {
+  return prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      password,
+    },
+  });
+}
+
+export function getVerificationCodes(id: string) {
+  return prisma.verificationToken.findMany({
+    where: {
+      identifier: id,
+      expires: {
+        gt: new Date(),
+      },
+    },
+  });
+}
+
+export async function deleteVerificationToken(token: string) {
+  try {
+    return await prisma.verificationToken.delete({
+      where: {
+        token,
+      },
+    });
+  } catch (e) {
+    // Token not found
+    return undefined;
+  }
+}
+
+export function storeVerificationCode(id: string, token: string, expires: Date) {
+  return prisma.verificationToken.create({
+    data: {
+      identifier: id,
+      token,
+      expires,
     },
   });
 }

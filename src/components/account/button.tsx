@@ -72,7 +72,7 @@ export const QuestionBtn = styled.button`
   }
 `;
 
-export const StyledLink = styled(Link)`
+export const OrdinaryLink = styled(Link)`
   color: ${({ theme }) => theme.button.anchor.text};
   font-weight: 480;
   font-size: 0.9rem;
