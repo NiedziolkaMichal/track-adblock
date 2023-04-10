@@ -52,6 +52,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  devIndicators: {
+    buildActivityPosition: "bottom-left",
+  },
   headers() {
     return [
       {
