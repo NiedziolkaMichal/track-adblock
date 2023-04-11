@@ -137,9 +137,15 @@ function LoginWithPassword({ setPageType }: { setPageType: Dispatch<SetStateActi
 }
 
 function clearUrlParameters(router: NextRouter) {
-  router.replace({
-    query: {},
-  });
+  router.replace(
+    {
+      query: {},
+    },
+    undefined,
+    {
+      shallow: true,
+    }
+  );
 }
 
 const SIGN_IN_CALLBACK: SignInOptions = {
