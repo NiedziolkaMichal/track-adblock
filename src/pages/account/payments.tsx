@@ -9,8 +9,7 @@ import { useRef } from "react";
 import { PricingCardPurchase } from "../../components/pricingCard";
 import styled from "styled-components";
 import { H1 } from "../../components/account/common";
-import { getExpirationDetails, getPayments } from "../../lib/db/query";
-import { Payment } from "@prisma/client";
+import { getExpirationDetails } from "../../lib/db/query";
 import { ServiceExpirationBar } from "../../components/account/serviceExpiration";
 import { getPaymentState, PaymentState } from "../../lib/payment/payment";
 import { PageMetaData } from "../../components/metadata";
@@ -18,7 +17,6 @@ import { logError } from "../../lib/util/log";
 
 interface Props {
   products: PropsProduct[];
-  payments: Payment[];
   paymentState: PaymentState;
   serviceExpiration: string | null;
 }
@@ -35,10 +33,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
   if (!userId || typeof email !== "string") {
     return LOGIN_REDIRECT;
   }
-  const paymentsPromise = getPayments(userId);
-  const expirationPromise = getExpirationDetails(userId);
-  const [payments, expiration] = await Promise.all([paymentsPromise, expirationPromise]);
 
+  const expiration = await getExpirationDetails(userId);
   if (!expiration) {
     logError("User is missing service expiration data");
     return ACCOUNT_REDIRECT;
@@ -50,7 +46,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context: Get
     return {
       props: {
         products,
-        payments,
         paymentState,
         serviceExpiration: expiration.serviceExpiration?.toISOString() || null,
       },
