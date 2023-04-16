@@ -6,6 +6,8 @@ import { getHostRequests } from "../../../../lib/db/query";
 import { HostRequestType } from "@prisma/client";
 import { logError } from "../../../../lib/util/log";
 import { DAY_IN_MILLIS } from "../../../../lib/util/misc";
+import { IntegrationType } from ".prisma/client";
+import { isIntegrationType } from "../../../../lib/db/prisma";
 
 export interface RequestsData {
   startDate: string;
@@ -38,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).send("");
   }
 
-  const data = await getRequestsData(userId, input.host, input.startDate, input.days);
+  const data = await getRequestsData(userId, input.host, input.type, input.startDate, input.days);
   return res.status(200).json(data);
 }
 
@@ -46,27 +48,29 @@ function getRequestInput(req: NextApiRequest) {
   const host = req.query.host;
   const startDateStr = req.query.startDate;
   const daysStr = req.query.days;
+  const type = req.query.type;
 
-  if (!host || typeof host !== "string" || typeof startDateStr !== "string" || typeof daysStr !== "string") {
+  if (!host || typeof host !== "string" || typeof startDateStr !== "string" || typeof daysStr !== "string" || typeof type !== "string") {
     logError("Invalid input data while getting host requests");
     return undefined;
   }
   const startDate = new Date(startDateStr);
   const days = Number(daysStr);
-  if (String(startDate) === "Invalid Date" || isNaN(days)) {
+  if (String(startDate) === "Invalid Date" || isNaN(days) || !isIntegrationType(type)) {
     logError("Invalid input data while getting host requests");
     return undefined;
   }
   return {
     host,
+    type,
     startDate,
     days,
   };
 }
 
-async function getRequestsData(userId: string, host: string, startDate: Date, days: number) {
+async function getRequestsData(userId: string, host: string, integrationType: IntegrationType, startDate: Date, days: number) {
   const endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + days, startDate.getHours()); // Current date + amount of days to display in the chart
-  const hostRequests = await getHostRequests(userId, host, startDate, endDate);
+  const hostRequests = await getHostRequests(userId, host, integrationType, startDate, endDate);
 
   function countRequestsOfType(expectedType: HostRequestType) {
     return (hostRequests || []).filter(({ type }) => type === expectedType).reduce((p, { requestCount }) => p + requestCount, 0);

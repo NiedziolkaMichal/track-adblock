@@ -1,4 +1,5 @@
 import { fullEncodeUriComponent } from "../util/uri";
+import { IntegrationType } from ".prisma/client";
 
 export function getProxyFileUrl(host: string) {
   return `/api/file/proxy?host=${fullEncodeUriComponent(host)}`;
@@ -46,8 +47,8 @@ export function getStartTrialUrl(host: string) {
   return `/api/host/${fullEncodeUriComponent(host)}/startTrial`;
 }
 
-export function getHostRequestsUrl(host: string, startDate: Date, days: number) {
-  return `/api/host/${fullEncodeUriComponent(host)}/requests?startDate=${startDate.toISOString()}&days=${days}`;
+export function getHostRequestsUrl(host: string, type: IntegrationType, startDate: Date, days: number) {
+  return `/api/host/${fullEncodeUriComponent(host)}/requests?type=${type}&startDate=${startDate.toISOString()}&days=${days}`;
 }
 
 export function getInspectAnalyticsIdUrl(url: string) {

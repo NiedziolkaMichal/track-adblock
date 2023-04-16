@@ -13,11 +13,12 @@ export function getHosts(userId: string) {
   });
 }
 
-export function getHostRequests(userId: string, host: string, startDate: Date, endDate: Date) {
+export function getHostRequests(userId: string, host: string, integrationType: IntegrationType, startDate: Date, endDate: Date) {
   return prisma.hostRequest.findMany({
     where: {
       userId,
       host,
+      integrationType,
       date: {
         gte: startDate.toISOString(),
         lte: endDate.toISOString(),

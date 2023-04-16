@@ -9,12 +9,13 @@ import { MarginValue } from "../../margin";
 
 const DAYS_IN_THE_CHART = 30;
 const REFRESH_INTERVAL_MILLIS = 30000;
+const INTEGRATION_TYPE = "googleAnalytics";
 
 const RequestsChart = lazy(() => import("./requestsChart"));
 
 export function RequestsCard({ host, className, $margin }: { host: string; className?: string; $margin?: MarginValue }) {
   const startDate = getChartStartDate();
-  const requestsData = useHostRequests(host, startDate, DAYS_IN_THE_CHART, REFRESH_INTERVAL_MILLIS);
+  const requestsData = useHostRequests(host, INTEGRATION_TYPE, startDate, DAYS_IN_THE_CHART, REFRESH_INTERVAL_MILLIS);
 
   const amountAll = requestsData ? formatNumber(requestsData.totalOrdinary + requestsData.totalUnblocked, 1) : "⟳";
   const amountOrdinary = requestsData ? formatNumber(requestsData.totalOrdinary, 1) : "⟳";

@@ -70,7 +70,8 @@ model Integration {
   jsFilePath    String
   phpFilePath   String
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  requests HostRequest[]
 
   @@id([userId, host, type])
   @@index([userId])
@@ -81,13 +82,17 @@ enum IntegrationType {
 }
 
 model HostRequest {
-  userId       String
-  host         String
-  date         DateTime
-  type         HostRequestType
-  requestCount Int             @db.UnsignedInt
+  userId          String
+  host            String
+  integrationType IntegrationType @default(googleAnalytics)
+  date            DateTime
+  type            HostRequestType
+  requestCount    Int             @db.UnsignedInt
+
+  integration Integration @relation(fields: [userId, host, integrationType], references: [userId, host, type], onDelete: Cascade)
 
   @@id([userId, host, type, date])
+  @@index([userId, host, integrationType])
 }
 
 enum HostRequestType {
