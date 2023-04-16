@@ -43,6 +43,10 @@ export function getConfirmResetPasswordBody(code: string, newPassword: string) {
   });
 }
 
+export function getDeleteAccountUrl() {
+  return "/api/user";
+}
+
 export function getStartTrialUrl(host: string) {
   return `/api/host/${fullEncodeUriComponent(host)}/startTrial`;
 }

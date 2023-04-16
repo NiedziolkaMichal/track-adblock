@@ -217,6 +217,18 @@ export async function getPasswordByUser(userId: string) {
   return existingUser.password;
 }
 
+export async function usingOAuth(userId: string) {
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      id: userId,
+    },
+    select: {
+      password: true,
+    },
+  });
+  return (existingUser && !existingUser.password) || false;
+}
+
 export async function isEmailUsingOAuth(email: string) {
   const existingUser = await prisma.user.findFirst({
     where: {
@@ -247,6 +259,14 @@ export function setPasswordByEmail(email: string, password: string) {
     },
     data: {
       password,
+    },
+  });
+}
+
+export function deleteUser(userId: string) {
+  return prisma.user.delete({
+    where: {
+      id: userId,
     },
   });
 }

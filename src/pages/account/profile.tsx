@@ -3,19 +3,23 @@ import { PageMetaData } from "../../components/metadata";
 import { ErrorInline, H1 } from "../../components/account/common";
 import { CardH2 } from "../../components/account/card";
 import { InvalidInput, Label, TextField } from "../../components/account/input";
-import { ButtonShapeShifter } from "../../components/account/button";
+import { ButtonPrimary, ButtonShapeShifter } from "../../components/account/button";
 import { useId, useState } from "react";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getServerSession } from "../api/auth/[...nextauth]";
 import { LOGIN_REDIRECT } from "../../lib/web/redirects";
-import { getHosts } from "../../lib/db/query";
-import { getChangePasswordBody, getChangePasswordUrl } from "../../lib/web/api";
+import { usingOAuth } from "../../lib/db/query";
+import { getChangePasswordBody, getChangePasswordUrl, getDeleteAccountUrl } from "../../lib/web/api";
 import { signOut } from "next-auth/react";
 import { getPasswordWarning, verifyPassword, VerifyPasswordResult } from "../../lib/util/verifyInput";
 
-export const getServerSideProps: GetServerSideProps<object> = async (context: GetServerSidePropsContext) => {
+interface Props {
+  oauth: boolean;
+}
+
+export const getServerSideProps: GetServerSideProps<Props> = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context);
   const userId = session?.user.id;
 
@@ -23,21 +27,22 @@ export const getServerSideProps: GetServerSideProps<object> = async (context: Ge
     return LOGIN_REDIRECT;
   }
 
-  const hosts = await getHosts(userId);
+  const oauth = await usingOAuth(userId);
 
   return {
     props: {
-      hosts,
+      oauth,
     },
   };
 };
 
-export default function Page() {
+export default function Page({ oauth }: Props) {
   return (
     <>
       <PageMetaData title="Profil | Track Adblock" />
       <H1>Profil użytkownika</H1>
-      <ChangePasswordCard />
+      {!oauth && <ChangePasswordCard />}
+      <DeleteAccount oauth={oauth} />
     </>
   );
 }
@@ -121,6 +126,49 @@ function ChangePasswordCard() {
         {!completed && "Zmień hasło"}
         {completed && "Hasło zostało zmienione"}
       </ButtonShapeShifter>
+    </CardH2>
+  );
+}
+
+function DeleteAccount({ oauth }: { oauth: boolean }) {
+  const passwordId = useId();
+  const [passwordState, setPasswordState] = useState<"ok" | "missing">("ok");
+  const [paid, setPaid] = useState(false);
+
+  async function tryDeleteAccount() {
+    const password = oauth ? "" : (document.getElementById(passwordId) as HTMLInputElement).value;
+    if (!oauth && !password) {
+      setPasswordState("missing");
+      return;
+    }
+    setPasswordState("ok");
+
+    const response = await fetch(getDeleteAccountUrl(), {
+      method: "DELETE",
+      body: password,
+    });
+    if (response.status === 403) {
+      setPaid(true);
+    } else {
+      signOut({
+        callbackUrl: response.status === 200 ? "/" : "/auth/login",
+      });
+    }
+  }
+
+  return (
+    <CardH2 $margin="b-25px" headingContent="Usunięcie konta" innerPadding={true}>
+      <p style={{ marginBottom: "20px" }}>
+        Konto zostanie usunięte natychmiastowo. <strong>Tej akcji nie można cofnąć!</strong>
+      </p>
+      {!oauth && (
+        <Label $margin="b-10px" htmlFor={passwordId}>
+          Aktualne hasło {passwordState !== "ok" && <ErrorInline>- Nie może być puste</ErrorInline>}
+        </Label>
+      )}
+      {!oauth && <TextField $margin={paid ? "b-10px" : "b-20px"} id={passwordId} name="password_old" type="password" />}
+      {paid && <InvalidInput $margin="b-10px">Nie można usunąć konta które ma opłaconą usługę</InvalidInput>}
+      <ButtonPrimary onClick={tryDeleteAccount}>Usuń konto</ButtonPrimary>
     </CardH2>
   );
 }
