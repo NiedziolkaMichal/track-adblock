@@ -7,13 +7,17 @@ import { convertRemToPixels } from "../lib/util/misc";
 import { useSession } from "next-auth/react";
 
 export function Header() {
+  const router = useRouter();
   const mobileNavBgRef = useRef<HTMLDivElement>(null);
   const hamburgerIconRef = useRef<HTMLObjectElement>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   useHideMobileNavOnResize(hamburgerIconRef, mobileNavBgRef, mobileNavOpen, setMobileNavOpen);
 
   return (
-    <StyledHeader>
+    <StyledHeader $account={router.pathname.startsWith("/account")}>
+      <LogoLink href="/">
+        <img src="/img/logo.webp" width={200} height={103} alt="Track AdBlock" decoding="async" />
+      </LogoLink>
       <DesktopNav>
         <NavLinks mobileNav={false} />
       </DesktopNav>
@@ -33,7 +37,7 @@ export function Header() {
 function useHideMobileNavOnResize(iconRef: RefObject<HTMLObjectElement>, mobileNavRef: RefObject<HTMLElement>, opened: boolean, setOpened: (opened: boolean) => void) {
   useEffect(() => {
     const listener = () => {
-      if (opened && window.innerWidth >= convertRemToPixels(29) + 86) {
+      if (opened && window.innerWidth >= convertRemToPixels(31) + 300) {
         openOrCloseMobileNav(iconRef, mobileNavRef, opened, setOpened, true);
       }
     };
@@ -115,12 +119,18 @@ function onMobileNavClick(e: MouseEvent<HTMLElement>, iconRef: RefObject<HTMLObj
   }
 }
 
+const LogoLink = styled(Link)`
+  margin-top: 10px;
+  position: relative;
+  z-index: 1000;
+`;
+
 const HamburgerParent = styled.div`
   position: relative;
   z-index: 1000;
   height: 50px;
 
-  @media (min-width: calc(29rem + 86px)) {
+  @media (min-width: calc(31rem + 300px)) {
     display: none;
   }
 `;
@@ -135,15 +145,15 @@ const HamburgerButton = styled.button`
   }
 `;
 
-const StyledHeader = styled.header`
+const StyledHeader = styled.header<{ $account: boolean }>`
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
   height: 6.5rem;
   width: 100%;
-  max-width: 1300px;
+  max-width: ${({ $account }) => ($account ? "1650px" : "1300px")};
   padding-inline: 30px;
-  margin: auto;
+  ${({ $account }) => ($account ? "margin-left: 0" : "margin: auto")};
   visibility: visible; // Making sure header is visible, while body is hidden
 `;
 
@@ -153,7 +163,7 @@ const DesktopNav = styled.nav`
   background-image: linear-gradient(to right, ${({ theme }) => theme.gradient.primary.color_1}, ${({ theme }) => theme.gradient.primary.color_2});
   -webkit-background-clip: text;
 
-  @media (max-width: calc(29rem + 85px)) {
+  @media (max-width: calc(31rem + 299px)) {
     display: none;
   }
 `;
@@ -175,7 +185,7 @@ const MobileNavBackground = styled.div`
     margin-top: 6.5rem;
   }
 
-  @media (min-width: calc(29rem + 86px)) {
+  @media (min-width: calc(31rem + 300px)) {
     display: none;
   }
 `;
